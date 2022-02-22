@@ -1,0 +1,27 @@
+---
+title: "Dataprojet"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+n <- 10
+MAF <- runif(n,0.01,0.49)
+person <- matrix(nrow=n, ncol=n)
+for (i  in 1:n){
+    person[i,] <- rbinom(n,2,MAF)
+  }
+
+person <- data.frame(person)
+person
+```
+
+```{r}
+#Oversæt til plink format 
+
+
+```
+
