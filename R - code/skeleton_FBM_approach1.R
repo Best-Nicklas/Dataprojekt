@@ -15,9 +15,7 @@ G2[1:10,1:10]
 # But filling out rows first might be fine too. 
 
 # adhoc way to fill out the matrix
-for(i in 1:10){
-  #fill out G in a loop with some block size
-}
+
 
 #filling with some dummy vars.
 G2[,1:10] <- matrix(0:2, ncol = 10, nrow = 1e5)
@@ -25,7 +23,6 @@ G2[1:10,1:10]
 
 #some functions in this package can very efficiently perform calculations on FBMs, eg:
 tmp_g2 = big_colstats(G2)
-
 
 library(dplyr)
 #save bigsnp object:
