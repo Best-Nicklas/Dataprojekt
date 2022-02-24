@@ -40,18 +40,18 @@ library(bigsnpr)
 ```
 
 ```{r}
-G2 = FBM.code256(nrow = 1e2, # number of rows
-                ncol = 1e2, # number of columns
+G2 = FBM.code256(nrow = 1e3, # number of rows
+                ncol = 1e3, # number of columns
                 code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)), # coding of FileBackedMatrix, here 0,1,2 and NA's.
                 backingfile = "../Data/test_fbm") # where to save the matrix on disk?
 ```
 
 ```{r}
-n <- 100
+n <- 1000
 #G2 <- matrix(nrow=n, ncol=n)
 #print(G2)
+block_size <- 100
 block <- matrix(nrow=block_size, ncol=n)
-block_size <- 10
 MAF <- runif(n,0.01,0.49)
 for(i in 0:((n/block_size)-1)){
   #print("outer loop start")
@@ -65,17 +65,29 @@ for(i in 0:((n/block_size)-1)){
   }
   #if (i < 2){
   #  print(block[,1:10])
-  }
+  #}
   G2[block_start:block_end,] <- block
   #print("outer loop fin")
   #print(i)
   #print(G2)
 }
 #print("loop done")
-MAF[1:2]
+#MAF[1:2]
 G2[1:20,1:10]
 #G2[91:100,91:100]
 ```
+```{r}
+h2 <- 0.8
+c <- n*0.01
+beta <- rnorm(n,0,h2/c)
+l_g <- G2[1,] %*% beta
+```
+```{r}
+l_e <- rnorm(n,0,1-h2)
+full_liability <- l_g+l_e[1]
+full_liability
+```
+
 
 ```{r}
 G2[1:10,1:10]
