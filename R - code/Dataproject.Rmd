@@ -1,118 +1,72 @@
----
-title: "Dataprojet"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+# Dataprojekt
 ```{r}
-n <- 1000
-MAF <- runif(n,0.01,0.49)
-person <- matrix(nrow=n, ncol=n)
-for (i  in 1:n){
-    person[i,] <- rbinom(n,2,MAF)
-  }
-
-person <- data.frame(person)
-person
-```
-
-```{r}
-Genome <- c("A","A","T","A","T","T")
-dim(Genome) <- c(3,2)
-n = 10
-person <- matrix(nrow=n, ncol=n*2)
-snp <- rbinom(n,2,runif(n,0.01,0.49))
-for (i  in 1:n){
-    person[i,] <- Genome[snp[i]+1,]
-  }
-
-# person <- data.frame(person)
-person
-```
-
-
-```{r}
+library(profvis)
 library(bigstatsr)
 library(bigsnpr)
+library(dplyr)
 ```
 
 ```{r}
-G2 = FBM.code256(nrow = 1e3, # number of rows
-                ncol = 1e3, # number of columns
-                code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)), # coding of FileBackedMatrix, here 0,1,2 and NA's.
-                backingfile = "../Data/test_fbm") # where to save the matrix on disk?
+# FBM file
+n <- 100000
+Dataframe = FBM.code256(nrow = n, # number of rows
+                 ncol = n, # number of columns
+                 code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)), # coding of FileBackedMatrix, here 0,1,2 and NA's.
+                 backingfile = "../Data/dataframe") # where to save the matrix on disk?
+
 ```
 
+
 ```{r}
-n <- 1000
-#G2 <- matrix(nrow=n, ncol=n)
-#print(G2)
-block_size <- 100
-block <- matrix(nrow=block_size, ncol=n)
+# Sim-code
+set.seed(777) # Seed for reproduction of simulation
 MAF <- runif(n,0.01,0.49)
+block_size <- n/10
 for(i in 0:((n/block_size)-1)){
-  #print("outer loop start")
-  #print(i)
   block_start <- 1 + i*block_size
   block_end <- (1+i)*block_size
-  for (j in 1:block_size){
-    #print("inner loop")
-    #print(j)
-    block[j,] <- rbinom(n,2,MAF)
-  }
-  #if (i < 2){
-  #  print(block[,1:10])
-  #}
-  G2[block_start:block_end,] <- block
-  #print("outer loop fin")
-  #print(i)
-  #print(G2)
+  Dataframe[block_start:block_end,] <- matrix(nrow=block_size,rbinom(n*block_size,2,MAF))
 }
-#print("loop done")
-#MAF[1:2]
-G2[1:20,1:10]
-#G2[91:100,91:100]
-```
-```{r}
-h2 <- 0.8
-c <- n*0.01
-beta <- rnorm(n,0,h2/c)
-l_g <- G2[1,] %*% beta
-```
-```{r}
-l_e <- rnorm(n,0,1-h2)
-full_liability <- l_g+l_e[1]
-full_liability
-```
-
-
-```{r}
-G2[1:10,1:10]
 ```
 
 ```{r}
-G2[,1:10] <- matrix(0:2, ncol = 10, nrow = 1e5)
-G2[1:10,1:10]
+# Normalize data, and calculate liability 
+# We designate the first c SNPs as causal for convenience. Simulated data means it doesn't matter.
+set.seed(777)
+c <- n*0.01 # 1% of SNPs are causal, which means 1000
+h2 <- 0.8 # 80% heritability of illness
+beta <- rnorm(c,0,h2/c)
+beta_dummy <- c(rep(0,n)) # Used in creation of tibble
+beta_dummy[1:c] <- beta
+causal <- ifelse(beta_dummy != 0, 1, 0)
+
+mu <- 2*MAF[1:c] # theoretical mean, because n big
+sigma <- sqrt(2*MAF[1:c]*(1-MAF[1:c])) # theoretical sd, because n big
+
+liab_g <- sweep(sweep(Dataframe[,1:c], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*% beta
+liab_g
+liab_e <- rnorm(n,0,1-h2)
+liab_full <- liab_e+liab_g
+
+threshold <- quantile(liab_full, 0.95)
 ```
 
 
+
+
 ```{r}
-library(dplyr)
-#save bigsnp object:
-#a list with 3 elements
-obj.bigsnp = list(genotypes = G2, # genotypes, FBM object
-                  map = tibble(snp = 1:ncol(G2)), # map, i.e. SNP info
-                  fam = tibble(FID = 1:nrow(G2))) # fam, i.e. info on individuals
-#saving the bigsnp object
-snp_save(obj.bigsnp)
+# GWAS
+
 ```
 
 ```{r}
-#you can read the data with:
-G3 = snp_attach("test_fbm.rds") # OBS: READ THE .rds(!!!) object
-#genotypes are then stored in the .bk file.
+# Tibbles
+FAM <- tibble(ID = 1:n, Full_Liability = liab_full, Genetic_Liability = liab_g, Status = ifelse(liab_full > threshold,1,0))
+MAP <- tibble(SNP_ID = 1:n, Minor_Allele_Frequency = MAF, BETA = beta_dummy, Causal = causal)
+```
+
+```{r}
+Full_model <- c(Dataframe,FAM,MAP)
+#snp_writeBed(Full_model, bedfile = "../Data/bigSNP")
 ```
 
