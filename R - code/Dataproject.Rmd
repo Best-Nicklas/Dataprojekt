@@ -4,6 +4,8 @@ library(profvis)
 library(bigstatsr)
 library(bigsnpr)
 library(dplyr)
+library(mfx)
+library(ggplot2)
 ```
 
 ```{r}
@@ -12,7 +14,7 @@ n <- 100000
 Dataframe = FBM.code256(nrow = n, # number of rows
                  ncol = n, # number of columns
                  code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)), # coding of FileBackedMatrix, here 0,1,2 and NA's.
-                 backingfile = "../Data/dataframe") # where to save the matrix on disk?
+                 backingfile = "../Data/datafile") # where to save the matrix on disk?
 
 ```
 
@@ -21,11 +23,11 @@ Dataframe = FBM.code256(nrow = n, # number of rows
 # Sim-code
 set.seed(777) # Seed for reproduction of simulation
 MAF <- runif(n,0.01,0.49)
-block_size <- n/10
+block_size <- n/20
 for(i in 0:((n/block_size)-1)){
   block_start <- 1 + i*block_size
   block_end <- (1+i)*block_size
-  Dataframe[block_start:block_end,] <- matrix(nrow=block_size,rbinom(n*block_size,2,MAF))
+  Dataframe[block_start:block_end,] <- matrix(nrow=block_size,rbinom(n*block_size,2,MAF), byrow=TRUE)
 }
 ```
 
@@ -35,8 +37,8 @@ for(i in 0:((n/block_size)-1)){
 set.seed(777)
 c <- n*0.01 # 1% of SNPs are causal, which means 1000
 h2 <- 0.8 # 80% heritability of illness
-beta <- rnorm(c,0,h2/c)
-beta_dummy <- c(rep(0,n)) # Used in creation of tibble
+beta <- rnorm(c,0,sqrt(h2/c))
+beta_dummy <- rep(0,n) # Used in creation of tibble
 beta_dummy[1:c] <- beta
 causal <- ifelse(beta_dummy != 0, 1, 0)
 
@@ -44,29 +46,68 @@ mu <- 2*MAF[1:c] # theoretical mean, because n big
 sigma <- sqrt(2*MAF[1:c]*(1-MAF[1:c])) # theoretical sd, because n big
 
 liab_g <- sweep(sweep(Dataframe[,1:c], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*% beta
-liab_g
-liab_e <- rnorm(n,0,1-h2)
+liab_e <- rnorm(n,0,sqrt(1-h2))
 liab_full <- liab_e+liab_g
 
 threshold <- quantile(liab_full, 0.95)
-```
-
-
-
-
-```{r}
-# GWAS
-
 ```
 
 ```{r}
 # Tibbles
 FAM <- tibble(ID = 1:n, Full_Liability = liab_full, Genetic_Liability = liab_g, Status = ifelse(liab_full > threshold,1,0))
 MAP <- tibble(SNP_ID = 1:n, Minor_Allele_Frequency = MAF, BETA = beta_dummy, Causal = causal)
+
+FAM
+MAP
 ```
 
 ```{r}
-Full_model <- c(Dataframe,FAM,MAP)
-#snp_writeBed(Full_model, bedfile = "../Data/bigSNP")
+Full_model <- list(genotypes = Dataframe, fam = FAM, map = MAP)
+snp_save(Full_model)
+
+snp_attach("../Data/datafile.rds")
+```
+
+```{r}
+# GWAS
+n <- 200
+status <- ifelse(liab_full > threshold,1,0)
+simple <- matrix(nrow=n, ncol=3)
+probit <- matrix(nrow=n, ncol=3)
+
+# Simple linear model
+for (i in 1:n){
+  SNP <- Dataframe[,i]
+  regression <- summary(lm(status ~ SNP))
+  simple[i,] <- c(i,regression$coefficients[1],regression$coefficients[4])
+}
+
+# Probit model
+for (i in 1:n){
+  SNP <- Dataframe[,i]
+  regression <- summary(glm(status ~ SNP, family = binomial(link="probit")))
+  probit[i,] <- c(i,regression$coefficients[1],regression$coefficients[4])
+}
+
+simple
+probit
+
+simple_df <- data.frame(simple)
+probit_df <- data.frame(probit)
+
+# Manhattan-plot - simple
+ggplot(simple_df, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue") + ylim(0,15) + geom_hline(yintercept=5, linetype=2) + xlab("SNP") + ylab("-log10(P-value)")
+  
+# Manhattan-plot - probit
+ggplot(probit_df, aes(x=X1, y=-log10(X3))) + geom_point(color="red") + ylim(0,15) + geom_hline(yintercept=5, linetype=2) + xlab("SNP") + ylab("-log10(P-value)")
+
+```
+
+```{r}
+ggplot(simple_df, aes(x=X1, y=-log10(X3), colour="blue")) + geom_point() + ylim(0,15)
+```
+
+```{r}
+
 ```
 
