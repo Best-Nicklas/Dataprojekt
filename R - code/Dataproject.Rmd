@@ -70,21 +70,22 @@ snp_attach("../Data/datafile.rds")
 
 ```{r}
 # GWAS
-n <- 200
+n <- 10
 status <- ifelse(liab_full > threshold,1,0)
 simple <- matrix(nrow=n, ncol=3)
 probit <- matrix(nrow=n, ncol=3)
 
+
 # Simple linear model
 for (i in 1:n){
-  SNP <- Dataframe[,i]
-  regression <- summary(lm(status ~ SNP))
+  SNP <- (Dataframe[,i]-2*MAF[i])/sqrt(2*MAF[i]*(1-MAF[i]))
+  regression <- summary(lm(status ~ SNP-1))
   simple[i,] <- c(i,regression$coefficients[1],regression$coefficients[4])
 }
 
 # Probit model
 for (i in 1:n){
-  SNP <- Dataframe[,i]
+  SNP <- (Dataframe[,i]-2*MAF[i])/sqrt(2*MAF[i]*(1-MAF[i]))
   regression <- summary(glm(status ~ SNP, family = binomial(link="probit")))
   probit[i,] <- c(i,regression$coefficients[1],regression$coefficients[4])
 }
@@ -96,18 +97,10 @@ simple_df <- data.frame(simple)
 probit_df <- data.frame(probit)
 
 # Manhattan-plot - simple
-ggplot(simple_df, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue") + ylim(0,15) + geom_hline(yintercept=5, linetype=2) + xlab("SNP") + ylab("-log10(P-value)")
+ggplot(simple_df, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue") + ylim(0,15) + geom_hline(yintercept=-log10(5e-10), linetype=2) + xlab("SNP") + ylab("-log10(P-value)")
   
 # Manhattan-plot - probit
 ggplot(probit_df, aes(x=X1, y=-log10(X3))) + geom_point(color="red") + ylim(0,15) + geom_hline(yintercept=5, linetype=2) + xlab("SNP") + ylab("-log10(P-value)")
-
-```
-
-```{r}
-ggplot(simple_df, aes(x=X1, y=-log10(X3), colour="blue")) + geom_point() + ylim(0,15)
-```
-
-```{r}
 
 ```
 
