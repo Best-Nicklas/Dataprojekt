@@ -1,3 +1,1 @@
-# Dataprojekt
-
-MAMA MIA
+# Dataprojekt - simuleret genetisk data
