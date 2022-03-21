@@ -1,1 +1,1 @@
-# Dataprojekt - Redskaber til anaylse og simulering af genetisk data
+# Dataprojekt - Redskaber til analyse og simulering af genetisk data
