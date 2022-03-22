@@ -1,3 +1,14 @@
 1. Læs LTFH artikel
 2. Omskriv kode til funktioner
 3. få orden i githubben
+
+
+Spørgsmål til Emil:
+
+1. Skal vi bruge pkgdown samt devtools pakkerne når vi laver hjemmesiden? 
+Hvilke andre pakker ville være gode at benytte? 
+
+2. Skal simulering af børn have deres forældre tilfældigt samplet fra fra G1,G2?
+Er det kun casecontrol status for forældrene der skal gemmes?
+ 
+
