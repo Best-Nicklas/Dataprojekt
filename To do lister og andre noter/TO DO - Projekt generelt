@@ -1,7 +1,9 @@
 1. Opsplit kode dokument i funktioner eller sammenhængende emner. Diskuter indeling
 i gruppen. 
 
-2. Opsæt foreløbig hjemmeside til pakke. 
-
-3. Find ud af hvilke andre association studie metoder der skal inkluderes i pakken.
+2. Find ud af hvilke andre association studie metoder der skal inkluderes i pakken.
 Evt. om der skal være funktioner til at prædikere.
+
+3. Opsæt foreløbig hjemmeside til pakke. 
+
+4. Anvend dplyr/tidyverse funktioner i kode.
