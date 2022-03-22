@@ -1,0 +1,199 @@
+---
+title: "Dataprojekt v2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(profvis)
+library(bigstatsr)
+library(bigsnpr)
+library(dplyr)
+library(mfx)
+library(ggplot2)
+```
+
+```{r}
+# FBM file
+CreateFBM <- function(nrow, ncol, path){
+    return(FBM.code256(nrow = nrow, # number of rows
+                       ncol = ncol, # number of columns
+                       code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)),
+                       backingfile = path)) 
+  
+}
+
+```
+
+
+```{r}
+# Sim-code
+SimulateMAF <- function(n, low_freq = 0.01, high_freq = 0.49, seed = NULL){
+  if (!is.null(seed)) {set.seed(seed)}
+  return(runif(n,low_freq, high_freq))
+}
+
+PopulateFBM <- function(MAF, dataframe, seed = NULL) {
+  if (!is.null(seed)) {set.seed(seed)}
+  if (dim(dataframe)[2] != length(MAF)) stop("Number of columns in 
+                                              dataframe does not match 
+                                              length of MAF vector")
+  n <- dim(dataframe)[1]
+  b_size <- n/20     
+  
+  for (i in 0:((n/b_size)-1)) {  
+    b_start <- 1 + i*b_size
+    b_end <- (1+i)*b_size
+    dataframe[b_start:b_end,] <- matrix(nrow=b_size,
+                                        rbinom(n*b_size,2,MAF), 
+                                        byrow=TRUE)
+  }
+}
+
+```
+
+
+```{r}
+#simulate FAM and MAP
+
+
+Simulate_FAM_MAP <- function(dataframe, MAF, causal_SNP , h2, seed = NULL) {
+  if (!is.null(seed)) {set.seed(seed)}
+  
+  rows <- dim(dataframe)[1]
+  cols <- dim(dataframe)[2]
+  
+  if (cols != length(MAF)) stop("Number of columns in 
+                                 dataframe does not match 
+                                 length of MAF vector")
+  if (cols != length(causal_SNP)) stop("Number of columns in 
+                                        dataframe does not match 
+                                        length of causal_SNPs vector")
+  
+  c <- sum(causal_SNP == 1)
+  beta <- ifelse(causal_SNP == 1, rnorm(cols, 0, sqrt(h2/c)), 0)
+  
+  mu <- 2*MAF*causal_SNP 
+  sigma <- sqrt((2*MAF*causal_SNP)*(1-MAF*causal_SNP))
+  sigma[sigma == 0] <- 1 
+  
+  liab_g <- numeric(rows)
+  
+  b_size <- cols/20
+  for (i in 0:((cols/b_size)-1)) {  
+    b_start <- 1 + i*b_size
+    b_end <- (1+i)*b_size
+    liab_g[b_start:b_end] <- sweep(sweep(dataframe[b_start:b_end, ], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*% beta
+  }
+    
+  liab_e <- rnorm(dim(dataframe)[1], 0, sqrt(1-h2))
+  liab_full <- liab_e + liab_g
+  threshold <- qnorm(0.95, 0, 1)
+  
+  FAM <- tibble(ID = 1:rows, 
+                Full_Liability = liab_full, 
+                Genetic_Liability = liab_g, 
+                Status = ifelse(liab_full > threshold, 1, 0))
+  MAP <- tibble(SNP_ID = 1:cols, 
+                Minor_Allele_Frequency = MAF, 
+                BETA = beta, 
+                Causal = causal_SNP)
+  
+  MAP_and_FAM <- list(genotypes = dataframe, fam = FAM, map = MAP)
+  snp_save(MAP_and_FAM)
+}
+
+#Open FAM and MAP file
+OpenRds <- function(path){
+  snp_attach(path)  
+}
+
+```
+
+
+
+```{r}
+# GWAS
+# Simple linear model
+
+GWAS <- function(MAPFAM) {
+  n <- length(MAPFAM$map$SNP_ID)
+  dataframe <- MAPFAM$genotypes
+  status <- MAPFAM$fam$Status 
+  GWAS_data <- matrix(nrow=n, ncol=3)
+  
+  for (i in 1:n){
+    SNP <- (dataframe[,i]-2*MAF[i])/sqrt(2*MAF[i]*(1-MAF[i]))
+    regression <- summary(lm(status ~ SNP-1))
+    GWAS_data[i,] <- c(i,
+                       regression$coefficients[1],
+                       regression$coefficients[4])
+  }
+  
+  return(data.frame(GWAS_data)) 
+}
+
+# Manhattan-plot - simple
+Manhattan_plot <- function(x) {
+  ggplot(x, aes(x=X1, y=-log10(X3), size=-log10(X3))) 
+  + geom_point(color="blue") 
+  + ylim(0,15) 
+  + geom_hline(yintercept=-log10(5e-7), linetype=2) + xlab("SNP") 
+  + ylab("-log10(P-value)")  
+}
+
+```
+
+```{r}
+
+# WORK IN PROGRESS
+Simulate_child <- function(G1, G2, path) {
+  child <- CreateFBM(dim(G1)[1],dim(G1)[2], path)
+  cols <- dim(G1)[2]
+  b_size <- cols/40
+  for (i in 0:((cols/b_size)-1)) {  
+    b_start <- 1 + i*b_size
+    b_end <- (1+i)*b_size
+    child[b_start:b_end, ] <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 1, STATS=2, FUN = "/")
+    
+  b_size <- length(child[child == 0.5])%/%20
+  for (i in 0:((cols/b_size)-1)) {  
+    b_start <- 1 + i*b_size
+    b_end <- (1+i)*b_size
+    child[child == 0.5][b_start:b_end] <- sample(0:1, b_size , replace = TRUE)
+    if (i == ((cols/b_size)-1)) {
+      child[child == 0.5][b_end:b_end+length(child[child == 0.5])%%20]
+      <- sample(0:1, length(child[child == 0.5])%%20, replace = TRUE)
+    } 
+    child[child == 1.5][b_start:b_end] <- sample(1:2, b_size, replace = TRUE)
+  }
+}
+}
+
+
+```
+
+
+```{r}
+
+G <- CreateFBM(10000,10000, "projektdata")
+MAF <- SimulateMAF(10000)
+PopulateFBM(MAF, G)
+
+Causal_SNP <- numeric(10000)
+pos <- sample(c(1:10000),100)
+for (i in 1:100) {
+  Causal_SNP[pos[i]] <- 1
+}
+
+Simulate_FAM_MAP(G, MAF, Causal_SNP, 0.8)
+
+rdstest <- OpenRds("projektdata.rds")
+
+regression <- GWAS(rdstest)
+Manhattan_plot(regression)
+
+```
