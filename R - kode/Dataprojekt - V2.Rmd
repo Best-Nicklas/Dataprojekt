@@ -3,25 +3,20 @@ title: "Dataprojekt v2"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r}
 library(profvis)
 library(bigstatsr)
 library(bigsnpr)
 library(dplyr)
-library(mfx)
 library(ggplot2)
 ```
 
 ```{r}
 # FBM file
-CreateFBM <- function(nrow, ncol, path){
+CreateFBM <- function(nrow, ncol, path, type = NA_integer_){
     return(FBM.code256(nrow = nrow, # number of rows
                        ncol = ncol, # number of columns
-                       code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)),
+                       code = c(0L, 1L, 2L, rep(type, 256 - 3)),
                        backingfile = path)) 
   
 }
@@ -53,12 +48,19 @@ PopulateFBM <- function(MAF, dataframe, seed = NULL) {
   }
 }
 
+# Simulate causal SNPs
+
+Simulate_Causal_SNPs <- function(n, c, seed = NULL){
+  if (!is.null(seed)) {set.seed(seed)}
+  Causal_SNP <- sample(c(1:n),c)
+  return(Causal_SNP)
+}
+
 ```
 
 
 ```{r}
 #simulate FAM and MAP
-
 
 Simulate_FAM_MAP <- function(dataframe, MAF, causal_SNP , h2, seed = NULL) {
   if (!is.null(seed)) {set.seed(seed)}
@@ -69,25 +71,16 @@ Simulate_FAM_MAP <- function(dataframe, MAF, causal_SNP , h2, seed = NULL) {
   if (cols != length(MAF)) stop("Number of columns in 
                                  dataframe does not match 
                                  length of MAF vector")
-  if (cols != length(causal_SNP)) stop("Number of columns in 
-                                        dataframe does not match 
-                                        length of causal_SNPs vector")
   
-  c <- sum(causal_SNP == 1)
-  beta <- ifelse(causal_SNP == 1, rnorm(cols, 0, sqrt(h2/c)), 0)
+  c <- length(causal_SNP)
+  beta <- numeric(cols)
+  beta[causal_SNP] <- rnorm(length(causal_SNP), 0, sqrt(h2/c))
   
-  mu <- 2*MAF*causal_SNP 
-  sigma <- sqrt((2*MAF*causal_SNP)*(1-MAF*causal_SNP))
-  sigma[sigma == 0] <- 1 
+  mu <- 2*MAF[causal_SNP]
+  sigma <- sqrt((2*MAF[causal_SNP])*(1-MAF[causal_SNP]))
   
   liab_g <- numeric(rows)
-  
-  b_size <- cols/20
-  for (i in 0:((cols/b_size)-1)) {  
-    b_start <- 1 + i*b_size
-    b_end <- (1+i)*b_size
-    liab_g[b_start:b_end] <- sweep(sweep(dataframe[b_start:b_end, ], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*% beta
-  }
+  liab_g <- sweep(sweep(dataframe[,causal_SNP], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*% beta[causal_SNP]
     
   liab_e <- rnorm(dim(dataframe)[1], 0, sqrt(1-h2))
   liab_full <- liab_e + liab_g
@@ -100,7 +93,7 @@ Simulate_FAM_MAP <- function(dataframe, MAF, causal_SNP , h2, seed = NULL) {
   MAP <- tibble(SNP_ID = 1:cols, 
                 Minor_Allele_Frequency = MAF, 
                 BETA = beta, 
-                Causal = causal_SNP)
+                Causal = ifelse(beta != 0, 1, 0))
   
   MAP_and_FAM <- list(genotypes = dataframe, fam = FAM, map = MAP)
   snp_save(MAP_and_FAM)
@@ -112,8 +105,6 @@ OpenRds <- function(path){
 }
 
 ```
-
-
 
 ```{r}
 # GWAS
@@ -138,62 +129,71 @@ GWAS <- function(MAPFAM) {
 
 # Manhattan-plot - simple
 Manhattan_plot <- function(x) {
-  ggplot(x, aes(x=X1, y=-log10(X3), size=-log10(X3))) 
-  + geom_point(color="blue") 
-  + ylim(0,15) 
-  + geom_hline(yintercept=-log10(5e-7), linetype=2) + xlab("SNP") 
-  + ylab("-log10(P-value)")  
+  ggplot(x, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue")+ ylim(0,15) + geom_hline(yintercept=-log10(5e-7), linetype=2) + xlab("SNP") + ylab("-log10(P-value)")  
 }
 
 ```
 
 ```{r}
+# Child simulation - WORK IN PROGRESS
 
-# WORK IN PROGRESS
 Simulate_child <- function(G1, G2, path) {
-  child <- CreateFBM(dim(G1)[1],dim(G1)[2], path)
+  child <- CreateFBM(dim(G1)[1],dim(G1)[2], path, type = NA_real_)
+  #child <- matrix(0, dim(G1)[1], dim(G1)[2])
   cols <- dim(G1)[2]
   b_size <- cols/40
   for (i in 0:((cols/b_size)-1)) {  
     b_start <- 1 + i*b_size
     b_end <- (1+i)*b_size
-    child[b_start:b_end, ] <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 1, STATS=2, FUN = "/")
-    
-  b_size <- length(child[child == 0.5])%/%20
-  for (i in 0:((cols/b_size)-1)) {  
+    child[b_start:b_end, ] <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 2, STATS=2, FUN = "/")
+  }
+  small_value <- rnorm(100000, 0, 0.01)
+  
+  sweep(child, MARGIN = 1, STATS = small_value, FUN = "+")
+  
+  b_size <- cols/20
+  for (i in 0:((cols/b_size)-1)){
     b_start <- 1 + i*b_size
     b_end <- (1+i)*b_size
-    child[child == 0.5][b_start:b_end] <- sample(0:1, b_size , replace = TRUE)
-    if (i == ((cols/b_size)-1)) {
-      child[child == 0.5][b_end:b_end+length(child[child == 0.5])%%20]
-      <- sample(0:1, length(child[child == 0.5])%%20, replace = TRUE)
-    } 
-    child[child == 1.5][b_start:b_end] <- sample(1:2, b_size, replace = TRUE)
+    round(child[,b_start:b_end])
   }
+  return(child)
 }
-}
-
 
 ```
 
 
 ```{r}
 
-G <- CreateFBM(10000,10000, "projektdata")
-MAF <- SimulateMAF(10000)
-PopulateFBM(MAF, G)
+Parent_1_fbm <- CreateFBM(100000,100000, "../Data/Parent_1")
+Parent_2_fbm <- CreateFBM(100000,100000, "../Data/Parent_2")
+MAF <- SimulateMAF(100000, seed = 666)
+PopulateFBM(MAF, Parent_1_fbm, seed = 777)
+PopulateFBM(MAF, Parent_2_fbm, seed = 888)
 
-Causal_SNP <- numeric(10000)
-pos <- sample(c(1:10000),100)
-for (i in 1:100) {
-  Causal_SNP[pos[i]] <- 1
-}
+Causal_SNPs <- Simulate_Causal_SNPs(100000, 1000, seed = 999)
+Causal_SNPs
 
-Simulate_FAM_MAP(G, MAF, Causal_SNP, 0.8)
+Simulate_FAM_MAP(Parent_1_fbm, MAF, Causal_SNPs, 0.8)
+Simulate_FAM_MAP(Parent_2_fbm, MAF, Causal_SNPs, 0.8)
 
-rdstest <- OpenRds("projektdata.rds")
+rds_Parent_1 <- OpenRds("../Data/Parent_1.rds")
+rds_Parent_2 <- OpenRds("../Data/Parent_2.rds")
 
-regression <- GWAS(rdstest)
-Manhattan_plot(regression)
+print(rds_Parent_1)
+print(rds_Parent_2)
 
+regression_1 <- GWAS(rds_Parent_1)
+regression_2 <- GWAS(rds_Parent_2)
+
+Manhattan_plot(regression_1)
+Manhattan_plot(regression_2)
+
+child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "Child_1")
+#print(child_test)
 ```
+```{r}
+test <- matrix(c(1,2,3,4), nrow=2,ncol=4, byrow = TRUE)
+test[,c(3,1)]
+```
+
