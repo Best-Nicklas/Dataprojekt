@@ -1,0 +1,241 @@
+---
+title: "Dataprojekt v2"
+output: html_document
+---
+
+```{r}
+library(profvis)
+library(bigstatsr)
+library(bigsnpr)
+library(dplyr)
+library(ggplot2)
+library(gtools)
+```
+
+```{r}
+# FBM file
+CreateFBM <- function(nrow, ncol, path, type = NA_integer_){
+    return(FBM.code256(nrow = nrow, # number of rows
+                       ncol = ncol, # number of columns
+                       code = c(0L, 1L, 2L, rep(type, 256 - 3)),
+                       backingfile = path)) 
+  
+}
+
+```
+
+
+```{r}
+# Sim-code
+SimulateMAF <- function(n, low_freq = 0.01, high_freq = 0.49, seed = NULL){
+  if (!is.null(seed)) {set.seed(seed)}
+  return(runif(n,low_freq, high_freq))
+}
+
+PopulateFBM <- function(MAF, dataframe, seed = NULL) {
+  if (!is.null(seed)) {set.seed(seed)}
+  if (dim(dataframe)[2] != length(MAF)) stop("Number of columns in 
+                                              dataframe does not match 
+                                              length of MAF vector")
+  n <- dim(dataframe)[1]
+  b_size <- n/20     
+  
+  for (i in 0:((n/b_size)-1)) {  
+    b_start <- 1 + i*b_size
+    b_end <- (1+i)*b_size
+    dataframe[b_start:b_end,] <- matrix(nrow=b_size,
+                                        rbinom(n*b_size,2,MAF), 
+                                        byrow=TRUE)
+  }
+}
+
+# Simulate causal SNPs
+
+Simulate_Causal_SNPs <- function(n, c, seed = NULL){
+  if (!is.null(seed)) {set.seed(seed)}
+  Causal_SNP <- sample(c(1:n),c)
+  return(Causal_SNP)
+}
+
+```
+
+
+```{r}
+#simulate FAM and MAP
+
+Simulate_FAM_MAP <- function(dataframe, MAF, causal_SNP , h2, seed = NULL) {
+  if (!is.null(seed)) {set.seed(seed)}
+  
+  rows <- dim(dataframe)[1]
+  cols <- dim(dataframe)[2]
+  
+  if (cols != length(MAF)) stop("Number of columns in 
+                                 dataframe does not match 
+                                 length of MAF vector")
+  
+  c <- length(causal_SNP)
+  beta <- numeric(cols)
+  beta[causal_SNP] <- rnorm(length(causal_SNP), 0, sqrt(h2/c))
+  
+  mu <- 2*MAF[causal_SNP]
+  sigma <- sqrt((2*MAF[causal_SNP])*(1-MAF[causal_SNP]))
+  
+  liab_g <- numeric(rows)
+  liab_g <- sweep(sweep(dataframe[,causal_SNP], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*%    
+  beta[causal_SNP]
+  
+  liab_e <- rnorm(dim(dataframe)[1], 0, sqrt(1-h2))
+  liab_full <- liab_e + liab_g
+  threshold <- qnorm(0.95, 0, 1)
+  
+  FAM <- tibble(ID = 1:rows, 
+                Full_Liability = liab_full, 
+                Genetic_Liability = liab_g, 
+                Status = ifelse(liab_full > threshold, 1, 0))
+  MAP <- tibble(SNP_ID = 1:cols, 
+                Minor_Allele_Frequency = MAF, 
+                BETA = beta, 
+                Causal = ifelse(beta != 0, 1, 0))
+  
+  MAP_and_FAM <- list(genotypes = dataframe, fam = FAM, map = MAP)
+  snp_save(MAP_and_FAM)
+}
+
+#Open FAM and MAP file
+OpenRds <- function(path){
+  snp_attach(path)  
+}
+
+```
+
+```{r}
+# GWAS
+# Simple linear model
+GWAS <- function(MAPFAM) {
+  n <- length(MAPFAM$map$SNP_ID)
+  dataframe <- MAPFAM$genotypes
+  status <- MAPFAM$fam$Status 
+  GWAS_data <- matrix(nrow=n, ncol=3)
+  
+  for (i in 1:n){
+    SNP <- (dataframe[,i]-2*MAF[i])/sqrt(2*MAF[i]*(1-MAF[i]))
+    regression <- summary(lm(status ~ SNP-1))
+    GWAS_data[i,] <- c(i,
+                       regression$coefficients[1],
+                       regression$coefficients[4])
+  }
+  
+  return(data.frame(GWAS_data)) 
+}
+
+# Manhattan-plot - simple
+Manhattan_plot <- function(x) {
+  ggplot(x, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue")+ ylim(0,15) + geom_hline(yintercept=-log10(5e-7), linetype=2) + xlab("SNP") + ylab("-log10(P-value)")  
+}
+
+```
+
+```{r}
+# Child simulation - WORK IN PROGRESS
+Simulate_child <- function(G1, G2, path) {
+  child <- CreateFBM(dim(G1)[1],dim(G1)[2], path, type = NA_real_)
+  cols <- dim(G1)[2]
+  b_size <- cols/40
+  for (i in 0:((cols/b_size)-1)) {  
+    b_start <- 1 + i*b_size
+    b_end <- (1+i)*b_size
+    temp <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 2, STATS=2, FUN = "/")
+    temp[temp == 0.5] <- sample(0:1,length(temp[temp == 0.5]), replace = TRUE)
+    temp[temp == 1.5] <- sample(0:1,length(temp[temp == 1.5]), replace = TRUE)
+    child[b_start:b_end, ] <- temp
+  }
+  return(child)
+}
+```
+
+
+```{r}
+n <- 1000
+
+Parent_1_fbm <- CreateFBM(n,n, "../Data/Parent_1_test1")
+Parent_2_fbm <- CreateFBM(n,n, "../Data/Parent_2_test1")
+MAF <- SimulateMAF(n, seed = 666)
+PopulateFBM(MAF, Parent_1_fbm, seed = 777)
+PopulateFBM(MAF, Parent_2_fbm, seed = 888)
+
+Causal_SNPs <- Simulate_Causal_SNPs(n, n/50, seed = 999)
+Causal_SNPs
+
+Simulate_FAM_MAP(Parent_1_fbm, MAF, Causal_SNPs, 0.8)
+Simulate_FAM_MAP(Parent_2_fbm, MAF, Causal_SNPs, 0.8)
+
+rds_Parent_1 <- OpenRds("../Data/Parent_1_test1.rds")
+rds_Parent_2 <- OpenRds("../Data/Parent_2_test1.rds")
+
+print(rds_Parent_1)
+print(rds_Parent_2)
+
+child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "../Data/Child_1_test")
+Simulate_FAM_MAP(child_test, MAF, Causal_SNPs, 0.8)
+child_test <- OpenRds("../Data/Child_1_test.rds")
+print(child_test)
+
+#regression_1 <- GWAS(rds_Parent_1)
+#regression_2 <- GWAS(rds_Parent_2)
+
+#Manhattan_plot(regression_1)
+#Manhattan_plot(regression_2)
+
+```
+```{r}
+# Make a covariance helper function 
+covariance_matix <- matrix(c(1, 0.5, 0.5, 0.5, 0.5, 1, 0, 0.5, 0.5, 0, 1, 0.5, 0.5, 0.5, 0.5, 1), nrow = 4, byrow = TRUE)
+covariance_matix 
+
+condition <- function(covariance_matix, vector_a, person_index) {
+  s11 <- covariance_matix[person_index, person_index]
+  s12 <- matrix(covariance_matix[person_index, -c(person_index)], nrow = 1)
+  s21 <- matrix(covariance_matix[-c(person_index), person_index], ncol = 1)
+  s22 <- covariance_matix[-c(person_index), -c(person_index)]
+  s22_inv <- solve(s22)
+  
+  c_mu <- s12 %*% s22_inv %*% vector_a[-person_index]
+  c_covariance_matix <- s11 - s12 %*% s22_inv %*% s21
+  
+  return(c(c_mu, c_covariance_matix))
+}
+
+
+
+covmatrix <- function(h2, sib = 0) {
+     cov_mat <- matrix(c(h2, h2, rep(0.5 * h2, sib + 2),
+                h2, 1, rep(0.5 * h2, sib + 2),
+                0.5 * h2, 0.5 * h2, 1, 0, rep(0.5 * h2, sib),
+                0.5 * h2, 0.5 * h2, 0, 1, rep(0.5 * h2, sib)),
+                nrow = 4, ncol = 4 + sib, byrow = T)
+  
+  return(cov_mat)
+}
+
+
+c1 <- covmatrix(0.8, 0)
+
+```
+
+
+```{r}
+# Gibbs sampling 
+# Make l
+l = list(lo = child_test$fam[4], lp1 = rds_Parent_1$fam[4], lp2 = rds_Parent_2$fam[4])
+l
+
+configrations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
+configrations[-c(3,7),]
+
+```
+
+```{r}
+conf <- 
+conf_list <- strsplit(conf, "")
+```
+
