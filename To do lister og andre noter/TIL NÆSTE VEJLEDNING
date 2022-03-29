@@ -4,6 +4,13 @@
 
 Spørgsmål til Emil:
 
+Kritisk værdi, til den truncated normal fordeling? 
 
+Er det rigtig forstået, at vi kun for 1 værdier for configiration (6 i alt), som vi bruger til GWAS i stedet for status (1,0)
+
+Har vi lavet Covariancematricen?? 
  
+Hvordan regner vi new_mu i vores conditional_calculater? Kan du gennemgå det med os? 
+
+Vi har problemer med at nå i mål, med gibbs samplingen
 
