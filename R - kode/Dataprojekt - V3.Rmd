@@ -189,17 +189,19 @@ print(child_test)
 
 
 ```{r}
-Conditional_calculater <- function(liab, i, covmatrix) {
-  s11 <- covmatix[i, i]
-  s12 <- matrix(covmatix[i, -c(i)], nrow = 1)
-  s21 <- matrix(covmatix[-c(i), i], ncol = 1)
-  s22 <- covmatix[-c(i), -c(i)]
+Cond_calc <- function(liab, i, covmatrix) {
+  s11 <- covmatrix[i, i]
+  s12 <- covmatrix[i, -i]
+  s21 <- covmatrix[-i, i]
+  s22 <- covmatrix[-i, -i]
 
-  new_mu <- s12 %% solve(s22) %% liab[-i]   # Vi mener du sagde noget om, at vi kunne fjerne mu1 og mu2, men vi er ikke sikre
-  new_sigma <- s11 - s12 %% solve(s22) %% s21
+  new_mu <- s12 %*% solve(s22) %*% liab[-i]  
+  new_sigma <- s11 - (s12 %*% solve(s22) %*% s21)
+  # Vi mener du sagde noget om, at vi kunne fjerne mu1 og mu2, men vi er ikke sikre
 
   return(c(new_mu, new_sigma))
 }
+
 ```
 
 
@@ -234,7 +236,7 @@ for (i in 1:6) {
     
     # iteration for hver parameter
     for (p in 1:length(l_all)) {
-      temp <- Conditional_calculater(l_all, p, cov_mat)
+      temp <- Cond_calc(l_all, p, cov_mat)
       mean <- temp[1]
       sigma <- temp[2]
       
