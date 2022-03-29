@@ -189,7 +189,6 @@ print(child_test)
 
 
 ```{r}
-
 Conditional_calculater <- function(liab, i, covmatrix) {
   s11 <- covmatix[i, i]
   s12 <- matrix(covmatix[i, -c(i)], nrow = 1)
@@ -200,7 +199,7 @@ Conditional_calculater <- function(liab, i, covmatrix) {
   new_sigma <- s11 - s12 %% solve(s22) %% s21
 
   return(c(new_mu, new_sigma))
-
+}
 ```
 
 
