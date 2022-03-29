@@ -185,26 +185,25 @@ print(child_test)
 
 #Manhattan_plot(regression_1)
 #Manhattan_plot(regression_2)
-
 ```
 ```{r}
 # Make a covariance helper function 
-covariance_matix <- matrix(c(1, 0.5, 0.5, 0.5, 0.5, 1, 0, 0.5, 0.5, 0, 1, 0.5, 0.5, 0.5, 0.5, 1), nrow = 4, byrow = TRUE)
-covariance_matix 
+# Conditional calculater 
+# Covmatrix, is a covariance matrix, that tells us information about the genetic heritage  
+# a, is a vector of liabilities
+# i, is the index of the person, we are looking at
 
-condition <- function(covariance_matix, vector_a, person_index) {
-  s11 <- covariance_matix[person_index, person_index]
-  s12 <- matrix(covariance_matix[person_index, -c(person_index)], nrow = 1)
-  s21 <- matrix(covariance_matix[-c(person_index), person_index], ncol = 1)
-  s22 <- covariance_matix[-c(person_index), -c(person_index)]
-  s22_inv <- solve(s22)
+Conditional_calculater <- function(covmatrix, a, i) {
+  s11 <- covmatix[i, i]
+  s21 <- matrix(covmatix[-c(i), i], ncol = 1)
+  s12 <- matrix(covmatix[i, -c(i)], nrow = 1)
+  s22 <- covmatix[-c(i), -c(i)]
   
-  c_mu <- s12 %*% s22_inv %*% vector_a[-person_index]
-  c_covariance_matix <- s11 - s12 %*% s22_inv %*% s21
+  new_mu <- s12 %*% solve(s22) %*% a[-i]
+  new_sigma <- s11 - s12 %*% solve(s22) %*% s21
   
-  return(c(c_mu, c_covariance_matix))
+  return(c(new_mu, new_sigma))
 }
-
 
 
 covmatrix <- function(h2, sib = 0) {
@@ -224,14 +223,12 @@ c1 <- covmatrix(0.8, 0)
 
 
 ```{r}
-# Gibbs sampling 
-# Make l
 l = list(lo = child_test$fam[4], lp1 = rds_Parent_1$fam[4], lp2 = rds_Parent_2$fam[4])
 l
 
 configrations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
-configrations[-c(3,7),]
-
+conf_list <- configrations[-c(3,7),]
+conf_list
 ```
 
 ```{r}
