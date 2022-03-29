@@ -187,6 +187,8 @@ print(child_test)
 #Manhattan_plot(regression_2)
 ```
 ```{r}
+<<<<<<< HEAD
+=======
 # Make a covariance helper function 
 # Conditional calculater 
 # Covmatrix, is a covariance matrix, that tells us information about the genetic heritage  
@@ -204,8 +206,20 @@ Conditional_calculater <- function(covmatrix, a, i) {
   
   return(c(new_mu, new_sigma))
 }
+>>>>>>> 0b21bd77ba427cb59aafaab3595de72e1efb1710
 
+Conditional_calculater <- function(liab, i, covmatrix) {
+  s11 <- covmatix[i, i]
+  s12 <- matrix(covmatix[i, -c(i)], nrow = 1)
+  s21 <- matrix(covmatix[-c(i), i], ncol = 1)
+  s22 <- covmatix[-c(i), -c(i)]
 
+<<<<<<< HEAD
+  new_mu <- s12 %% solve(s22) %% liab[-i]   # Vi mener du sagde noget om, at vi kunne fjerne mu1 og mu2, men vi er ikke sikre
+  new_sigma <- s11 - s12 %% solve(s22) %% s21
+
+  return(c(new_mu, new_sigma))
+=======
 covmatrix <- function(h2, sib = 0) {
      cov_mat <- matrix(c(h2, h2, rep(0.5 * h2, sib + 2),
                 h2, 1, rep(0.5 * h2, sib + 2),
@@ -214,25 +228,64 @@ covmatrix <- function(h2, sib = 0) {
                 nrow = 4, ncol = 4 + sib, byrow = T)
   
   return(cov_mat)
+>>>>>>> 0b21bd77ba427cb59aafaab3595de72e1efb1710
 }
 
-
-c1 <- covmatrix(0.8, 0)
-
 ```
+
 
 
 ```{r}
 l = list(lo = child_test$fam[4], lp1 = rds_Parent_1$fam[4], lp2 = rds_Parent_2$fam[4])
-l
 
+<<<<<<< HEAD
+configurations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
+configurations[-c(3,7),]
+conv <- 100
+alpha <- 0.05
+h2 <- 0.8
+cov_mat <- matrix(c(h2,        h2,  0.5 * h2, 0.5 * h2,
+                    h2,         1,  0.5 * h2, 0.5 * h2,
+              0.5 * h2,  0.5 * h2,         1,        0,
+              0.5 * h2,  0.5 * h2,         0,        1),
+                         nrow = 4, ncol = 4, byrow = T)
+
+
+mean_liabs <- numeric(6)
+# Gibbs sampling for hver konfig
+for (i in 1:6) {
+  config <- configurations[i,]
+  l_all <- c(rnorm(4,0,1))  #initialize l 
+  
+  mean <- NA
+  sigma <- NA 
+  
+  # conv - antal kørsler indtil konvergens 
+  for (j in 1:conv) {
+    
+    # iteration for hver parameter
+    for (p in 1:length(l_all)) {
+      temp <- Conditional_calculater(l_all, p, cov_mat)
+      mean <- temp[1]
+      sigma <- temp[2]
+      
+      if (config[] == 0) {
+        l_all[p] <- rnorm(mean, sqrt(sigma))  
+      }
+      
+      else {
+        crit_value <-  pnorm(qnorm(1-alpha, mean, sqrt(sigma)), mean, sqrt(sigma)) 
+        
+      }
+    }
+  }
+}
+
+=======
 configrations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
 conf_list <- configrations[-c(3,7),]
 conf_list
+>>>>>>> 0b21bd77ba427cb59aafaab3595de72e1efb1710
 ```
 
-```{r}
-conf <- 
-conf_list <- strsplit(conf, "")
-```
 
