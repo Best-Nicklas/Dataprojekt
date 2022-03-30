@@ -187,17 +187,22 @@ print(child_test)
 #Manhattan_plot(regression_2)
 ```
 
+```{r}
+#måske nyttig funktion
+#k <- matrix(NA,4,4)
+#k<- replicate(4,rnorm(4,0,1))
+```
+
 
 ```{r}
-Cond_calc <- function(liab, i, covmatrix) {
+cond_calc <- function(i, covmatrix) {
   s11 <- covmatrix[i, i]
   s12 <- covmatrix[i, -i]
   s21 <- covmatrix[-i, i]
   s22 <- covmatrix[-i, -i]
 
-  new_mu <- s12 %*% solve(s22) %*% liab[-i]  
+  new_mu <- s12 %*% solve(s22) 
   new_sigma <- s11 - (s12 %*% solve(s22) %*% s21)
-  # Vi mener du sagde noget om, at vi kunne fjerne mu1 og mu2, men vi er ikke sikre
 
   return(c(new_mu, new_sigma))
 }
@@ -205,53 +210,58 @@ Cond_calc <- function(liab, i, covmatrix) {
 ```
 
 
+```{r}
+#l = list(lo = child_test$fam[4], lp1 = rds_Parent_1$fam[4], lp2 = #rds_Parent_2$fam[4])
+
+
+#configurations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
+#configurations[-c(3,7),]
+#alpha <- 0.05
+
+gibbs_sampler <- function(n, cov_mat) {
+  l_n <- dim(cov_mat)[1]
+  
+  liabs <- matrix(ncol = l_n, nrow = n) 
+  liabs[1, ] <- rep(10,l_n) #initializing l's
+  
+  #pre-calculations
+  means <- matrix(ncol = l_n - 1, nrow = l_n)
+  sigmas <- vector()
+  for (p in 1:l_n) {
+   temp <- cond_calc(p, cov_mat) 
+   means[p, ] <- temp[1:(l_n - 1)]
+   sigmas[p] <- temp[4]
+  }
+
+  # iterationers
+  for (i in 2:n) {
+    # iterations for each parameter
+    for (p in 1:l_n) {
+        new_mean <- means[p, ] %*% liabs[i-1, -p]
+        liabs[i, p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
+      
+    }
+  }
+  return(liabs)
+}
+
+
+```
 
 ```{r}
-l = list(lo = child_test$fam[4], lp1 = rds_Parent_1$fam[4], lp2 = rds_Parent_2$fam[4])
 
-
-configurations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
-configurations[-c(3,7),]
-conv <- 100
-alpha <- 0.05
 h2 <- 0.8
+n <- 1000
 cov_mat <- matrix(c(h2,        h2,  0.5 * h2, 0.5 * h2,
                     h2,         1,  0.5 * h2, 0.5 * h2,
               0.5 * h2,  0.5 * h2,         1,        0,
               0.5 * h2,  0.5 * h2,         0,        1),
                          nrow = 4, ncol = 4, byrow = T)
 
+data <- gibbs_sampler(n, cov_mat)
 
-mean_liabs <- numeric(6)
-# Gibbs sampling for hver konfig
-for (i in 1:6) {
-  config <- configurations[i,]
-  l_all <- c(rnorm(4,0,1))  #initialize l 
-  
-  mean <- NA
-  sigma <- NA 
-  
-  # conv - antal kørsler indtil konvergens 
-  for (j in 1:conv) {
-    
-    # iteration for hver parameter
-    for (p in 1:length(l_all)) {
-      temp <- Cond_calc(l_all, p, cov_mat)
-      mean <- temp[1]
-      sigma <- temp[2]
-      
-      if (config[] == 0) {
-        l_all[p] <- rnorm(mean, sqrt(sigma))  
-      }
-      
-      else {
-        crit_value <-  pnorm(qnorm(1-alpha, mean, sqrt(sigma)), mean, sqrt(sigma)) 
-        
-      }
-    }
-  }
-}
+plot(1:n, data[,1])
+cov(data[100:1000,])
+cov_mat
 
 ```
-
-
