@@ -6,11 +6,22 @@ Spørgsmål til Emil:
 
 Kritisk værdi, til den truncated normal fordeling? 
 
-Er det rigtig forstået, at vi kun for 1 værdier for configiration (6 i alt), som vi bruger til GWAS i stedet for status (1,0)
+Er det rigtig forstået, at vi kun for 1 værdier for configiration (6 i alt), som vi bruger til GWAS i stedet for status (1,0)! 
+#Check - Det er rigtigt
 
 Har vi lavet Covariancematricen?? 
  
 Hvordan regner vi new_mu i vores conditional_calculater? Kan du gennemgå det med os? 
+#Check - vi har lavet det rigtig 
 
 Vi har problemer med at nå i mål, med gibbs samplingen
 
+
+# Regn mu og sigma en gang 
+# Lav upper og lower bound (truncated normal distribution (Her er 1-alpha)) - Skal laves for hver lower og upper bound indgang. 
+
+# Lav en multidiminsional fordeling der virker. Tjek det ved at se om covariance matrixen er korrekt, og om vores værdier convegere mod vores start mu og sigma. (Her kan man bruge colmeans for at på data trukket efter convegering) Brug cov på 
+
+#Svar Convenes check og lav Tinning, hvis der er meget afhængighed 
+
+# roxygen2. - R pakke til at lave vores egen pakke. 
