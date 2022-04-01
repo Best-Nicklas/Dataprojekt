@@ -1,6 +1,5 @@
-<<<<<<< HEAD:R - kode/Dataprojekt-V3.Rmd
 ---
-title: "Dataprojekt v2"
+title: "Dataprojekt v3"
 output: html_document
 ---
 
@@ -223,7 +222,7 @@ gibbs_sampler <- function(n, cov_mat) {
   l_n <- dim(cov_mat)[1]
   
   liabs <- matrix(ncol = l_n, nrow = n) 
-  liabs[1, ] <- rep(10,l_n) #initializing l's
+  liabs_current <- rep(10,l_n) #initializing l's
   
   #pre-calculations
   means <- matrix(ncol = l_n - 1, nrow = l_n)
@@ -231,17 +230,18 @@ gibbs_sampler <- function(n, cov_mat) {
   for (p in 1:l_n) {
    temp <- cond_calc(p, cov_mat) 
    means[p, ] <- temp[1:(l_n - 1)]
-   sigmas[p] <- temp[4]
+   sigmas[p] <- temp[l_n]
   }
 
-  # iterationers
-  for (i in 2:n) {
+  # iterations
+  for (i in 1:n) {
     # iterations for each parameter
     for (p in 1:l_n) {
-        new_mean <- means[p, ] %*% liabs[i-1, -p]
-        liabs[i, p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
-      
+        new_mean <- means[p, ] %*% liabs_current[-p]
+        liabs_current[p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
     }
+    #Saves current liablities
+    liabs[i, ] <- liabs_current 
   }
   return(liabs)
 }
@@ -252,7 +252,7 @@ gibbs_sampler <- function(n, cov_mat) {
 ```{r}
 
 h2 <- 0.8
-n <- 1000
+n <- 10000
 cov_mat <- matrix(c(h2,        h2,  0.5 * h2, 0.5 * h2,
                     h2,         1,  0.5 * h2, 0.5 * h2,
               0.5 * h2,  0.5 * h2,         1,        0,
@@ -261,277 +261,10 @@ cov_mat <- matrix(c(h2,        h2,  0.5 * h2, 0.5 * h2,
 
 data <- gibbs_sampler(n, cov_mat)
 
+colMeans(data[500:10000,])
 plot(1:n, data[,1])
-cov(data[100:1000,])
+cov(data[500:10000,])
 cov_mat
 
 ```
-=======
----
-title: "Dataprojekt v2"
-output: html_document
----
 
-```{r}
-library(profvis)
-library(bigstatsr)
-library(bigsnpr)
-library(dplyr)
-library(ggplot2)
-library(gtools)
-```
-
-```{r}
-# FBM file
-CreateFBM <- function(nrow, ncol, path, type = NA_integer_){
-    return(FBM.code256(nrow = nrow, # number of rows
-                       ncol = ncol, # number of columns
-                       code = c(0L, 1L, 2L, rep(type, 256 - 3)),
-                       backingfile = path)) 
-  
-}
-
-```
-
-
-```{r}
-# Sim-code
-SimulateMAF <- function(n, low_freq = 0.01, high_freq = 0.49, seed = NULL){
-  if (!is.null(seed)) {set.seed(seed)}
-  return(runif(n,low_freq, high_freq))
-}
-
-PopulateFBM <- function(MAF, dataframe, seed = NULL) {
-  if (!is.null(seed)) {set.seed(seed)}
-  if (dim(dataframe)[2] != length(MAF)) stop("Number of columns in 
-                                              dataframe does not match 
-                                              length of MAF vector")
-  n <- dim(dataframe)[1]
-  b_size <- n/20     
-  
-  for (i in 0:((n/b_size)-1)) {  
-    b_start <- 1 + i*b_size
-    b_end <- (1+i)*b_size
-    dataframe[b_start:b_end,] <- matrix(nrow=b_size,
-                                        rbinom(n*b_size,2,MAF), 
-                                        byrow=TRUE)
-  }
-}
-
-# Simulate causal SNPs
-
-Simulate_Causal_SNPs <- function(n, c, seed = NULL){
-  if (!is.null(seed)) {set.seed(seed)}
-  Causal_SNP <- sample(c(1:n),c)
-  return(Causal_SNP)
-}
-
-```
-
-
-```{r}
-#simulate FAM and MAP
-
-Simulate_FAM_MAP <- function(dataframe, MAF, causal_SNP , h2, seed = NULL) {
-  if (!is.null(seed)) {set.seed(seed)}
-  
-  rows <- dim(dataframe)[1]
-  cols <- dim(dataframe)[2]
-  
-  if (cols != length(MAF)) stop("Number of columns in 
-                                 dataframe does not match 
-                                 length of MAF vector")
-  
-  c <- length(causal_SNP)
-  beta <- numeric(cols)
-  beta[causal_SNP] <- rnorm(length(causal_SNP), 0, sqrt(h2/c))
-  
-  mu <- 2*MAF[causal_SNP]
-  sigma <- sqrt((2*MAF[causal_SNP])*(1-MAF[causal_SNP]))
-  
-  liab_g <- numeric(rows)
-  liab_g <- sweep(sweep(dataframe[,causal_SNP], MARGIN = 2, STATS = mu, FUN = "-"), MARGIN = 2, STATS = sigma, FUN = "/") %*%    
-  beta[causal_SNP]
-  
-  liab_e <- rnorm(dim(dataframe)[1], 0, sqrt(1-h2))
-  liab_full <- liab_e + liab_g
-  threshold <- qnorm(0.95, 0, 1)
-  
-  FAM <- tibble(ID = 1:rows, 
-                Full_Liability = liab_full, 
-                Genetic_Liability = liab_g, 
-                Status = ifelse(liab_full > threshold, 1, 0))
-  MAP <- tibble(SNP_ID = 1:cols, 
-                Minor_Allele_Frequency = MAF, 
-                BETA = beta, 
-                Causal = ifelse(beta != 0, 1, 0))
-  
-  MAP_and_FAM <- list(genotypes = dataframe, fam = FAM, map = MAP)
-  snp_save(MAP_and_FAM)
-}
-
-#Open FAM and MAP file
-OpenRds <- function(path){
-  snp_attach(path)  
-}
-
-```
-
-```{r}
-# GWAS
-# Simple linear model
-GWAS <- function(MAPFAM) {
-  n <- length(MAPFAM$map$SNP_ID)
-  dataframe <- MAPFAM$genotypes
-  status <- MAPFAM$fam$Status 
-  GWAS_data <- matrix(nrow=n, ncol=3)
-  
-  for (i in 1:n){
-    SNP <- (dataframe[,i]-2*MAF[i])/sqrt(2*MAF[i]*(1-MAF[i]))
-    regression <- summary(lm(status ~ SNP-1))
-    GWAS_data[i,] <- c(i,
-                       regression$coefficients[1],
-                       regression$coefficients[4])
-  }
-  
-  return(data.frame(GWAS_data)) 
-}
-
-# Manhattan-plot - simple
-Manhattan_plot <- function(x) {
-  ggplot(x, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue")+ ylim(0,15) + geom_hline(yintercept=-log10(5e-7), linetype=2) + xlab("SNP") + ylab("-log10(P-value)")  
-}
-
-```
-
-```{r}
-# Child simulation - WORK IN PROGRESS
-Simulate_child <- function(G1, G2, path) {
-  child <- CreateFBM(dim(G1)[1],dim(G1)[2], path, type = NA_real_)
-  cols <- dim(G1)[2]
-  b_size <- cols/40
-  for (i in 0:((cols/b_size)-1)) {  
-    b_start <- 1 + i*b_size
-    b_end <- (1+i)*b_size
-    temp <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 2, STATS=2, FUN = "/")
-    temp[temp == 0.5] <- sample(0:1,length(temp[temp == 0.5]), replace = TRUE)
-    temp[temp == 1.5] <- sample(0:1,length(temp[temp == 1.5]), replace = TRUE)
-    child[b_start:b_end, ] <- temp
-  }
-  return(child)
-}
-```
-
-
-```{r}
-n <- 1000
-
-Parent_1_fbm <- CreateFBM(n,n, "../Data/Parent_1_test1")
-Parent_2_fbm <- CreateFBM(n,n, "../Data/Parent_2_test1")
-MAF <- SimulateMAF(n, seed = 666)
-PopulateFBM(MAF, Parent_1_fbm, seed = 777)
-PopulateFBM(MAF, Parent_2_fbm, seed = 888)
-
-Causal_SNPs <- Simulate_Causal_SNPs(n, n/50, seed = 999)
-Causal_SNPs
-
-Simulate_FAM_MAP(Parent_1_fbm, MAF, Causal_SNPs, 0.8)
-Simulate_FAM_MAP(Parent_2_fbm, MAF, Causal_SNPs, 0.8)
-
-rds_Parent_1 <- OpenRds("../Data/Parent_1_test1.rds")
-rds_Parent_2 <- OpenRds("../Data/Parent_2_test1.rds")
-
-print(rds_Parent_1)
-print(rds_Parent_2)
-
-child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "../Data/Child_1_test")
-Simulate_FAM_MAP(child_test, MAF, Causal_SNPs, 0.8)
-child_test <- OpenRds("../Data/Child_1_test.rds")
-print(child_test)
-
-#regression_1 <- GWAS(rds_Parent_1)
-#regression_2 <- GWAS(rds_Parent_2)
-
-#Manhattan_plot(regression_1)
-#Manhattan_plot(regression_2)
-```
-
-```{r}
-#måske nyttig funktion
-#k <- matrix(NA,4,4)
-#k<- replicate(4,rnorm(4,0,1))
-```
-
-
-```{r}
-cond_calc <- function(i, covmatrix) {
-  s11 <- covmatrix[i, i]
-  s12 <- covmatrix[i, -i]
-  s21 <- covmatrix[-i, i]
-  s22 <- covmatrix[-i, -i]
-
-  new_mu <- s12 %*% solve(s22) 
-  new_sigma <- s11 - (s12 %*% solve(s22) %*% s21)
-
-  return(c(new_mu, new_sigma))
-}
-
-```
-
-
-```{r}
-#l = list(lo = child_test$fam[4], lp1 = rds_Parent_1$fam[4], lp2 = #rds_Parent_2$fam[4])
-
-
-#configurations <- permutations(2,3,c(0,1), repeats.allowed = TRUE) 
-#configurations[-c(3,7),]
-#alpha <- 0.05
-
-gibbs_sampler <- function(n, cov_mat) {
-  l_n <- dim(cov_mat)[1]
-  
-  liabs <- matrix(ncol = l_n, nrow = n) 
-  liabs[1, ] <- rep(10,l_n) #initializing l's
-  
-  #pre-calculations
-  means <- matrix(ncol = l_n - 1, nrow = l_n)
-  sigmas <- vector()
-  for (p in 1:l_n) {
-   temp <- cond_calc(p, cov_mat) 
-   means[p, ] <- temp[1:(l_n - 1)]
-   sigmas[p] <- temp[4]
-  }
-
-  # iterationers
-  for (i in 2:n) {
-    # iterations for each parameter
-    for (p in 1:l_n) {
-        new_mean <- means[p, ] %*% liabs[i-1, -p]
-        liabs[i, p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
-      
-    }
-  }
-  return(liabs)
-}
-
-
-```
-
-```{r}
-
-h2 <- 0.8
-n <- 1000
-cov_mat <- matrix(c(h2,        h2,  0.5 * h2, 0.5 * h2,
-                    h2,         1,  0.5 * h2, 0.5 * h2,
-              0.5 * h2,  0.5 * h2,         1,        0,
-              0.5 * h2,  0.5 * h2,         0,        1),
-                         nrow = 4, ncol = 4, byrow = T)
-
-data <- gibbs_sampler(n, cov_mat)
-
-plot(1:n, data[,1])
-cov(data[100:1000,])
-cov_mat
-
-```
->>>>>>> fed8d2f052b1cc94bc34da3f5939cee4e70c3146:R - kode/Dataprojekt - V3.Rmd
