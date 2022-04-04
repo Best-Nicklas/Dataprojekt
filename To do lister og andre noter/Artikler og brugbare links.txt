@@ -6,3 +6,6 @@ https://en.wikipedia.org/wiki/Genome-wide_association_study
 
 pakke til at lave pakker - 
 https://pkgdown.r-lib.org/reference/index.html
+
+Forklaring til hvordan man trækker fra trunkeret normalfordeling - 
+https://www.r-bloggers.com/2020/08/generating-data-from-a-truncated-distribution/
