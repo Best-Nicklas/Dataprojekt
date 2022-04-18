@@ -157,8 +157,8 @@ Simulate_child <- function(G1, G2, path) {
 ```{r}
 n <- 1000
 
-Parent_1_fbm <- CreateFBM(n,n, "../Data/Parent_1_test2")
-Parent_2_fbm <- CreateFBM(n,n, "../Data/Parent_2_test2")
+Parent_1_fbm <- CreateFBM(n,n, "../Data/Parent_1_test3")
+Parent_2_fbm <- CreateFBM(n,n, "../Data/Parent_2_test3")
 MAF <- SimulateMAF(n, seed = 666)
 PopulateFBM(MAF, Parent_1_fbm, seed = 777)
 PopulateFBM(MAF, Parent_2_fbm, seed = 888)
@@ -169,15 +169,15 @@ Causal_SNPs
 Simulate_FAM_MAP(Parent_1_fbm, MAF, Causal_SNPs, 0.8)
 Simulate_FAM_MAP(Parent_2_fbm, MAF, Causal_SNPs, 0.8)
 
-rds_Parent_1 <- OpenRds("../Data/Parent_1_test2.rds")
-rds_Parent_2 <- OpenRds("../Data/Parent_2_test2.rds")
+rds_Parent_1 <- OpenRds("../Data/Parent_1_test3.rds")
+rds_Parent_2 <- OpenRds("../Data/Parent_2_test3.rds")
 
 print(rds_Parent_1)
 print(rds_Parent_2)
 
-child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "../Data/Child_2_test")
+child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "../Data/Child_3_test")
 Simulate_FAM_MAP(child_test, MAF, Causal_SNPs, 0.8)
-child_test <- OpenRds("../Data/Child_2_test.rds")
+child_test <- OpenRds("../Data/Child_3_test.rds")
 print(child_test)
 
 #regression_1 <- GWAS(rds_Parent_1)
@@ -307,6 +307,10 @@ LTFH <- function(child, parent1, parent2) {
 
 ```{r}
 G <- LTFH(child_test, rds_Parent_1, rds_Parent_2)
+G
+child_test$fam$Genetic_Liability
+plot(child_test$fam$Genetic_Liability, G) 
+abline(b=1, a=0)
 ```
 
 ```{r}
@@ -333,6 +337,11 @@ Manhattan_plot <- function(x) {
 }
 
 ```
+
+```{r}
+
+```
+
 
 ```{r}
 Manhattan_plot(GWASTWOPOINTO(child_test,G))
