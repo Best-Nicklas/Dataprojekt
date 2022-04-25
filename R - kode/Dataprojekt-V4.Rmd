@@ -131,6 +131,12 @@ GWAS <- function(MAPFAM) {
   return(data.frame(GWAS_data)) 
 }
 
+GWAS2 <- function(MAPFAM) {
+  dataframe <- MAPFAM$genotypes
+  status <- MAPFAM$fam$Status
+  big_univLinReg(dataframe, status)
+}
+
 # Manhattan-plot - simple
 Manhattan_plot <- function(x) {
   ggplot(x, aes(x=X1, y=-log10(X3), size=-log10(X3))) + geom_point(color="blue")+ ylim(0,15) + geom_hline(yintercept=-log10(5e-7), linetype=2) + xlab("SNP") + ylab("-log10(P-value)")  
@@ -147,9 +153,9 @@ Simulate_child <- function(G1, G2, path) {
   for (i in 0:((cols/b_size)-1)) {  
     b_start <- 1 + i*b_size
     b_end <- (1+i)*b_size
-    temp <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 2, STATS=2, FUN = "/")
+    temp <- sweep((G1[b_start:b_end, ] + G2[b_start:b_end, ]), MARGIN = 2, STATS = 2, FUN = "/")
     temp[temp == 0.5] <- sample(0:1,length(temp[temp == 0.5]), replace = TRUE)
-    temp[temp == 1.5] <- sample(0:1,length(temp[temp == 1.5]), replace = TRUE)
+    temp[temp == 1.5] <- sample(1:2,length(temp[temp == 1.5]), replace = TRUE)
     child[b_start:b_end, ] <- temp
   }
   return(child)
@@ -177,8 +183,13 @@ rds_Parent_2 <- OpenRds("../Data/Parent_2_test1.rds")
 print(rds_Parent_1)
 print(rds_Parent_2)
 
-#child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "../Data/Child_3_test")
-#print(child_test[2])
+child_test <- Simulate_child(Parent_1_fbm, Parent_2_fbm, "../Data/Child_3_test")
+Simulate_FAM_MAP(child_test, MAF, Causal_SNPs, 0.8)
+rds_Child <- OpenRds("../Data/Child_3_test.rds")
+print(rds_Child)
+
+reg1 <- GWAS(rds_Child)
+reg2 <- GWAS2(rds_Child)
 
 #regression_1 <- GWAS(rds_Parent_1)
 #regression_2 <- GWAS(rds_Parent_2)
