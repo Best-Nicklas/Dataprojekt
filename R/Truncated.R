@@ -1,10 +1,10 @@
-#' Description - Helper function to calculated the interval for a truncated distribution
+#' Description - Helper function to get values from truncated normal distribution
 #' 
 #' @param n
 #' @param range
 #' @param mu
 #' @param sigma
-#' @return A interval which can be use to pull from disstribution truncated.
+#' @return Values from a normal distribution truncated in the given range.
 #' @example 
 #' 
 

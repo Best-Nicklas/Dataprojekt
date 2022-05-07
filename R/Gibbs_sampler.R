@@ -31,17 +31,17 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
     for (p in 1:l_n) {
       new_mean <- means[p, ] %*% liabs_current[-p]
       
-      #For genetic liability - ingen trunkering
+      #For genetic liability - no truncation 
       if (p == 1) {
         liabs_current[p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
       }
       
-      #For liabilties når vi Ikke har case (0)
+      #For liabilties when we have case (0)
       else if (config[p-1] == 0) {
         liabs_current[p] <- rnorm_trunc(1, c(-Inf, threshold), new_mean, sqrt(sigmas[p]))
         
       }
-      #For liability når vi har case (1)
+      #For liability when we dont have case (1)
       else {
         liabs_current[p] <- rnorm_trunc(1, c(threshold, Inf), new_mean, sqrt(sigmas[p]))
       }

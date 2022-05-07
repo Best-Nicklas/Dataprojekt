@@ -25,10 +25,16 @@ simulate_people <- function(n, disease, file_name, n_blocks = 20, seed = NULL) {
   #   file.remove(bk_file)
   # }
   
+  #Initializes empty FBM 
   FBM <- CreateFBM(rows, cols, file_name)
+  
+  #Fills empty FBM out with genotypes
   PopulateFBM(FBM, disease$MAF, seed = seed)
+  
+  #Calculates MAP and FAM info for the genotypes
   MAPFAM <- calculate_MAPFAM(FBM, disease, n_blocks, seed)
   
+  #Saves info in Rds file
   all_people <- list(genotypes = FBM, FAM = MAPFAM$FAM, MAP = MAPFAM$MAP)
   snp_save(all_people)
   

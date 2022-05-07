@@ -13,6 +13,7 @@ GWAX <- function(child) {
   child_status <- child$FAM$Status
   FBM <- child$genotypes
   
+  #Creates a vector of the proxy statuses for the child
   x <- numeric(n)
   for (i in 1:n) {
     if (child_status[i] == 1 | p1_status[i] == 1 | p2_status[i] == 1) {
@@ -23,8 +24,9 @@ GWAX <- function(child) {
     }
   }
   
+  #Uses function from bigSNPr package perform regression on the FBM
   regr <- big_univLinReg(FBM, x)
   regr$p.value <- predict(regr, log10 = FALSE)
   
-  return(data.frame(pval = regr$p.value)) 
+  return(data.frame(regr)) 
 }

@@ -4,7 +4,7 @@
 #' @param ncol 
 #' @param path 
 #' @param type 
-#' @return The File-back matrxi
+#' @return An empty filebacked matrix 
 #' @example 
 #'
 #'

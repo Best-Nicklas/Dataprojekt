@@ -10,26 +10,29 @@
 
 
 simulate_child_with_sibs <- function(p1, p2, disease, path, n_blocks = 20, seed = NULL) {
+  #Simulates children from p1 and p2
   child <- Simulate_children(p1, p2, disease, path)
+  
   rows <- nrow(child$genotypes)
   cols <- ncol(child$genotypes)
   
   threshold <- qnorm(1 - disease$PREVALENS)
   h2 <- disease$H2
   
-  
+  # Calculates the family information - liability,status, config etc.
   family_info <- tibble(id = 1:rows, 
                         
                         n_sib = 2,
                         
+                        #Creates parents according to the number of sibs to generate children and their g_liabs from
                         sibs_g_liabs = purrr::map2(id, n_sib, .f = ~ {sibs_liab_calc(.y, 
                                                                                      matrix(rep(p1$genotypes[.x, ], .y), .y, cols, byrow = T),
                                                                                      matrix(rep(p2$genotypes[.x, ], .y), .y, cols, byrow = T), disease)}),
-                        
+                        #calculates full liabilities
                         sibs_full_liabs = purrr::map(sibs_g_liabs , .f = ~ 
                                                        {if ( is.null(.x)) NULL 
                                                          else .x + rnorm(length(.x), 0, sqrt(1 - h2))}),
-                        
+                        #calculates status
                         sibs_status = purrr::map(sibs_full_liabs, .f = ~ 
                                                    {if ( is.null(.x)) NULL
                                                      else(.x > threshold) + 0}),
@@ -38,6 +41,7 @@ simulate_child_with_sibs <- function(p1, p2, disease, path, n_blocks = 20, seed 
                         
                         p2_status = p2$FAM$Status,
                         
+                        #Creates a standardized string for the family status configuration
                         config = mapply(function(s_child, s_p1,
                                                  s_p2, s_sibs)
                         {paste(toString(s_child),
