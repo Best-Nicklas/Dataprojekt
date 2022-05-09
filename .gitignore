@@ -1,3 +1,5 @@
 
 *.bk
 *.rds
+.Rproj.user
+*.Rproj

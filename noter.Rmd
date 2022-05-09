@@ -1,0 +1,18 @@
+---
+title: "noter"
+author: "Emil M. Pedersen"
+date: '2022-05-07'
+output: html_document
+---
+
+# kort og generelt
+
+Der mangler description fil til at lave til en pakke. Se tutorial til hvordan man laver en pakke og hvilken struktur den skal have. Kort sagt er det et par devtools kommandoer, som skal køres. I skal nok også flytte lidt rundt i hvor jeres filer ligger. fx skal alt r kode ligge i mappen R (og i skal derfor ikke bruge jeres andre mapper).
+
+Jeg vil mene, at i kan omstrukturere jeres kode, så alt simulering af genetisk data og tilhørende information blev simuleret i én funktion. Så skal i bare angive antal søskende i vil have til hver individ, og så bliver resten klaret internt i funktionen, og output kan så være ét obj.bigsnp, med genotype på barnet, en map med information på snps, og en fam med alt relevant information om den genotyped person, forældre og søskende i én.
+   Hvis i gør dette, så kan i nok også undgå at lave en FBM til forældrene. bare lav en håndfuld forældre og udregn genotyper for ét barn, og gem alt relevant information om forældre, barn og søskende i én FBM. 
+   
+   
+jeg har efterladt en del kommentarer i jeres kode også.
+
+bare slet den her fil når i er færdige med den.

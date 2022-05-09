@@ -26,10 +26,10 @@ simulate_people <- function(n, disease, file_name, n_blocks = 20, seed = NULL) {
   # }
   
   #Initializes empty FBM 
-  FBM <- CreateFBM(rows, cols, file_name)
+  FBM <- CreateFBM(rows, cols, file_name) ### erstat med en opdateret funktion, så i ikke mister jeres FBM.
   
   #Fills empty FBM out with genotypes
-  PopulateFBM(FBM, disease$MAF, seed = seed)
+  PopulateFBM(FBM, disease$MAF, seed = seed) #eventuelt sig: null_catcher = populateFBM() for at fange nulls, så console ikke bliver spammet
   
   #Calculates MAP and FAM info for the genotypes
   MAPFAM <- calculate_MAPFAM(FBM, disease, n_blocks, seed)

@@ -16,5 +16,7 @@ cond_calc <- function(i, covmatrix) {
   new_mu <- s12 %*% solve(s22) 
   new_sigma <- s11 - (s12 %*% solve(s22) %*% s21)
   
-  return(c(new_mu, new_sigma))
+  return(c(new_mu, new_sigma)) # jeg er IKKE fan af at lave dette trick her. 
 }
+#i den returnerende vektor, kan i NEMT løbe ind i problemer med at uforudsete ting sker. lav i stedet en liste med mu og sigma som navngivet indgange.
+

@@ -18,3 +18,13 @@ covmatrix <- function(h2, sib = 0) {
   
   return(cov_m)
 }
+
+# det her er en meget bøvlet måde at lave denne matrix på.
+# udnyt i ved hvad de fleste indgange er, og så tilpas resten.
+get_cov = function(h2, n_sib = 0) {
+  cov <- matrix(h2/2, 4 + n_sib, 4 + n_sib)
+  diag(cov) <- 1
+  cov[3,4] <- cov[4,3] <- 0
+  cov[1:2, 1] <- cov[1, 1:2] <- h2
+  cov
+}
