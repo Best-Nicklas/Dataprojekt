@@ -22,7 +22,8 @@ Simulate_children <- function(p1, p2, disease, path, n_blocks = 20, seed = NULL)
   blocks <-  round(seq(0, rows, length = n_blocks + 1))
 
   #Creates children in block sizes 
-  for (i in 1:(length(blocks)-1)) {  
+  for (i in 1:(length(blocks)-1)) {  # lav til future.apply i stedet. brug seq_along
+    
     b_start <- blocks[i] + 1
     b_end <- blocks[i + 1]
     b_size <- (b_end - b_start + 1)
@@ -30,6 +31,11 @@ Simulate_children <- function(p1, p2, disease, path, n_blocks = 20, seed = NULL)
     FBM[b_start:b_end, ] <- truer_gen(p1$genotypes[b_start:b_end, ], 
                                       p2$genotypes[b_start:b_end, ], 
                                       seed)
+    NULL #bare returnér null, ellers vil den vist returnere det sidste i har udregnet, i.e. jeres genotyper. 
+    # undgå generelt at flytte data i mellem parent og child processses når i parallelisere. 
+    # det kan tage så lang tid, at i mister alle fordele ved at parallelisere, fordi i bare flytter data rundt.
+    # I stedet kan i indlæse data i jeres paralleliseret loop og skrive dens resultater til disk.
+    # det er ofte hurtigere end at sende mellem parallele processer.
   }
   
   #Calculates MAF and FAM info for the children
