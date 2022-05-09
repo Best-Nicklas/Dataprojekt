@@ -5,6 +5,8 @@
 #' @example 
 #' 
 
+#bare lav en funktion der udregner GWAX status. I har en anden funktion til at lave GWAS allerede.
+
 GWAX <- function(child) {
   
   n <- length(child$MAP$SNP_ID)
@@ -15,7 +17,7 @@ GWAX <- function(child) {
   
   #Creates a vector of the proxy statuses for the child
   x <- numeric(n)
-  for (i in 1:n) {
+  for (i in 1:n) { #her ville ifelse være en langt bedre løsning.
     if (child_status[i] == 1 | p1_status[i] == 1 | p2_status[i] == 1) {
       x[i] <- 1  
     }

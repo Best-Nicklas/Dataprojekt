@@ -10,8 +10,9 @@
 #'
 
 gibbs_sampler <- function(config, n, start, cov_mat) {
-  l_n <- dim(cov_mat)[1] #number of l's
-  threshold <- qnorm(0.95)
+  #nrow i stedet for. dim er ikke til at læse.
+  l_n <- dim(cov_mat)[1] #number of l' 
+  threshold <- qnorm(0.95) #lower.tail = T
   
   gen_liabs <- numeric(n)
   liabs_current <- rep(10,l_n) #initializing l's
@@ -36,6 +37,7 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
         liabs_current[p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
       }
       
+      #jeres kommentar og jeres kode stemmer ikke overens. normalt bruger man 1 for at angive case og 0 for control
       #For liabilties when we have case (0)
       else if (config[p-1] == 0) {
         liabs_current[p] <- rnorm_trunc(1, c(-Inf, threshold), new_mean, sqrt(sigmas[p]))
@@ -48,5 +50,5 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
     }
     gen_liabs[i] <- liabs_current[1]
   }
-  return(mean(gen_liabs[start:n]))
+  return(mean(gen_liabs[start:n])) # hvordan ved i nu, om estimatet er præcist nok ??
 }

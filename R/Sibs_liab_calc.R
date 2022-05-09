@@ -7,8 +7,11 @@
 #' @return 
 #' @example 
 #' 
-
-sibs_liab_calc <- function(n_sibs, p1, p2, disease) {
+# hvis i gerne vil have n_sib som argument, så burde i også bruge den lidt mere.
+# Nu hedder funktionen jo sibs_liab_calc. så hvorfor ikke lave en funktion, som laver n_sibs søskende og returnere deres relevante information?
+# på den måde kan i bare kalde den efter i har lavet jeres første barn eller bare returnere genotyperne for den sidst udregnet "søskende" og lave
+# den til jeres genotyped barn.
+sibs_liab_calc <- function(n_sibs, p1, p2, disease) { 
   if (n_sibs == 0) {
     return(NULL)
   }
@@ -28,6 +31,8 @@ sibs_liab_calc <- function(n_sibs, p1, p2, disease) {
   c <- sum(causal)
   
   #Calculates the genetic liabilities for sibs
+  # i stedet for at kalde dette udtryk hele tiden, så lav en funktion der hedder normalize_genotypes eller noget, som tager 
+  # en mat som input og tilsvarende mu, sigma og beta.
   liab_g <- c(sweep(sweep(temp, 
                           MARGIN = 2, 
                           STATS = mu, 

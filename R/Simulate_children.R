@@ -13,10 +13,10 @@
 
 Simulate_children <- function(p1, p2, disease, path, n_blocks = 20, seed = NULL) {
   rows <- nrow(p1$genotypes)
-  cols <- ncol(p1$genotypes)
+  cols <- ncol(p1$genotypes) #overvej at simulér forældre i blocks, e.g. 1000 ad gangen, så kan i undgå at lave to ekstra fbms
   
   #Initializes an empty FBM
-  FBM <- CreateFBM(rows, cols, path, type = NA_real_)
+  FBM <- CreateFBM(rows, cols, path, type = NA_real_) # erstat med noget der gemmer FBM med dummy map og fam, eller læser fra en path
   
   #Calculates blocks from specified number of blocks n_blocks
   blocks <-  round(seq(0, rows, length = n_blocks + 1))
