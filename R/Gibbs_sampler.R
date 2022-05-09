@@ -10,8 +10,8 @@
 #'
 
 gibbs_sampler <- function(config, n, start, cov_mat) {
-  l_n <- dim(cov_mat)[1] #number of l's
-  threshold <- qnorm(0.95)
+  l_n <- nrow(cov_mat) #number of l's
+  threshold <- qnorm(0.95) #lower.tail = T
   
   gen_liabs <- numeric(n)
   liabs_current <- rep(10,l_n) #initializing l's
@@ -21,8 +21,8 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
   sigmas <- vector()
   for (p in 1:l_n) {
     temp <- cond_calc(p, cov_mat) 
-    means[p, ] <- temp[1:(l_n - 1)]
-    sigmas[p] <- temp[l_n]
+    means[p, ] <- temp$mu
+    sigmas[p] <- temp$sigma
   }
   
   # iterations
@@ -36,17 +36,18 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
         liabs_current[p] <- rnorm(1, new_mean, sqrt(sigmas[p]))
       }
       
-      #For liabilties when we have case (0)
+      #For liabilties when we dont have case (0)
       else if (config[p-1] == 0) {
         liabs_current[p] <- rnorm_trunc(1, c(-Inf, threshold), new_mean, sqrt(sigmas[p]))
         
       }
-      #For liability when we dont have case (1)
+      #For liability when we do have case (1)
       else {
         liabs_current[p] <- rnorm_trunc(1, c(threshold, Inf), new_mean, sqrt(sigmas[p]))
       }
     }
     gen_liabs[i] <- liabs_current[1]
   }
+  
   return(mean(gen_liabs[start:n]))
 }

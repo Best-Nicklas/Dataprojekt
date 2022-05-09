@@ -54,9 +54,10 @@ calculate_MAPFAM <- function(FBM, disease, n_blocks, seed) {
   
   #Creates tibbles that store info disease and liability
   FAM <- tibble(ID = 1:rows, 
-                Full_Liability = liab_full, 
-                Genetic_Liability = liab_g, 
-                Status = ifelse(liab_full > threshold, 1, 0))
+                Genetic_Liability = liab_g,
+                Full_Liability = rnorm(rows, 0, sqrt(1 - h2)) + Genetic_Liability, 
+                Status = (liab_full > threshold) + 0)
+  
   MAP <- tibble(SNP_ID = 1:cols, 
                 MAF = disease$MAF, 
                 BETA = disease$BETA, 

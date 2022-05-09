@@ -15,6 +15,5 @@ cond_calc <- function(i, covmatrix) {
   
   new_mu <- s12 %*% solve(s22) 
   new_sigma <- s11 - (s12 %*% solve(s22) %*% s21)
-  
-  return(c(new_mu, new_sigma))
+  return(list(mu = new_mu, sigma = new_sigma))
 }
