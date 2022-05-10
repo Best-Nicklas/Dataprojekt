@@ -7,9 +7,8 @@
 
 GWAX <- function(child) {
   
-  n <- length(child$MAP$SNP_ID)
-  p1_status <- child$family_info$p1_status
-  p2_status <- child$family_info$p2_status
+  p1_status <- child$FAM$p1_status
+  p2_status <- child$FAM$p2_status
   child_status <- child$FAM$Status
   FBM <- child$genotypes
   
@@ -18,3 +17,4 @@ GWAX <- function(child) {
   
   GWAS(child, x)
 }
+

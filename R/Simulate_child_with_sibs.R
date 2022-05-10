@@ -20,39 +20,24 @@ simulate_child_with_sibs <- function(p1, p2, disease, path, n_blocks = 20, seed 
   h2 <- disease$H2
   
   # Calculates the family information - liability,status, config etc.
-  family_info <- tibble(id = 1:rows, 
-                        
-                        n_sib = 2,
-                        
-                        #Creates parents according to the number of sibs to generate children and their g_liabs from
-                        sibs_g_liabs = purrr::map2(id, n_sib, .f = ~ {sibs_liab_calc(.y, 
-                                                                                     matrix(rep(p1$genotypes[.x, ], .y), .y, cols, byrow = T),
-                                                                                     matrix(rep(p2$genotypes[.x, ], .y), .y, cols, byrow = T), disease)}),
-                        #calculates full liabilities
-                        sibs_full_liabs = purrr::map(sibs_g_liabs , .f = ~ 
-                                                       {if ( is.null(.x)) NULL 
-                                                         else .x + rnorm(length(.x), 0, sqrt(1 - h2))}),
-                        #calculates status
-                        sibs_status = purrr::map(sibs_full_liabs, .f = ~ 
-                                                   {if ( is.null(.x)) NULL
-                                                     else(.x > threshold) + 0}),
-                        
-                        p1_status = p1$FAM$Status,
-                        
-                        p2_status = p2$FAM$Status,
-                        
-                        #Creates a standardized string for the family status configuration
-                        config = mapply(function(s_child, s_p1,
-                                                 s_p2, s_sibs)
-                        {paste(toString(s_child),
-                               toString(max(s_p1, s_p2)),
-                               toString(min(s_p1, s_p2)),
-                               strrep(1, sum(s_sibs)),
-                               strrep(0,length(s_sibs) - sum(s_sibs)),
-                               sep = "")},
-                        child$FAM$Status, p1_status, p2_status, sibs_status))
+  child$FAM$n_sib = 2
   
-  child$family_info <- family_info
+  #Creates parents according to the number of sibs to generate children and their g_liabs from
+  child$FAM$sibs_g_liabs = purrr::map2(1:rows, child$FAM$n_sib, .f = ~ {sibs_liab_calc(.y, 
+                                                                                       matrix(rep(p1$genotypes[.x, ], .y), .y, cols, byrow = T),
+                                                                                       matrix(rep(p2$genotypes[.x, ], .y), .y, cols, byrow = T), 
+                                                                                       disease)})
+  #calculates full liabilities
+  child$FAM$sibs_full_liabs = purrr::map(child$FAM$sibs_g_liabs, .f = ~ 
+                                           {if ( is.null(.x)) NULL 
+                                             else .x + rnorm(length(.x), 0, sqrt(1 - h2))})
+  #calculates status
+  child$FAM$sibs_status = purrr::map(child$FAM$sibs_full_liabs, .f = ~ 
+                                       {if ( is.null(.x)) NULL
+                                         else(.x > threshold) + 0})
+  
+  
+  
   return(child)
   
 }

@@ -17,8 +17,11 @@ PopulateFBM <- function(FBM, MAF, n_blocks = 20, seed = NULL) {
   # Finds the correct blocks using the n_blocks parameter
   blocks <-  round(seq(0, nrow(FBM), length = n_blocks + 1))
   
+  # Prepare for parallelization 
+  plan(multisession, workers = max(1, availableCores(logical = F) - 1))
+  
   # Inserts values into FBM in block sizes
-  for (i in 1:(length(blocks) - 1)) {  
+  future_lapply(1:(length(blocks) - 1), function(i) {  
     b_start <- blocks[i] + 1
     b_end <- blocks[i + 1]
     b_size <- (b_end - b_start + 1)
@@ -26,7 +29,8 @@ PopulateFBM <- function(FBM, MAF, n_blocks = 20, seed = NULL) {
     FBM[b_start:b_end, ] <- matrix(nrow = b_size,
                                    rbinom(ncol(FBM) * b_size, 2, MAF), 
                                    byrow = TRUE)
-  }
+    NULL
+  }, future.seed = T)
+  invisible(NULL)
 }
-
 

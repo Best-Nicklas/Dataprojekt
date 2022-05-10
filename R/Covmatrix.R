@@ -7,7 +7,7 @@
 #' @example covmatrix(0.5, 2)
 #' 
 
-covmatrix <- function(h2, sib = 0) {
+covmatrix <- function(h2, n_sib = 0) {
   cov <- matrix(h2/2, 4 + n_sib, 4 + n_sib)
   diag(cov) <- 1
   cov[3,4] <- cov[4,3] <- 0

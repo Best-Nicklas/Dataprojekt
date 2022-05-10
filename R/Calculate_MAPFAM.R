@@ -10,7 +10,7 @@
 #' 
 
 
-calculate_MAPFAM <- function(FBM, disease, n_blocks, seed) {
+calculate_MAPFAM <- function(FBM, disease, n_blocks = 20, seed) {
   if (!is.null(seed)) {set.seed(seed)}
   
   #Initializes parameters
@@ -47,16 +47,13 @@ calculate_MAPFAM <- function(FBM, disease, n_blocks, seed) {
     
   }, future.seed = T) %>% do.call("rbind", .) %>% as.numeric()
   
-  #Adds environmental factor
-  liab_e <- rnorm(rows, 0, sqrt(1 - h2))
-  liab_full <- liab_e + liab_g
   threshold <- qnorm(1 - prevalens)
   
   #Creates tibbles that store info disease and liability
   FAM <- tibble(ID = 1:rows, 
                 Genetic_Liability = liab_g,
                 Full_Liability = rnorm(rows, 0, sqrt(1 - h2)) + Genetic_Liability, 
-                Status = (liab_full > threshold) + 0)
+                Status = (Full_Liability > threshold) + 0)
   
   MAP <- tibble(SNP_ID = 1:cols, 
                 MAF = disease$MAF, 

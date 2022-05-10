@@ -10,33 +10,22 @@
 #' 
 
 
-simulate_people <- function(n, disease, file_name, n_blocks = 20, seed = NULL) {
+simulate_people <- function(n, disease, path, n_blocks = 20, overwrite = T, seed = NULL) {
   rows <- n
   cols <- disease$N_SNP
   
-  # bk_file <- paste(file_name, ".bk", sep = "")
-  # rds_file <- paste(file_name, ".rds", sep = "")
-  # 
-  # if (file.exists(bk_file) & file.exists(rds_file) & overwrite) {
-  #   file.remove(bk_file)
-  #   file.remove(rds_file)
-  # }
-  # else if (file.exists(paste(file_name, ".bk", sep = "")) & overwrite) {
-  #   file.remove(bk_file)
-  # }
-  
-  #Initializes empty FBM 
-  FBM <- CreateFBM(rows, cols, file_name)
+  #Checks if a FBM with the given name and dimensions exists, else creates one
+  FBM <- verifyRds(path, overwrite, rows, cols) 
   
   #Fills empty FBM out with genotypes
-  PopulateFBM(FBM, disease$MAF, seed = seed)
+  PopulateFBM(FBM$genotypes, disease$MAF, seed = seed)
   
   #Calculates MAP and FAM info for the genotypes
-  MAPFAM <- calculate_MAPFAM(FBM, disease, n_blocks, seed)
+  MAPFAM <- calculate_MAPFAM(FBM$genotypes, disease, n_blocks, seed)
   
   #Saves info in Rds file
-  all_people <- list(genotypes = FBM, FAM = MAPFAM$FAM, MAP = MAPFAM$MAP)
-  snp_save(all_people)
+  FBM$FAM <- MAPFAM$FAM 
+  FBM$MAP <- MAPFAM$MAP
   
-  return(all_people)
+  return(FBM)
 }

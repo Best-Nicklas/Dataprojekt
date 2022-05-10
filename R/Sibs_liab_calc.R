@@ -38,3 +38,4 @@ sibs_liab_calc <- function(n_sibs, p1, p2, disease) {
   return(liab_g)  
 }
 
+

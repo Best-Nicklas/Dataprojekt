@@ -9,11 +9,11 @@
 #' @example 
 #'
 
-gibbs_sampler <- function(config, n, start, cov_mat) {
+gibbs_sampler <- function(config, burn_in, cov_mat) {
   l_n <- nrow(cov_mat) #number of l's
   threshold <- qnorm(0.95) #lower.tail = T
   
-  gen_liabs <- numeric(n)
+  gen_liabs <- vector()
   liabs_current <- rep(10,l_n) #initializing l's
   
   #pre-calculations for each l
@@ -25,8 +25,12 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
     sigmas[p] <- temp$sigma
   }
   
+  SEM <- 1
+  i <- 0
+  
   # iterations
-  for (i in 1:n) {
+  while (SEM > 0.01) {
+    i <- i + 1
     # iteration for each parameter
     for (p in 1:l_n) {
       new_mean <- means[p, ] %*% liabs_current[-p]
@@ -47,7 +51,12 @@ gibbs_sampler <- function(config, n, start, cov_mat) {
       }
     }
     gen_liabs[i] <- liabs_current[1]
+    
+    if (i > burn_in){
+      SEM <- sd(gen_liabs) / sqrt(i)
+      
+    }
   }
   
-  return(mean(gen_liabs[start:n]))
+  return(mean(gen_liabs))
 }
