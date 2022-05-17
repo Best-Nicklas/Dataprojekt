@@ -6,7 +6,6 @@
 #' @example
 #' Manhattan_plot(my_regression)
 #' 
-
 Manhattan_plot <- function(x) {
   ggplot(x, aes(x=1:length(p.value), y=-log10(p.value), size=-log10(p.value))) + 
     geom_point(color="blue") + 
