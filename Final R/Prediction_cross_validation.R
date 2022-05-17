@@ -1,12 +1,13 @@
 #' @title Prediction Cross-validation
 #' @description Function to calculate predictive powers of different models
-#' @param person An Rds file with first entry being an FBM.code256.
+#' @param person An Rds file with an FBM.code256 and accompanying FAM and MAP.
 #' @param k Number of folds to be used in cross-validation. Default is 10.
 #' @param threshold Vector of P-values to be used in thresholding. Default does not use thresholding.
 #' @param disease List with properties of disease.
 #' @param method Method to use for prediction. Possible methods are "GWAS", "GWAX", "LTFH". Default is "GWAS".
 #' @param liabilities Vector of liabilities used for prediction with "LTFH" method. If not specified, uses "GWAS" method instead.
 #' @return A list with 3 values: a tibble with average and best scores for each threshold, the best score, and the best model.
+#' @export
 #' @example 
 #' Prediction_cross_validation(person, k = 20, threshold = c(0.5,0.05), method = "GWAX")
 #' 
