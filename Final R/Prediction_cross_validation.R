@@ -11,7 +11,6 @@
 #' @example 
 #' Prediction_cross_validation(person, k = 20, threshold = c(0.5,0.05), method = "GWAX")
 #' 
-
 Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, method = "GWAS", liabilities = person$FAM$Status) {
   n <- nrow(person$genotypes)
   block_size <- n%/%k
