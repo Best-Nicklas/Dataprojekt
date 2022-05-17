@@ -1,12 +1,17 @@
-#' This function creates the theoretical co-variance matrix from the 
+#' @title Co-variance matrix
+#' 
+#' @description  This function creates the theoretical co-variance matrix from the 
 #' multivariate normal distribution which is used to model the liabilities.
 #' 
-#' @param h2 Heritability.
+#' @param h2 Heritability parameter.
 #' @param sib Number of siblings.
-#' @return A co-variance matrix, calculated by the value of h2 and 
-#' the amount of siblings.
+#' @return A co-variance matrix, created from the value of h2 and 
+#' the amount of sib. 
+#' 
 #' @example covmatrix(0.5, 2)
+#' 
 #' @export
+#' 
 covmatrix <- function(h2, n_sib = 0) {
   cov <- matrix(h2/2, 4 + n_sib, 4 + n_sib)
   diag(cov) <- 1
