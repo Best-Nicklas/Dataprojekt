@@ -1,11 +1,12 @@
-#' Description - Function to simulate disease parameters
+#' @title Simulation of a disease 
+#' @description This function is used to simulate a disease parameters. 
 #' 
-#' @param n_snp
-#' @param prevalens
-#' @param h2
-#' @param causal
-#' @param causal_n
-#' @param maf
+#' @param n_snp Amount of SNPs
+#' @param prevalence Prevalence of disease in simulated population
+#' @param h2 Herability parameter 
+#' @param causal List of predetermined causal SNPs. Leave empty to get random causal SNPs. 
+#' @param causal_n Amount of causal SNPs. Default value is 10 procent of total SNPs 
+#' @param maf List of predetermined Minor Ale Frequency 
 #' @param maf_low
 #' @param maf_high
 #' @param seed
