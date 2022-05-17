@@ -75,8 +75,6 @@ OpenRds <- function(path){
 
 
 ```{r}
-
-
 sim_disease <- function(n_snp, prevalence, h2, causal = NULL, maf = NULL, maf_low = 0.01, maf_high = 0.49, seed = NULL){
   if (!is.null(seed)) {set.seed(seed)}
   
@@ -155,7 +153,6 @@ calc_normalization_consts <- function(MAF, causal) {
 
 
 ```{r}
-
 sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 20) {
   
   # Load disease information
@@ -436,7 +433,6 @@ GWAX <- function(child) {
 
 
 ```{r}
-
 LTFH <- function(child, prevalence, h2) {
   child_configs <- pmap(list(child$FAM$Status,child$FAM$p1_Status, child$FAM$p2_Status, child$FAM$sibs_Status), 
        function(x1, x2, x3, x4) 
