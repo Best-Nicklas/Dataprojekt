@@ -1,29 +1,27 @@
-#' Description - Function to populate the FBM
-#' 
-#' @param person
-#' @param k
-#' @param threshold
-#' @param disease
-#' @param method
-#' @param liabilities
+#' @title Prediction Cross-validation
+#' @description Function to calculate predictive powers of different models
+#' @param person An Rds file with first entry being an FBM.code256.
+#' @param k Number of folds to be used in cross-validation. Default is 10.
+#' @param threshold Vector of P-values to be used in thresholding. Default does not use thresholding.
+#' @param disease List with properties of disease.
+#' @param method Method to use for prediction. Possible methods are "GWAS", "GWAX", "LTFH". Default is "GWAS".
+#' @param liabilities Vector of liabilities used for prediction with "LTFH" method. If not specified, uses "GWAS" method instead.
+#' @return A list with 3 values: a tibble with average and best scores for each threshold, the best score, and the best model.
 #' @example 
+#' Prediction_cross_validation(person, k = 20, threshold = c(0.5,0.05), method = "GWAX")
 #' 
 
 Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, method = "GWAS", liabilities = person$FAM$Status) {
   n <- nrow(person$genotypes)
-  #res <- tibble(threshold = numeric(), PRS = vector(), predictive_power = numeric())
   block_size <- n%/%k
   bestest_score <- 0
   bestest_model <- NULL
   best_scores <- numeric(length(threshold))
   avg_scores <- numeric(length(threshold))
   for (i in 1:length(threshold)){
-    #print(i)
     scores <- numeric(k)
     best_score <- 0
     for (j in 0:(k-1)){
-      #print(j)
-      
       #Create blocks
       block_start <- j*block_size + 1
       if (j == k-1){
@@ -54,8 +52,6 @@ Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, 
         best_score <- score
         best_model <- regr
       }
-      #print(scores)
-      
     }
     #Update best models, scores
     best_scores[i] <- best_score[1,1]
@@ -68,39 +64,3 @@ Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, 
   results <- tibble(Pvalue = threshold, Average_Score = avg_scores, Best_Score = best_scores)
   return(list(Results = results, Best_Score = bestest_score, Best_Model = data.frame(bestest_model)))
 }
-
-#reg <- lm(person$FAM$Status~normalized_PRS)
-
-#nn <- c(1,2,3,4,5)
-#oo <- c(5,4,3,2,6,6,42,5,6,7)
-#op <- list(c(5,4,3,2,6,6,42,5,6,7))
-#print(op)
-
-#mm <- 0.95
-
-#a <- tibble(pvals = nn, PRS = list(vector(length = 10)), predpower = NA,)
-#a
-#a[1,3] <- mm
-#a[1,2] <- op
-#a
-
-
-#b <- tibble(pvals = numeric(), PRS = vector(), predpower = numeric())
-#b
-
-#c <- as_tibble_row(list(pvals = nn[1], PRS = op, predpower = mm))
-
-#rbind(b, c) 
-
-#print(list(rnorm(10)))
-#add_row(b, list(pvals = nn[1], PRS = list(rnorm(10)), predpower = mm))
-
-
-#test <- data.frame("a" = z, "b" = aa)
-#test[1,] <- c(5, c(1,2,3))
-# <- as.list(5, c(1,2,3))
-#est
-#z <- c(0,1,1,0,1)
-#aa <- c(1,0,1,1,1)
-#sum(z == aa)
-#Prediction_cross_validation(persona, k=3)
