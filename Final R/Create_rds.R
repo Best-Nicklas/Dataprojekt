@@ -1,10 +1,16 @@
-#' Description - Create Rds
-#' @param path Path to file
-#' @param nrow Total rows
-#' @param ncol Total columns 
-#' @return 
-#' @example 
+#' @title Create .rds file.
 #' 
+#' @description This function is used create a file-backed matrices and save it as an .rds file with related information. 
+#' 
+#' @param nrow Amount of rows.
+#' @param ncol Amount of columns.
+#' @param path Path where to save and find the file. 
+#' 
+#' @return An rds object containing a list with a file-backed matrix, FAM and MAP information in a list.
+#' 
+#' @export
+#'
+
 
 createRds <-  function(path, nrow, ncol) {
   G = FBM.code256(nrow = nrow, # number of rows
@@ -21,3 +27,4 @@ createRds <-  function(path, nrow, ncol) {
   
   return(obj.bigsnp)
 }
+
