@@ -1,9 +1,11 @@
-#' Description - Verify Rds
-#' @param path Path to file
+#' @title Verification of .rds file
+#' @description This function is used to verify if the path is valid. If the path is already in use, 
+#' it checks if the already exiting .rds file has the same dimensions and overwrites it. 
+#' If the dimensions are wrong it stops and returns a error message. 
+#' @param path Path where to save and find the file 
 #' @param overwrite Boolean value 
-#' @param nrow Total rows
-#' @param ncol Total columns
-#' @return 
+#' @param nrow Amount of rows
+#' @param ncol Amount of columns
 #' @example 
 #' 
 
