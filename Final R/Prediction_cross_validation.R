@@ -1,6 +1,6 @@
 #' @title Prediction Cross-validation
 #' @description Function to calculate predictive powers of different models
-#' @param person An Rds file with an FBM.code256 and accompanying FAM and MAP.
+#' @param person A .rds file with an FBM.code256 and accompanying FAM and MAP.
 #' @param k Number of folds to be used in cross-validation. Default is 10.
 #' @param threshold Vector of P-values to be used in thresholding. Default does not use thresholding.
 #' @param disease List with properties of disease.
