@@ -1,8 +1,10 @@
-#' Description - Manhattan_plot
-#' 
-#' @param x
-#' @return 
-#' @example 
+#' @title Manhattan plot
+#' @description Produces a Manhattan plot from a regression
+#' @param x A regression
+#' @return A Manhattan plot with each regressor on the x-axis and their -log10(P-values) on the y-axis. 
+#' @export
+#' @example
+#' Manhattan_plot(my_regression)
 #' 
 
 Manhattan_plot <- function(x) {
