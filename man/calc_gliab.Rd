@@ -21,3 +21,4 @@ placeholder
 \description{
 Helper function to calculate genetic liabilities.
 }
+\keyword{internal}

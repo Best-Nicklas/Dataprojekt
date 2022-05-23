@@ -20,3 +20,4 @@ This function is used to verify if the path is valid. If the path is already in 
 it checks if the already exiting .rds file has the same dimensions and overwrites it.
 If the dimensions are wrong it stops and returns a error message.
 }
+\keyword{internal}

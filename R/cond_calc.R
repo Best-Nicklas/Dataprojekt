@@ -5,7 +5,8 @@
 #' @param i Index of person 
 #' @param covmatrix A co-variance matrix 
 #' @return The conditional values of mu and sigma
-#' @export
+#' @keywords internal
+
 cond_calc <- function(i, covmatrix) {
   s11 <- covmatrix[i, i]
   s12 <- covmatrix[i, -i]

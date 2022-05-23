@@ -7,8 +7,8 @@
 #' @param overwrite Boolean value. 
 #' @param nrow Amount of rows.
 #' @param ncol Amount of columns.
-#' @export
-#' 
+#' @keywords internal
+
 
 verifyRds <- function(path, overwrite, nrow, ncol) {
   rds_file <- paste(path, ".rds", sep = "")

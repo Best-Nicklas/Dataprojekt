@@ -6,12 +6,14 @@
 \alias{RyouSick-package}
 \title{RyouSick: Simulation and Analysis of Genetic Data}
 \description{
-What the package does (one paragraph).
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
+This package does this and this
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://best-nicklas.github.io/pakketest/}
+  \item \url{https://best-nicklas.github.io/Dataprojekt/}
 }
 
 }

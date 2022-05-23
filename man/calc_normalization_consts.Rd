@@ -17,3 +17,4 @@ A list with the theoretical values of mu and sigma.
 \description{
 This function calculates the theoretical value of the constants mu and sigma, which are used to normalize the data.
 }
+\keyword{internal}

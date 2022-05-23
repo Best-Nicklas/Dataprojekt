@@ -2,7 +2,7 @@
 title: "LTFH"
 output: rmarkdown::html_vignette
 description:
-  skriv kort describtion her som kommer til at stå ved artikler 
+  skriv kort bekskrivelse her - ses ved siden artikler
 vignette: >
   %\VignetteIndexEntry{LTFH}
   %\VignetteEngine{knitr::rmarkdown}

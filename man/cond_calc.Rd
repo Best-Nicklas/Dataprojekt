@@ -18,3 +18,4 @@ The conditional values of mu and sigma
 This function calculates the conditional mu and sigma given a co-variance
 matrix.
 }
+\keyword{internal}

@@ -2,9 +2,9 @@
 title: "Writing Efficient R Code and Working with Large Datasets"
 output: rmarkdown::html_vignette
 description:
-  skriv kort describtion her som kommer til at stå ved artikler 
+  skriv kort bekskrivelse her - ses ved siden artikler
 vignette: >
-  %\VignetteIndexEntry{Writing_efficient_R_code_and_working_with_large_datasets}
+  %\VignetteIndexEntry{Writing Efficient R Code and Working with Large Datasets}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

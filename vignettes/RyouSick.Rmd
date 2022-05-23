@@ -2,7 +2,7 @@
 title: "Getting Started with RyouSick"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{RyouSick}
+  %\VignetteIndexEntry{Getting Started with RyouSick}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

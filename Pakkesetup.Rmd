@@ -9,34 +9,35 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-
-
 ```{r}
 #funktioner til at bygge pakke
-devtools::create("RyouSick") #tilføj dependencies i import, husk til piping
 
-usethis::use_package_doc() #docs for ?package 
+devtools::create("RyouSick") #Husk at tilføje dependencies i import (pipe operatoren), og lav :: notation når funktioner fra andre pakker bruges i koden
+
+usethis::use_package_doc() #docs til ?package_name 
 usethis::use_mit_license() #licens
-usethis::use_readme_md() #Frontside   
+usethis::use_readme_md() #Frontside/github tekst   
 
-devtools::document() #converts documentations
-usethis::use_vignette("LTFH") #Lav en med samme navn som pakke for "get started"
+devtools::document() #konverterer dokumentationer 
+usethis::use_vignette("LTFH") #Laver vignettes/artikler. Lav en med samme navn som pakken for at få "get started" siden. 
 
 
 ```
 
 ```{r}
-#installation af pakke fra github eller mappe 
+#installation af pakke fra samme mappe 
 devtools::load_all()
 devtools::install()
+
+#installation af pakke fra github
 devtools::install_github("Best-Nicklas/TestPackageSiteR")
 ```
 
 ```{r}
-#bygge hjemmeside 
-usethis::use_pkgdown()
-pkgdown::build_site()
-usethis::use_pkgdown_github_pages()
+#funktioner til at bygge hjemmeside
+usethis::use_pkgdown() #laver yaml fil
+pkgdown::build_site() #Bygger siden lokalt
+usethis::use_pkgdown_github_pages() #forbinder til github pages 
 
 ```
 

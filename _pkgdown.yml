@@ -13,14 +13,14 @@ navbar:
 reference:
 - title: Simulation
   description: |
-    **Simulation** functions that can be used to do....
+    **Simulation** functions that can be used to....(skal fyldes ud)
   contents:
   - sim_disease
   - sim_genotypes_no_family
   - sim_genotypes_with_family
 - title: Analysis
   description: |
-    **Analysis** functions used to....
+    **Analysis** functions used to.... (skal fyldes ud)
   contents:
   - GWAS
   - GWAX
@@ -28,13 +28,13 @@ reference:
   - Prediction_cross_validation
 - title: Visualizations
   description: |
-    **Visualizations** to show....
+    **Visualizations** to show.... (skal fyldes ud)
   contents:
   - Manhattan_plot
   - Power_plot
 - title: Helpers
   description: |
-    **Helpers** for various....
+    **Helpers** for various....(skal fyldes ud)
   contents:
   - gibbs_sampler
   - covmatrix

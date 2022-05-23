@@ -6,6 +6,7 @@
 #' @param mu placeholder
 #' @param sigma placeholder
 #' @return placeholder
+#' @keywords internal
 #' 
 
 calc_gliab <- function(obj, beta, mu, sigma) {
