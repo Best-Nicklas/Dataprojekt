@@ -1,11 +1,13 @@
-# pkgdown <img src="man/figures/logo.png" align="left" />
-
-# RyouSick
+# RyouSick <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 The goal of RyouSick is to ...
+
+## Backends
+packages used...
+
 
 ## Installation
 
