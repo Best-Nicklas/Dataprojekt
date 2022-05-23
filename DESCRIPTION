@@ -5,7 +5,7 @@ Authors@R: c(
     person("Nicklas", "Stanislaus", email = "dummy@dummy.com", role = c("cre","aut")),
     person("Markus", "Nielsen", role = "aut"),
     person("Christian", "Mains", role = "aut"))
-Description: What the package does (one paragraph).
+Description: This package does this and this
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
