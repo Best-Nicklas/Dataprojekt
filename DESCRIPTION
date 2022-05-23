@@ -16,6 +16,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://best-nicklas.github.io/pakketest/,
-    https://best-nicklas.github.io/Dataprojekt/
-github: https://best-nicklas.github.io/pakketest/
+URL: https://best-nicklas.github.io/Dataprojekt/
