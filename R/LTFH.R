@@ -1,13 +1,19 @@
-#' Description - 
+#' placeholder
 #' 
-#' @param child
-#' @return 
-#' @example 
+#' This function finds all the unique status configurations in the data and 
+#' calculates the mean posterior genetic liability for each of these unique 
+#' configurations using a gibbs-sampler. The calculated mean posterior genetic 
+#' liabilities are then matched to each person in the data-set.
+#' 
+#' @param child Dataframe containing liabilities and status for the entire family
+#' @param prevalence The likelihood of having the disease
+#' @param h2 Heredity
+#' @return placeholder
+#' @export
 #' 
 
-LTFH <- function(child) {
-  h2 <- child$MAP$H2 
-  child_configs <- pmap(list(child$FAM$Status,child$FAM$p1_status, child$FAM$p2_status, child$FAM$sibs_status), 
+LTFH <- function(child, prevalence, h2) {
+  child_configs <- pmap(list(child$FAM$Status,child$FAM$p1_Status, child$FAM$p2_Status, child$FAM$sibs_Status), 
                         function(x1, x2, x3, x4) 
                           paste(toString(x1),
                                 toString(max(x2, x3)),
@@ -23,7 +29,7 @@ LTFH <- function(child) {
   config_liabs <- vector()
   for (config in unique_configs) {
     gibb_input <- as.numeric(strsplit(config,"")[[1]])
-    config_liabs[config] <- gibbs_sampler(gibb_input, 100, covmatrix(h2 = 0.8, n_sib = length(gibb_input) - 3))
+    config_liabs[config] <- gibbs_sampler(gibb_input, 100, covmatrix(h2 = h2, n_sib = length(gibb_input) - 3), prevalence)
   }
   
   n  <- nrow(child$genotypes)
@@ -34,5 +40,5 @@ LTFH <- function(child) {
     gen_liabs[i] <- config_liabs[child_configs[i]]
   }
   
-  return(GWAS(child, gen_liabs))
+  return(list(GWAS_values = GWAS(child, gen_liabs), Mean_Genetic_Liability = gen_liabs))
 }

@@ -1,10 +1,11 @@
-#' Description - Helper function to calculate genetic liabilities
-#' @param obj
-#' @param beta
-#' @param mu
-#' @param sigma
-#' @return 
-#' @example 
+#' title
+#' 
+#' Helper function to calculate genetic liabilities.
+#' @param obj placeholder
+#' @param beta placeholder
+#' @param mu placeholder
+#' @param sigma placeholder
+#' @return placeholder
 #' 
 
 calc_gliab <- function(obj, beta, mu, sigma) {

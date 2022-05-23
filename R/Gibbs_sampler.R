@@ -1,19 +1,21 @@
-#' Description - Function to calculate means of genetic liability 
-#' from a configarations of famalies
+#' placeholder
 #' 
-#' @param config A configarations 
-#' @param n Iterations after burn_in
-#' @param start Iterations until mean and sigma convegates 
-#' @param cov_mat Covariance matrix
+#' This function calculates mean of genetic liability given a configuration.
+#' 
+#' 
+#' @param config List of configurations 
+#' @param burn_in 
+#' @param cov_mat Co-variance matrix
+#' @param prevalence The likelihood of having the disease
 #' @return The mean of genetic liability from the given configaration 
-#' @example 
+#' @export
 #'
 
-gibbs_sampler <- function(config, burn_in, cov_mat) {
+gibbs_sampler <- function(config, burn_in, cov_mat, prevalence) {
   l_n <- nrow(cov_mat) #number of l's
-  threshold <- qnorm(0.95) #lower.tail = T
+  threshold <- qnorm(prevalence, lower.tail = F) 
   
-  gen_liabs <- vector()
+  gen_liabs <- numeric(burn_in + 10000)
   liabs_current <- rep(10,l_n) #initializing l's
   
   #pre-calculations for each l
@@ -52,11 +54,11 @@ gibbs_sampler <- function(config, burn_in, cov_mat) {
     }
     gen_liabs[i] <- liabs_current[1]
     
-    if (i > burn_in){
-      SEM <- sd(gen_liabs) / sqrt(i)
+    if (i > burn_in + 1000){
+      SEM <- sd(gen_liabs[burn_in:i]) / sqrt(i - burn_in)
       
     }
   }
-  
-  return(mean(gen_liabs))
+  return(mean(gen_liabs[burn_in:i]))
 }
+

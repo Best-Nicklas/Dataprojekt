@@ -1,20 +1,22 @@
-#' Description - GWAX
+#' Description 
 #' 
-#' @param child
-#' @return 
-#' @example 
+#' GWAX
+#' 
+#' @param child placeholder
+#' @return placeholder
+#' @export 
 #' 
 
-GWAX <- function(child) {
+GWAX <- function(child, include = rows_along(child$genotypes)) {
   
-  p1_status <- child$FAM$p1_status
-  p2_status <- child$FAM$p2_status
+  p1_Status <- child$FAM$p1_Status
+  p2_Status <- child$FAM$p2_Status
   child_status <- child$FAM$Status
   FBM <- child$genotypes
   
   #Creates a vector of the proxy statuses for the child
-  x <- ifelse(child_status == 1 | p1_status == 1 | p2_status == 1, 1, 0)
+  x <- (child_status == 1 | p1_Status == 1 | p2_Status == 1) + 0
   
-  GWAS(child, x)
+  GWAS(child, x, include = include)
 }
 

@@ -1,12 +1,11 @@
-#' Description - Helper function to calculated the conditional mu and sigma
+#' placeholder
 #' 
-#' @param i
-#' @param covmatrix
+#' This function calculates the conditional mu and sigma given a co-variance 
+#' matrix. 
+#' @param i Index of person 
+#' @param covmatrix A co-variance matrix 
 #' @return The conditional values of mu and sigma
-#' @example 
-#' 
-
-
+#' @export
 cond_calc <- function(i, covmatrix) {
   s11 <- covmatrix[i, i]
   s12 <- covmatrix[i, -i]
