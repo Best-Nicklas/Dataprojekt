@@ -39,14 +39,28 @@ Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, 
       }
       
       #Calculate PRS on 1 fold
-      PRS <- snp_PRS(G = person$genotypes, betas.keep = regr$estim, ind.test = block_start:block_end, lpS.keep = -log10(regr$p.value), thr.list = threshold[i])
+      PRS <- bigsnpr::snp_PRS(G = person$genotypes, betas.keep = regr$estim, ind.test = block_start:block_end, lpS.keep = -log10(regr$p.value), thr.list = threshold[i])
       
       #Normalize PRS with mean = 0 and sd = 1
       normalized_PRS <- (PRS - mean(PRS))/sd(PRS)
       
       #Find score of model
-      score <- cor(normalized_PRS, person$FAM$Full_Liability[block_start:block_end])
-      scores[j+1] <- score
+      #Correlation between predicted effect sizes and status
+      #if(method == "GWAS"){
+      #  regr2 <- lm(person$FAM$Status[block_start:block_end] ~ normalized_PRS - 1)
+      #  score1 <- cor(regr2$coefficients, person$FAM$Status[block_start:block_end])
+      #}
+      #else if(method == "GWAX"){
+      #  regr2 <- GWAX(person, include = (block_start:block_end))
+      #}
+      #else if(method == "LTFH"){
+      #  regr2 <- GWAS(person, liabilities, (block_start:block_end))
+      #}
+      
+      #Correlation between PRS and status
+      score2 <- cor(normalized_PRS, person$FAM$Status[block_start:block_end])
+      
+      scores[j+1] <- score2
       if(score > best_score){
         best_score <- score
         best_model <- regr
@@ -60,6 +74,6 @@ Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, 
       bestest_model <- best_model
     }
   }
-  results <- tibble(Pvalue = threshold, Average_Score = avg_scores, Best_Score = best_scores)
+  results <- tibble::tibble(Pvalue = threshold, Average_Score = avg_scores, Best_Score = best_scores)
   return(list(Results = results, Best_Score = bestest_score, Best_Model = data.frame(bestest_model)))
 }
