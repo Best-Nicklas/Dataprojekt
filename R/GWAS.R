@@ -11,7 +11,7 @@ GWAS <- function(person, y, include = rows_along(person$genotypes)) {
   FBM <- person$genotypes
   
   #Uses function from bigSNPr package to do regression on FBM
-  regr <- big_univLinReg(FBM, y[include], ind.train = include)
+  regr <- bigstatsr::big_univLinReg(FBM, y[include], ind.train = include)
   #Adds column with P-values
   regr$p.value <- predict(regr, log10 = FALSE)
   
