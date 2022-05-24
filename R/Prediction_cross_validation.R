@@ -46,10 +46,10 @@ Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, 
       
       #Find score of model
       #Correlation between predicted effect sizes and status
-      #if(method == "GWAS"){
-      #  regr2 <- lm(person$FAM$Status[block_start:block_end] ~ normalized_PRS - 1)
-      #  score1 <- cor(regr2$coefficients, person$FAM$Status[block_start:block_end])
-      #}
+      if(method == "GWAS"){
+        regr2 <- lm(person$FAM$Status[block_start:block_end] ~ normalized_PRS - 1)
+        score1 <- cor(regr2$coefficients, person$FAM$Status[block_start:block_end])
+      }
       #else if(method == "GWAX"){
       #  regr2 <- GWAX(person, include = (block_start:block_end))
       #}
@@ -60,7 +60,7 @@ Prediction_cross_validation <- function(person, k = 10, threshold = 0, disease, 
       #Correlation between PRS and status
       score2 <- cor(normalized_PRS, person$FAM$Status[block_start:block_end])
       
-      scores[j+1] <- score2
+      scores[j+1] <- score1
       if(score > best_score){
         best_score <- score
         best_model <- regr
