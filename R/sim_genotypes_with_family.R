@@ -1,6 +1,11 @@
-#' Description - 
-#' 
 #' Simulation with family (Fixed and non fixed)
+#' 
+#' This function is used to simulate parents and child genotypes. With the parents 
+#' genotypes, the function calculates the status of parents, child and 
+#' siblings, using a LTFH helper function. All the data is stored in a tibble, 
+#' which can then be used for genetic associations studies. 
+#' 
+#' 
 #' @param n placeholder
 #' @param disease placeholder
 #' @param path placeholder
@@ -36,7 +41,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
   
   #prepare for block calculations of genetic liabilities 
   blocks <-  round(seq(0, n, length = n_blocks + 1))
-  g_liabs <- future_lapply(1:(length(blocks) - 1), function(i) {  
+  g_liabs <- future.apply::future_lapply(1:(length(blocks) - 1), function(i) {  
     b_start <- blocks[i] + 1
     b_end <- blocks[i + 1]
     b_size <- (b_end - b_start + 1)
@@ -69,7 +74,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
       }
     }
     
-    tibble(child_gliab, p1_gliab, p2_gliab, sibs_gliab)
+    tibble::tibble(child_gliab, p1_gliab, p2_gliab, sibs_gliab)
     
   }, future.seed = T) %>% do.call("bind_rows", .)
   
