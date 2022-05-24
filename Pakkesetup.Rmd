@@ -17,6 +17,7 @@ devtools::create("RyouSick") #Husk at tilføje dependencies i import (pipe opera
 usethis::use_package_doc() #docs til ?package_name 
 usethis::use_mit_license() #licens
 usethis::use_readme_md() #Frontside/github tekst   
+usethis::use_pipe()
 
 devtools::document() #konverterer dokumentationer 
 usethis::use_vignette("LTFH") #Laver vignettes/artikler. Lav en med samme navn som pakken for at få "get started" siden. 

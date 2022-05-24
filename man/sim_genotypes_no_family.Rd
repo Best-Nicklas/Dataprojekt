@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_genotypes_no_family.R
 \name{sim_genotypes_no_family}
 \alias{sim_genotypes_no_family}
-\title{Description - Simulation with no family}
+\title{Simulation of genotypes with no family}
 \usage{
 sim_genotypes_no_family(n, disease, path, overwrite = T, n_blocks = 20)
 }
@@ -21,5 +21,5 @@ sim_genotypes_no_family(n, disease, path, overwrite = T, n_blocks = 20)
 placeholder
 }
 \description{
-Description - Simulation with no family
+Simulation of genotypes with no family
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_genotypes_with_family.R
 \name{sim_genotypes_with_family}
 \alias{sim_genotypes_with_family}
-\title{Description -}
+\title{Simulation with family (Fixed and non fixed)}
 \usage{
 sim_genotypes_with_family(
   n,
@@ -30,5 +30,8 @@ sim_genotypes_with_family(
 placeholder
 }
 \description{
-Simulation with family (Fixed and non fixed)
+This function is used to simulate parents and child genotypes. With the parents
+genotypes, the function calculates the status of parents, child and
+siblings, using a LTFH helper function. All the data is stored in a tibble,
+which can then be used for genetic associations studies.
 }

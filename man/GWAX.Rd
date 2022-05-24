@@ -4,7 +4,7 @@
 \alias{GWAX}
 \title{Description}
 \usage{
-GWAX(child, include = rows_along(child$genotypes))
+GWAX(child, include = bigparallelr::rows_along(child$genotypes))
 }
 \arguments{
 \item{child}{placeholder}

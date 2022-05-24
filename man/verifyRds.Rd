@@ -16,6 +16,9 @@ verifyRds(path, overwrite, nrow, ncol)
 \item{ncol}{Amount of columns.}
 }
 \description{
+Verification of .rds file
+}
+\details{
 This function is used to verify if the path is valid. If the path is already in use,
 it checks if the already exiting .rds file has the same dimensions and overwrites it.
 If the dimensions are wrong it stops and returns a error message.

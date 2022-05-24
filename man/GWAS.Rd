@@ -5,7 +5,7 @@
 \title{GWAS
 Calculates a linear regression}
 \usage{
-GWAS(person, y, include = rows_along(person$genotypes))
+GWAS(person, y, include = bigparallelr::rows_along(person$genotypes))
 }
 \arguments{
 \item{person}{A .rds file with an FBM.code256 and accompanying FAM and MAP.}
