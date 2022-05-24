@@ -12,7 +12,7 @@
 #' @param maf_high placeholder
 #' @param seed placeholder
 #' @return placeholder
-#'
+#' @export
 #' 
 
 

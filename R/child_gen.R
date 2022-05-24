@@ -6,6 +6,7 @@
 #' @param p2 placeholder
 #' @return wd34
 #' @keywords internal
+#' @export
 
 child_gen = function(p1, p2){
   #Finds the positions at which both parents have 1

@@ -7,6 +7,7 @@
 #' @param overwrite placeholder
 #' @param n_blocks placeholder
 #' @return placeholder
+#' @export
 #' 
 
 sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 20) {

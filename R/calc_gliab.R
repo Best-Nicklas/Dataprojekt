@@ -7,7 +7,7 @@
 #' @param sigma placeholder
 #' @return placeholder
 #' @keywords internal
-#' 
+#' @export
 
 calc_gliab <- function(obj, beta, mu, sigma) {
   g_liab <- sweep(sweep(obj, 

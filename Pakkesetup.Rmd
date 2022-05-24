@@ -29,7 +29,6 @@ usethis::use_vignette("LTFH") #Laver vignettes/artikler. Lav en med samme navn s
 #installation af pakke fra samme mappe 
 devtools::load_all()
 devtools::install()
-
 #installation af pakke fra github
 devtools::install_github("Best-Nicklas/TestPackageSiteR")
 ```
@@ -41,4 +40,5 @@ pkgdown::build_site() #Bygger siden lokalt
 usethis::use_pkgdown_github_pages() #forbinder til github pages 
 
 ```
+
 

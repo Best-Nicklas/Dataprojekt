@@ -6,6 +6,7 @@
 #' @param covmatrix A co-variance matrix 
 #' @return The conditional values of mu and sigma
 #' @keywords internal
+#' @export
 
 cond_calc <- function(i, covmatrix) {
   s11 <- covmatrix[i, i]

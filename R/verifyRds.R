@@ -11,6 +11,7 @@
 #' @param nrow Amount of rows.
 #' @param ncol Amount of columns.
 #' @keywords internal
+#' @export
 
 
 verifyRds <- function(path, overwrite, nrow, ncol) {
