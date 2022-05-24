@@ -7,7 +7,7 @@
 #' @export 
 #' 
 #' 
-GWAS <- function(person, y, include = rows_along(person$genotypes)) {
+GWAS <- function(person, y, include = bigparallelr::rows_along(person$genotypes)) {
   FBM <- person$genotypes
   
   #Uses function from bigSNPr package to do regression on FBM

@@ -7,7 +7,7 @@
 #' @export 
 #' 
 
-GWAX <- function(child, include = rows_along(child$genotypes)) {
+GWAX <- function(child, include = bigparallelr::rows_along(child$genotypes)) {
   
   p1_Status <- child$FAM$p1_Status
   p2_Status <- child$FAM$p2_Status
