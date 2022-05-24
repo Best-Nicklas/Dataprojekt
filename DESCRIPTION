@@ -12,7 +12,15 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports:
     magrittr,
-    tibble
+    tibble,
+    bigsnpr,
+    bigstatsr,
+    dplyr,
+    future.apply,
+    ggplot2,
+    purrr,
+    magrittr,
+    bigparallelr
 Suggests: 
     knitr,
     rmarkdown

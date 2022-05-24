@@ -19,7 +19,7 @@ usethis::use_mit_license() #licens
 usethis::use_readme_md() #Frontside/github tekst   
 usethis::use_pipe()
 
-devtools::document() #konverterer dokumentationer 
+devtools::document() #konverterer dokumentationer og tilføjer namespaces
 usethis::use_vignette("LTFH") #Laver vignettes/artikler. Lav en med samme navn som pakken for at få "get started" siden. 
 
 
