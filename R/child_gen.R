@@ -9,10 +9,10 @@
 
 child_gen = function(p1, p2){
   #Finds the positions at which both parents have 1
-  ph1 = which(p1 == 1, arr.ind = T) %>% as_tibble()
-  ph2 = which(p2 == 1, arr.ind = T) %>% as_tibble()
-  ind_11 = bind_rows(inner_join(ph1, ph2, by = c("row", "col")), 
-                     inner_join(ph1, ph2, by = c("row", "col"))) %>% distinct()
+  ph1 = which(p1 == 1, arr.ind = T) %>% dplyr::as_tibble()
+  ph2 = which(p2 == 1, arr.ind = T) %>% dplyr::as_tibble()
+  ind_11 = dplyr::bind_rows(dplyr::inner_join(ph1, ph2, by = c("row", "col")), 
+                            dplyr::inner_join(ph1, ph2, by = c("row", "col"))) %>% dplyr::distinct()
   
   #calculates the avg genotypes for the parents 
   temp <- (p1 + p2) / 2
