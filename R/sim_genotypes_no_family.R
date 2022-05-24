@@ -1,4 +1,6 @@
-#' Description - Simulation with no family
+#' Simulation of genotypes with no family
+#' 
+#' 
 #' @param n placeholder
 #' @param disease placeholder
 #' @param path placeholder
@@ -29,7 +31,7 @@ sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 
   blocks <-  round(seq(0, n, length = n_blocks + 1))
   
   # Inserts values into FBM and calculate genetic liabilities in block sizes
-  g_liabs <- future_lapply(1:(length(blocks) - 1), function(i) {  
+  g_liabs <- future.apply::future_lapply(1:(length(blocks) - 1), function(i) {  
     b_start <- blocks[i] + 1
     b_end <- blocks[i + 1]
     b_size <- (b_end - b_start + 1)
