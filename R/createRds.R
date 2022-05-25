@@ -1,4 +1,4 @@
-#' Create .rds file.
+#' Create an .rds file
 #' 
 #' This function is used to create and save a file-backed matrix with related information.
 #' 

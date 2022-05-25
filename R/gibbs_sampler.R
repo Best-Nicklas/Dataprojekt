@@ -1,4 +1,4 @@
-#' Gibbs sampling
+#' Gibbs sample posterior mean genetic liabilities
 #' 
 #' This function is used as a helper function for the LTFH function. It calculates the 
 #' posterior mean genetic liability for and individual with a given 
@@ -12,7 +12,7 @@
 #' @param burn_in An integer that specifies the burn-in period before sampling for the mean.
 #' @param cov_mat Co-variance matrix modeling the liabilities.
 #' @param prevalence Integer specifying the likelihood of having the disease in the population.
-#' @return The mean posterior genetic liability of the configuration.
+#' @return The posterior mean genetic liability of the configuration.
 #' @export
 #'
 

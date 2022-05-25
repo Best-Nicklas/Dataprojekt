@@ -2,7 +2,7 @@
 % Please edit documentation in R/openRds.R
 \name{OpenRds}
 \alias{OpenRds}
-\title{Open Rds}
+\title{Open an .rds file}
 \usage{
 OpenRds(path)
 }

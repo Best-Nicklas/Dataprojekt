@@ -1,4 +1,4 @@
-#' Power plot
+#' Create a power plot from analysis
 #' 
 #' This function plots the power of different analysis methods.
 #' 

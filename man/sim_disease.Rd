@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_disease.R
 \name{sim_disease}
 \alias{sim_disease}
-\title{Simulation of a disease}
+\title{Simulation of disease parameters}
 \usage{
 sim_disease(
   n_snp,

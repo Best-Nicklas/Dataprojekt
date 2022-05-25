@@ -2,7 +2,7 @@
 % Please edit documentation in R/rnorm_trunc.R
 \name{rnorm_trunc}
 \alias{rnorm_trunc}
-\title{Truncated}
+\title{Sample from a truncated normal distribution}
 \usage{
 rnorm_trunc(n, range, mu, sigma)
 }

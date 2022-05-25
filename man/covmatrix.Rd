@@ -2,7 +2,7 @@
 % Please edit documentation in R/covmatrix.R
 \name{covmatrix}
 \alias{covmatrix}
-\title{Co-variance matrix}
+\title{Calculate co-variance matrix for liability modeling}
 \usage{
 covmatrix(h2, n_sib = 0)
 }

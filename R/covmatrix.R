@@ -1,4 +1,4 @@
-#' Co-variance matrix
+#' Calculate co-variance matrix for liability modeling
 #' 
 #' This function creates the theoretical co-variance matrix for the 
 #' multivariate normal distribution which is used to model the liabilities.

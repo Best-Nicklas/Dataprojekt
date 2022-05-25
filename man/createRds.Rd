@@ -2,7 +2,7 @@
 % Please edit documentation in R/createRds.R
 \name{createRds}
 \alias{createRds}
-\title{Create .rds file.}
+\title{Create an .rds file}
 \usage{
 createRds(path, nrow, ncol)
 }

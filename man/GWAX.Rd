@@ -2,7 +2,7 @@
 % Please edit documentation in R/GWAX.R
 \name{GWAX}
 \alias{GWAX}
-\title{GWAX}
+\title{Perform GWAS with proxy information on family case-control status}
 \usage{
 GWAX(child, include = bigparallelr::rows_along(child$genotypes))
 }

@@ -1,4 +1,4 @@
-#' Open Rds
+#' Open an .rds file
 #' 
 #' This function is used to open a saved .rds file. If the path do not exists 
 #' the function returns a error message. 

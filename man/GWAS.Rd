@@ -2,7 +2,7 @@
 % Please edit documentation in R/GWAS.R
 \name{GWAS}
 \alias{GWAS}
-\title{GWAS}
+\title{Perform genome wide association study (GWAS)}
 \usage{
 GWAS(person, y, include = bigparallelr::rows_along(person$genotypes))
 }

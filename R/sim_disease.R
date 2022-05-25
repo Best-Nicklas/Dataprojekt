@@ -1,4 +1,4 @@
-#' Simulation of a disease 
+#' Simulation of disease parameters
 #' 
 #' This function is used to simulate disease parameters. If not predetermined,
 #' the function will randomly calculate causal SNPs, MAF vaules and beta values. 

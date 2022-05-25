@@ -1,4 +1,4 @@
-#' Prediction Cross-validation
+#' Perform Prediction Cross-validation to determine best model
 #' 
 #' 
 #' This function is used to calculate predictive powers of different models.

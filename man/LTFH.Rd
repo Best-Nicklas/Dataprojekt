@@ -2,7 +2,7 @@
 % Please edit documentation in R/LTFH.R
 \name{LTFH}
 \alias{LTFH}
-\title{LTFH}
+\title{Perform GWAS on posterior mean genetic liabilities}
 \usage{
 LTFH(child, prevalence, h2)
 }
@@ -15,11 +15,11 @@ LTFH(child, prevalence, h2)
 }
 \value{
 The function returns a list, where the first entrance is the GWAS
-output and the second entrance are the calculated mean posterior genetic liabilities.
+output and the second entrance are the calculated posterior mean genetic liabilities.
 }
 \description{
 This function finds all the unique status configurations in the data and
 calculates the mean posterior genetic liability for each of these unique
-configurations using gibbs sampling. The calculated mean posterior genetic
+configurations using gibbs sampling. The calculated posterior mean genetic
 liabilities are then matched to each person in the dataset and used to perform GWAS.
 }

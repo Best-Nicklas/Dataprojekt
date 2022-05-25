@@ -2,7 +2,7 @@
 % Please edit documentation in R/Manhattan_plot.R
 \name{Manhattan_plot}
 \alias{Manhattan_plot}
-\title{Manhattan plot}
+\title{Make a Manhattan plot from analysis data}
 \usage{
 Manhattan_plot(x)
 }

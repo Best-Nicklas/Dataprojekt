@@ -1,4 +1,4 @@
-#' Truncated
+#' Sample from a truncated normal distribution
 #' 
 #' Helper function used to sample from a truncated normal distribution.
 #' 

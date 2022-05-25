@@ -1,4 +1,4 @@
-#' GWAS
+#' Perform genome wide association study (GWAS)
 #' 
 #' This function performs a GWAS on given genotype and phenotype data to find the likelihood that 
 #' SNPs are causal.

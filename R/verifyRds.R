@@ -1,4 +1,4 @@
-#' Verification of .rds file.
+#' Verification of .rds file
 #' 
 #' This is an internal helper function used to verify if the path is valid. If the path is already in use, 
 #' it checks if the already exiting .rds file has the same dimensions and overwrites it (if overwrite TRUE). 

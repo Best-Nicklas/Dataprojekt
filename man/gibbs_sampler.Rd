@@ -2,7 +2,7 @@
 % Please edit documentation in R/gibbs_sampler.R
 \name{gibbs_sampler}
 \alias{gibbs_sampler}
-\title{Gibbs sampling}
+\title{Gibbs sample posterior mean genetic liabilities}
 \usage{
 gibbs_sampler(config, burn_in, cov_mat, prevalence)
 }
@@ -18,7 +18,7 @@ and the rest that of siblings.}
 \item{prevalence}{Integer specifying the likelihood of having the disease in the population.}
 }
 \value{
-The mean posterior genetic liability of the configuration.
+The posterior mean genetic liability of the configuration.
 }
 \description{
 This function is used as a helper function for the LTFH function. It calculates the

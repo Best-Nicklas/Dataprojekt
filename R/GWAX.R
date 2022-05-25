@@ -1,4 +1,4 @@
-#' GWAX
+#' Perform GWAS with proxy information on family case-control status
 #' 
 #' This function uses proxy information on case-control status and given genotype data to find the likelihood that 
 #' SNPs are causal. Information on parent case-control status must be included. 

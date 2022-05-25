@@ -1,4 +1,4 @@
-#' Manhattan plot
+#' Make a Manhattan plot from analysis data 
 #' 
 #' This function produces a Manhattan plot from p-values found in an association analysis. 
 #' 

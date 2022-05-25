@@ -2,7 +2,7 @@
 % Please edit documentation in R/verifyRds.R
 \name{verifyRds}
 \alias{verifyRds}
-\title{Verification of .rds file.}
+\title{Verification of .rds file}
 \usage{
 verifyRds(path, overwrite, nrow, ncol)
 }

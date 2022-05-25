@@ -2,7 +2,7 @@
 % Please edit documentation in R/Prediction_cross_validation.R
 \name{Prediction_cross_validation}
 \alias{Prediction_cross_validation}
-\title{Prediction Cross-validation}
+\title{Perform Prediction Cross-validation to determine best model}
 \usage{
 Prediction_cross_validation(
   person,

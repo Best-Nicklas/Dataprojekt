@@ -2,7 +2,7 @@
 % Please edit documentation in R/Power_plot.R
 \name{Power_plot}
 \alias{Power_plot}
-\title{Power plot}
+\title{Create a power plot from analysis}
 \usage{
 Power_plot(x)
 }
