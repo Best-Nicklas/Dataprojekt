@@ -1,13 +1,14 @@
-#' placeholder
+#' Gibbs sampler
 #' 
-#' This function calculates mean of genetic liability given a configuration.
-#' 
+#' This function is used as a helper function for the LTFH function. 
+#' This gibbs sampler calculates mean of genetic liability given a configuration, 
+#' where the configurations are made from the status for a family.
 #' 
 #' @param config List of configurations 
-#' @param burn_in 
+#' @param burn_in A number that specifies the burn-in period
 #' @param cov_mat Co-variance matrix
 #' @param prevalence The likelihood of having the disease
-#' @return The mean of genetic liability from the given configaration 
+#' @return The mean of genetic liability from the given configuration 
 #' @export
 #'
 

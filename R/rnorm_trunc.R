@@ -1,12 +1,12 @@
-#' placeholder
+#' Truncated
 #' 
-#' Helper function to calculate threshold for truncated distribution 
+#' Helper function to calculate threshold for truncated distribution.
 #' 
-#' @param n placeholder
+#' @param n Integer
 #' @param range placeholder
-#' @param mu placeholder
-#' @param sigma placeholder
-#' @return The threshold value used to get the truncated distribution
+#' @param mu Mu
+#' @param sigma Sigma
+#' @return The threshold value used in a truncated distribution
 #' @export
 #' 
 

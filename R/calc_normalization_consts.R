@@ -1,8 +1,9 @@
 #' Constants for normalization
 #' 
-#' This function calculates the theoretical value of the constants mu and sigma, which are used to normalize the data. 
-#' @param MAF List of Minor Ale Frequency.
-#' @param causal List of causal SNP´s where causal SNP´s has the value 1.
+#' This function calculates the theoretical value of the constants mu and sigma, which are used to normalize the data.
+#'  
+#' @param MAF List of Minor Allele Frequency.
+#' @param causal List of causal SNPs where causal SNPs has the value 1.
 #' @return A list with the theoretical values of mu and sigma.
 #' @keywords internal
 

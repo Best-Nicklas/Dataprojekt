@@ -1,11 +1,12 @@
-#' title
+#' title Calculation for genetic liability
 #' 
-#' Helper function to calculate genetic liabilities.
-#' @param obj placeholder
-#' @param beta placeholder
-#' @param mu placeholder
-#' @param sigma placeholder
-#' @return placeholder
+#' This is a helper function to used to calculate genetic liabilities.
+#' 
+#' @param obj A matrix where colums are genotypes and rows are amout of persons.
+#' @param beta List of beta values.
+#' @param mu List of mu vaules.
+#' @param sigma List of sigma vaules.
+#' @return The function returns a matrix with one genetic liability for each row
 #' @keywords internal
 #' 
 

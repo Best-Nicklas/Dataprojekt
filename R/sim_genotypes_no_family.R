@@ -1,12 +1,16 @@
 #' Simulation of genotypes with no family
 #' 
+#' This function is used to simulate genotypes for parents and child. 
+#' The function then calculates the phenotype data from the genotypes and saves 
+#' the data in a tibble, which can then be used for genetic associations studies. 
 #' 
-#' @param n placeholder
-#' @param disease placeholder
-#' @param path placeholder
-#' @param overwrite placeholder
-#' @param n_blocks placeholder
-#' @return placeholder
+#' 
+#' @param n Amount of rows and columns
+#' @param disease A list with all the disease parameters 
+#' @param path Path to the .rds file
+#' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
+#' @param n_blocks Integer used to determine amount of blocks (Default value is 20)
+#' @return 
 #' 
 
 sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 20) {
@@ -53,7 +57,7 @@ sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 
   FBM$FAM$Status <- (FBM$FAM$Full_Liability > threshold) + 0
   
   FBM$MAP$MAF <- MAF
-  FBM$MAP$BETA  <- beta
+  FBM$MAP$BETA <- beta
   
   return(FBM)
 }

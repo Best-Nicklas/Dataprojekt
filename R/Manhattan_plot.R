@@ -1,5 +1,7 @@
-#' @title Manhattan plot
-#' @description Produces a Manhattan plot from a regression
+#' Manhattan plot
+#' 
+#' This function produces a Manhattan plot from a regression.
+#' 
 #' @param x A regression
 #' @return A Manhattan plot with each regressor on the x-axis and their -log10(P-values) on the y-axis. 
 #' @export

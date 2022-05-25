@@ -1,17 +1,15 @@
-#' Simulation with family (Fixed and non fixed)
+#' Simulation of family (Fixed and non fixed)
 #' 
-#' This function is used to simulate parents and child genotypes. With the parents 
-#' genotypes, the function calculates the status of parents, child and 
-#' siblings, using a LTFH helper function. All the data is stored in a tibble, 
-#' which can then be used for genetic associations studies. 
+#' This function is used to simulate genotypes for parents, child and siblings.
+#' The function then calculates the phenotype data from the genotypes and saves 
+#' the data in a tibble, which can then be used for genetic associations studies. 
 #' 
-#' 
-#' @param n placeholder
-#' @param disease placeholder
-#' @param path placeholder
-#' @param n_sibs placeholder
-#' @param overwrite placeholder
-#' @param n_blocks placeholder
+#' @param n Number of rows and columns
+#' @param disease A list with all the disease parameters 
+#' @param path Path to the .rds file
+#' @param n_sibs Number of siblings
+#' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
+#' @param n_blocks Integer used to determine amount of blocks (Default value is 20)
 #' @return  placeholder
 #' 
 

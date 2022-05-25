@@ -1,9 +1,10 @@
-#' Description 
-#' 
 #' GWAX
 #' 
-#' @param child placeholder
-#' @return placeholder
+#' This function is used to 
+#' 
+#' @param child A .rds file with an FBM.code256 and accompanying FAM and MAP.
+#' @param include Vector of rows to use in regression. Used with cross-validation. Default uses all rows.
+#' @return A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
 #' @export 
 #' 
 

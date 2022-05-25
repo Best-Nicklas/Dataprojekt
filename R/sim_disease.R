@@ -1,17 +1,18 @@
 #' Simulation of a disease 
 #' 
-#' This function is used to simulate a disease parameters. 
+#' This function is used to simulate disease parameters. If not predetermined,
+#' the fucntion will randomly calculate causal SNPs, MAF vaules and beta vaules. 
 #' 
-#' @param n_snp Amount of SNPs
-#' @param prevalence Prevalence of disease in simulated population
-#' @param h2 Herability parameter 
+#' @param n_snp Amount of SNPs.
+#' @param prevalence Prevalence of disease in simulated population.
+#' @param h2 Herability parameter.
 #' @param causal List of predetermined causal SNPs. Leave empty to get random causal SNPs. 
-#' @param causal_n Amount of causal SNPs. Default value is 10 procent of total SNPs 
-#' @param maf List of predetermined Minor Ale Frequency 
+#' @param causal_n Amount of causal SNPs. Default value is 10 procent of total SNPs.
+#' @param maf List of predetermined Minor Allele Frequency.
 #' @param maf_low placeholder
 #' @param maf_high placeholder
-#' @param seed placeholder
-#' @return placeholder
+#' @param seed Seed, if the need to simulate same disease parameters.
+#' @return A list with all the diesease parameters.
 #'
 #' 
 

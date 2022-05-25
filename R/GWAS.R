@@ -1,5 +1,7 @@
 #' GWAS
-#' Calculates a linear regression
+#' 
+#' This function calculates a linear regression
+#' 
 #' @param person A .rds file with an FBM.code256 and accompanying FAM and MAP.
 #' @param y Vector of regressands to regress on 
 #' @param include Vector of rows to use in regression. Used with cross-validation. Default uses all rows.

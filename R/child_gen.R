@@ -1,10 +1,14 @@
-#' Description 
+#' Childs genotypes 
 #' 
-#' wdwdwd
+#' This function is used as a helper function to calculate the genotypes of 
+#' the child given the parents genotypes. The two parents list of genotypes are 
+#' added together and divided by 2. All non integers are then randomly rounded 
+#' up and down. 
 #' 
-#' @param p1 placeholder
-#' @param p2 placeholder
-#' @return wd34
+#' 
+#' @param p1 List of genotypes.
+#' @param p2 List of genotypes.
+#' @return The function returns a list of the childs genotypes.
 #' @keywords internal
 
 child_gen = function(p1, p2){

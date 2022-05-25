@@ -22,7 +22,8 @@ createRds <-  function(path, nrow, ncol) {
     genotypes = G,
     MAP = tibble::tibble(SNP_ID = 1:ncol),
     FAM = tibble::tibble(ID = 1:nrow))
-  snp_save(obj.bigsnp)
+  
+  bigstatsr::snp_save(obj.bigsnp)
   
   
   return(obj.bigsnp)

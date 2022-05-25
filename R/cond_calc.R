@@ -1,7 +1,8 @@
-#' placeholder
+#' Conditional values of mu and sigma
 #' 
 #' This function calculates the conditional mu and sigma given a co-variance 
-#' matrix. 
+#' matrix.
+#'  
 #' @param i Index of person 
 #' @param covmatrix A co-variance matrix 
 #' @return The conditional values of mu and sigma

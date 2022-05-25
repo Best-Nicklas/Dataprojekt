@@ -1,14 +1,15 @@
-#' placeholder
+#' LTFH
 #' 
 #' This function finds all the unique status configurations in the data and 
 #' calculates the mean posterior genetic liability for each of these unique 
-#' configurations using a gibbs-sampler. The calculated mean posterior genetic 
-#' liabilities are then matched to each person in the data-set.
+#' configurations using gibbs sampling. The calculated mean posterior genetic 
+#' liabilities are then matched to each person in the dataset.
 #' 
-#' @param child Dataframe containing liabilities and status for the entire family
-#' @param prevalence The likelihood of having the disease
-#' @param h2 Heredity
-#' @return placeholder
+#' @param child A .rds file with an FBM.code256 and accompanying FAM and MAP.
+#' @param prevalence The likelihood of having the disease.
+#' @param h2 Heritability parameter.
+#' @return The function returns a list, where the first entrance are the GWAS 
+#' values and the second entrance are calculated mean posterior genetic liabilities.
 #' @export
 #' 
 

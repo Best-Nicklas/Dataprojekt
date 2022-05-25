@@ -8,7 +8,6 @@
 #' @return A co-variance matrix, created from the value of h2 and 
 #' the amount of sib. 
 #' 
-#' 
 #' @export
 #' 
 covmatrix <- function(h2, n_sib = 0) {
