@@ -1,9 +1,10 @@
 #' Open Rds
 #' 
-#' This function is used to open an .rds file. If the path do not exists 
+#' This function is used to open a saved .rds file. If the path do not exists 
 #' the function returns a error message. 
 #' 
-#' @param path Path to file
+#' @param path Path to file (DO NOT INCLUDE FILE EXTENSION).
+#' @return returns the list saved in .rds file. 
 #' @export
 #' 
 

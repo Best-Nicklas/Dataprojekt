@@ -7,11 +7,11 @@
 Manhattan_plot(x)
 }
 \arguments{
-\item{x}{A regression}
+\item{x}{List object containing p-values from an analysis.}
 }
 \value{
-A Manhattan plot with each regressor on the x-axis and their -log10(P-values) on the y-axis.
+A Manhattan plot with each regressor (SNP) on the x-axis and their -log10(P-values) on the y-axis.
 }
 \description{
-Produces a Manhattan plot from a regression
+This function produces a Manhattan plot from p-values found in an association analysis.
 }

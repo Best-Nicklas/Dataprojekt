@@ -12,32 +12,30 @@ sim_disease(
   causal_n = round(n_snp/10),
   maf = NULL,
   maf_low = 0.01,
-  maf_high = 0.49,
-  seed = NULL
+  maf_high = 0.49
 )
 }
 \arguments{
-\item{n_snp}{Amount of SNPs}
+\item{n_snp}{Integer specifying amount of SNPs.}
 
-\item{prevalence}{Prevalence of disease in simulated population}
+\item{prevalence}{Integer specifying prevalence of disease in simulated population.}
 
-\item{h2}{Herability parameter}
+\item{h2}{Integer specifying heritability parameter.}
 
-\item{causal}{List of predetermined causal SNPs. Leave empty to get random causal SNPs.}
+\item{causal}{Vector of predetermined causal SNPs (0 if not causal, 1 if causal). Leave empty to get random causal SNPs.}
 
-\item{causal_n}{Amount of causal SNPs. Default value is 10 procent of total SNPs}
+\item{causal_n}{Integer specifying amount of causal SNPs if no causal param given. Default value is 10 procent of total SNPs.}
 
-\item{maf}{List of predetermined Minor Ale Frequency}
+\item{maf}{Vector of predetermined Minor Allele Frequencies.Leave empty to get random MAF.}
 
-\item{maf_low}{placeholder}
+\item{maf_low}{Integer specifying lower bound for MAF if none given.}
 
-\item{maf_high}{placeholder}
-
-\item{seed}{placeholder}
+\item{maf_high}{Integer specifying upper bound for MAF if none given.}
 }
 \value{
-placeholder
+A list with all the diesease parameters.
 }
 \description{
-This function is used to simulate a disease parameters.
+This function is used to simulate disease parameters. If not predetermined,
+the function will randomly calculate causal SNPs, MAF vaules and beta values.
 }

@@ -2,23 +2,24 @@
 % Please edit documentation in R/LTFH.R
 \name{LTFH}
 \alias{LTFH}
-\title{placeholder}
+\title{LTFH}
 \usage{
 LTFH(child, prevalence, h2)
 }
 \arguments{
-\item{child}{Dataframe containing liabilities and status for the entire family}
+\item{child}{A list object with an FBM.code256 and accompanying FAM and MAP.}
 
-\item{prevalence}{The likelihood of having the disease}
+\item{prevalence}{The likelihood of having the disease in the population}
 
-\item{h2}{Heredity}
+\item{h2}{Heritability parameter.}
 }
 \value{
-placeholder
+The function returns a list, where the first entrance is the GWAS
+output and the second entrance are the calculated mean posterior genetic liabilities.
 }
 \description{
 This function finds all the unique status configurations in the data and
 calculates the mean posterior genetic liability for each of these unique
-configurations using a gibbs-sampler. The calculated mean posterior genetic
-liabilities are then matched to each person in the data-set.
+configurations using gibbs sampling. The calculated mean posterior genetic
+liabilities are then matched to each person in the dataset and used to perform GWAS.
 }

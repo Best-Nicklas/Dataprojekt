@@ -1,24 +1,22 @@
 #' Simulation of a disease 
 #' 
 #' This function is used to simulate disease parameters. If not predetermined,
-#' the fucntion will randomly calculate causal SNPs, MAF vaules and beta vaules. 
+#' the function will randomly calculate causal SNPs, MAF vaules and beta values. 
 #' 
-#' @param n_snp Amount of SNPs.
-#' @param prevalence Prevalence of disease in simulated population.
-#' @param h2 Herability parameter.
-#' @param causal List of predetermined causal SNPs. Leave empty to get random causal SNPs. 
-#' @param causal_n Amount of causal SNPs. Default value is 10 procent of total SNPs.
-#' @param maf List of predetermined Minor Allele Frequency.
-#' @param maf_low placeholder
-#' @param maf_high placeholder
-#' @param seed Seed, if the need to simulate same disease parameters.
+#' @param n_snp Integer specifying amount of SNPs.
+#' @param prevalence Integer specifying prevalence of disease in simulated population.
+#' @param h2 Integer specifying heritability parameter.
+#' @param causal Vector of predetermined causal SNPs (0 if not causal, 1 if causal). Leave empty to get random causal SNPs. 
+#' @param causal_n Integer specifying amount of causal SNPs if no causal param given. Default value is 10 procent of total SNPs.
+#' @param maf Vector of predetermined Minor Allele Frequencies.Leave empty to get random MAF.
+#' @param maf_low Integer specifying lower bound for MAF if none given. 
+#' @param maf_high Integer specifying upper bound for MAF if none given. 
 #' @return A list with all the diesease parameters.
 #'
 #' 
 
 
-sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = round(n_snp / 10), maf = NULL, maf_low = 0.01, maf_high = 0.49, seed = NULL){
-  if (!is.null(seed)) {set.seed(seed)}
+sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = round(n_snp / 10), maf = NULL, maf_low = 0.01, maf_high = 0.49){
   
   #Calculates a vector with causal SNPs at random positions if a causal vector not given
   if (is.null(causal)) {

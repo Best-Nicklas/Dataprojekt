@@ -1,16 +1,17 @@
 #' Simulation of family (Fixed and non fixed)
 #' 
-#' This function is used to simulate genotypes for parents, child and siblings.
-#' The function then calculates the phenotype data from the genotypes and saves 
-#' the data in a tibble, which can then be used for genetic associations studies. 
+#' This function is used to simulate genotypes gentypes for individuals with accompanying phenotype information and 
+#' information on the case-control status of parents annd possible sibling.
 #' 
-#' @param n Number of rows and columns
-#' @param disease A list with all the disease parameters 
-#' @param path Path to the .rds file
-#' @param n_sibs Number of siblings
+#' @param n Integer specifying the number of individuals/genotypes to simulate. 
+#' @param disease A list with all the disease parameters.
+#' @param path Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).
+#' @param n_sibs Integer value for how many sibling to produce for each genotype or vector containing values for
+#' how many sibs to sample from (ex. c(1,4,6) will produce genotypes randomly with 1, 4 or 6 siblings).  
 #' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
-#' @param n_blocks Integer used to determine amount of blocks (Default value is 20)
-#' @return  placeholder
+#' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.
+#' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
+#' FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
 #' @export
 #' 
 
@@ -30,7 +31,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
   if (!is.null(n_sibs)) {
     sibs_pr_child <- if (length(n_sibs) == 1) 
     {rep(n_sibs,n)} else 
-      sample(min(n_sibs):max(n_sibs), n, replace = T)
+      sample(n_sibs, n, replace = T)
   }
   
   # Calculate normalization constants 
@@ -66,10 +67,13 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
     sibs_gliab <- vector(mode = "list", b_size)
     if (!is.null(n_sibs)) {
       for (s in 1:b_size) {
-        sibs <- child_gen(matrix(rep(p1[s, ], sibs_pr_child[s]), sibs_pr_child[s], cols, byrow = T),
-                          matrix(rep(p2[s, ], sibs_pr_child[s]), sibs_pr_child[s], cols, byrow = T))
+        if (sibs_pr_child[s] != 0) {
+          sibs <- child_gen(matrix(rep(p1[s, ], sibs_pr_child[s]), sibs_pr_child[s], cols, byrow = T),
+                            matrix(rep(p2[s, ], sibs_pr_child[s]), sibs_pr_child[s], cols, byrow = T))
+          
+          sibs_gliab[[s]] <- calc_gliab(sibs, beta, mu, sigma)  
+        } else sibs_gliab[[s]] <- NULL
         
-        sibs_gliab[[s]] <- calc_gliab(sibs, beta, mu, sigma)
       }
     }
     

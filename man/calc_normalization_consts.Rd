@@ -2,19 +2,21 @@
 % Please edit documentation in R/calc_normalization_consts.R
 \name{calc_normalization_consts}
 \alias{calc_normalization_consts}
-\title{Constants for normalization}
+\title{Calculation of normalization constants}
 \usage{
 calc_normalization_consts(MAF, causal)
 }
 \arguments{
-\item{MAF}{List of Minor Ale Frequency.}
+\item{MAF}{Vector of Minor Allele Frequencies.}
 
-\item{causal}{List of causal SNP´s where causal SNP´s has the value 1.}
+\item{causal}{Vector of causal SNPs where causal SNPs has the value 1 and non causal SNPs has the value 0.}
 }
 \value{
-A list with the theoretical values of mu and sigma.
+A list with that contains two vectors, one for theoretical values of mu and one for the theoretical values of
+sigma.
 }
 \description{
-This function calculates the theoretical value of the constants mu and sigma, which are used to normalize the data.
+This an internal helper function used to calculate the theoretical value of the constants
+mu and sigma, which are used to normalize the data.
 }
 \keyword{internal}

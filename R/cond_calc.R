@@ -1,11 +1,11 @@
 #' Conditional values of mu and sigma
 #' 
-#' This function calculates the conditional mu and sigma given a co-variance 
-#' matrix.
+#' This function is an internal helper function used to calculate the 
+#' conditional mu and sigma of a co-variance for a multivariate normal distribution.
 #'  
-#' @param i Index of person 
-#' @param covmatrix A co-variance matrix 
-#' @return The conditional values of mu and sigma
+#' @param i parameter index of interest.
+#' @param covmatrix the co-variance matrix. 
+#' @return The conditional values of mu and sigma.
 #' @keywords internal
 #' @export
 

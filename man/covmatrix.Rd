@@ -7,15 +7,15 @@
 covmatrix(h2, n_sib = 0)
 }
 \arguments{
-\item{h2}{Heritability parameter.}
+\item{h2}{Integer specifying heritability parameter (0 < h2 < 1).}
 
-\item{sib}{Number of siblings.}
+\item{sib}{Integer specifying number of siblings (default 0).}
 }
 \value{
 A co-variance matrix, created from the value of h2 and
-the amount of sib.
+the number of sibs.
 }
 \description{
-This function creates the theoretical co-variance matrix from the
+This function creates the theoretical co-variance matrix for the
 multivariate normal distribution which is used to model the liabilities.
 }

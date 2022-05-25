@@ -2,13 +2,17 @@
 % Please edit documentation in R/openRds.R
 \name{OpenRds}
 \alias{OpenRds}
-\title{Description -}
+\title{Open Rds}
 \usage{
 OpenRds(path)
 }
 \arguments{
-\item{path}{Path to file}
+\item{path}{Path to file (DO NOT INCLUDE FILE EXTENSION).}
+}
+\value{
+returns the list saved in .rds file.
 }
 \description{
-Open Rds
+This function is used to open a saved .rds file. If the path do not exists
+the function returns a error message.
 }

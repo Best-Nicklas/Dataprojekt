@@ -30,5 +30,5 @@ Prediction_cross_validation(
 A list with 3 values: a tibble with average and best scores for each threshold, the best score, and the best model.
 }
 \description{
-Function to calculate predictive powers of different models
+This function is used to calculate predictive powers of different models.
 }

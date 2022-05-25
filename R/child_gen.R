@@ -1,14 +1,16 @@
-#' Childs genotypes 
+#' Generator of genotypes for children
 #' 
-#' This function is used as a helper function to calculate the genotypes of 
-#' the child given the parents genotypes. The two parents list of genotypes are 
-#' added together and divided by 2. All non integers are then randomly rounded 
-#' up and down. 
+#' This function is an internal helper function used to calculate the genotypes of 
+#' children given the parents genotypes. 
 #' 
+#' @param p1 Matrix of genotypes where each row is the genotype of an individual.
+#' @param p2 Matrix of genotypes where each row is the genotype of an individual.
+#' @return The function returns a matrix of childrens genotypes where each row is a childs genotype calculated 
+#' based on the row on p1 and p2 at the same index.
 #' 
-#' @param p1 List of genotypes.
-#' @param p2 List of genotypes.
-#' @return The function returns a list of the childs genotypes.
+#' @details 
+#' The genotypes for a child are calculated by finding the average genotypes of the parents, and
+#' randomly rounding non-intergers. SNPs where both parents have 1 are sampled from {0,1, 2}. 
 #' @keywords internal
 #' @export
 
@@ -32,3 +34,4 @@ child_gen = function(p1, p2){
   temp[as.matrix(ind_11)] <- sample(0:2, size = nrow(ind_11), replace = T)  
   return(temp)
 }
+

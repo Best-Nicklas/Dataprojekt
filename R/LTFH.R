@@ -3,13 +3,13 @@
 #' This function finds all the unique status configurations in the data and 
 #' calculates the mean posterior genetic liability for each of these unique 
 #' configurations using gibbs sampling. The calculated mean posterior genetic 
-#' liabilities are then matched to each person in the dataset.
+#' liabilities are then matched to each person in the dataset and used to perform GWAS.
 #' 
-#' @param child A .rds file with an FBM.code256 and accompanying FAM and MAP.
-#' @param prevalence The likelihood of having the disease.
+#' @param child A list object with an FBM.code256 and accompanying FAM and MAP.
+#' @param prevalence The likelihood of having the disease in the population
 #' @param h2 Heritability parameter.
-#' @return The function returns a list, where the first entrance are the GWAS 
-#' values and the second entrance are calculated mean posterior genetic liabilities.
+#' @return The function returns a list, where the first entrance is the GWAS 
+#' output and the second entrance are the calculated mean posterior genetic liabilities.
 #' @export
 #' 
 

@@ -2,16 +2,20 @@
 % Please edit documentation in R/GWAX.R
 \name{GWAX}
 \alias{GWAX}
-\title{Description}
+\title{GWAX}
 \usage{
 GWAX(child, include = bigparallelr::rows_along(child$genotypes))
 }
 \arguments{
-\item{child}{placeholder}
+\item{child}{A list object with an FBM.code256 and accompanying FAM and MAP. Must contain case-control status
+parents in FAM.}
+
+\item{include}{Vector of rows to use in regression. Used with cross-validation. Default uses all rows.}
 }
 \value{
-placeholder
+A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
 }
 \description{
-GWAX
+This function uses proxy information on case-control status and given genotype data to find the likelihood that
+SNPs are causal. Information on parent case-control status must be included.
 }

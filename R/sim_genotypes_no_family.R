@@ -1,16 +1,15 @@
 #' Simulation of genotypes with no family
 #' 
-#' This function is used to simulate genotypes for parents and child. 
-#' The function then calculates the phenotype data from the genotypes and saves 
-#' the data in a tibble, which can then be used for genetic associations studies. 
+#' This function is used to simulate genotypes individuals with no family and accompanying phenotype data. 
 #' 
-#' 
-#' @param n Amount of rows and columns
-#' @param disease A list with all the disease parameters 
-#' @param path Path to the .rds file
-#' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
-#' @param n_blocks Integer used to determine amount of blocks (Default value is 20)
-#' @return 
+#' @param n Integer specifying amount of gentypes/indivduals to simulate. 
+#' @param disease A list with all the disease parameters.
+#' @param path Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).
+#' @param overwrite Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).
+#' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.
+#' @details Simulation can be performed using paralization if a paralization plan has been set prior to excution in the global environment. 
+#' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
+#' FAM object containing phenotype information on genotypes
 #' 
 
 sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 20) {

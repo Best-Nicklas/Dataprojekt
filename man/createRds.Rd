@@ -7,15 +7,23 @@
 createRds(path, nrow, ncol)
 }
 \arguments{
-\item{path}{Path where to save and find the file.}
+\item{path}{Path where to save the files (DO NOT SPECIFIY FILE EXTENSION).}
 
-\item{nrow}{Amount of rows.}
+\item{nrow}{Integer specifying number of rows.}
 
-\item{ncol}{Amount of columns.}
+\item{ncol}{Integer specifying number of columns.}
 }
 \value{
-An rds object containing a list with a file-backed matrix, FAM and MAP information in a list.
+A list containing a file-backed matrix, a
+FAM tibble and a MAP tibble.
 }
 \description{
-This function is used create a file-backed matrices and save it as an .rds file with related information.
+This function is used to create and save a file-backed matrix with related information.
+}
+\details{
+When using this function both a .bk and .rds file will be created at the specified path. Besides
+the file-backed matrix two tibbles containing FAM (phenotype information) and MAP (SNP information)
+will be intialized and saved together with the file-backed matrix in the .rds file.
+Both the .bk and the .rds file must always be in the same directory.
+The function openRds can be used to access these files again (see function reference for openRds).
 }

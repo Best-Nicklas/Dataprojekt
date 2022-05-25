@@ -2,20 +2,20 @@
 % Please edit documentation in R/cond_calc.R
 \name{cond_calc}
 \alias{cond_calc}
-\title{placeholder}
+\title{Conditional values of mu and sigma}
 \usage{
 cond_calc(i, covmatrix)
 }
 \arguments{
-\item{i}{Index of person}
+\item{i}{parameter index of interest.}
 
-\item{covmatrix}{A co-variance matrix}
+\item{covmatrix}{the co-variance matrix.}
 }
 \value{
-The conditional values of mu and sigma
+The conditional values of mu and sigma.
 }
 \description{
-This function calculates the conditional mu and sigma given a co-variance
-matrix.
+This function is an internal helper function used to calculate the
+conditional mu and sigma of a co-variance for a multivariate normal distribution.
 }
 \keyword{internal}

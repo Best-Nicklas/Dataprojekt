@@ -9,18 +9,15 @@ verifyRds(path, overwrite, nrow, ncol)
 \arguments{
 \item{path}{Path where to save and find the file.}
 
-\item{overwrite}{Boolean value.}
+\item{overwrite}{Boolean value specifying whether to overwrite exisiting files.}
 
-\item{nrow}{Amount of rows.}
+\item{nrow}{Integer specifying the amount of rows.}
 
-\item{ncol}{Amount of columns.}
+\item{ncol}{Integer specifying the amount of columns.}
 }
 \description{
-Verification of .rds file
-}
-\details{
-This function is used to verify if the path is valid. If the path is already in use,
-it checks if the already exiting .rds file has the same dimensions and overwrites it.
+This is an internal helper function used to verify if the path is valid. If the path is already in use,
+it checks if the already exiting .rds file has the same dimensions and overwrites it (if overwrite TRUE).
 If the dimensions are wrong it stops and returns a error message.
 }
 \keyword{internal}

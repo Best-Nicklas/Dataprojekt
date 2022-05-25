@@ -13,5 +13,5 @@ Power_plot(x)
 placeholder
 }
 \description{
-This function plots the power of
+This function plots the power of different analysis methods.
 }

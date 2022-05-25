@@ -2,19 +2,25 @@
 % Please edit documentation in R/child_gen.R
 \name{child_gen}
 \alias{child_gen}
-\title{Description}
+\title{Generator of genotypes for children}
 \usage{
 child_gen(p1, p2)
 }
 \arguments{
-\item{p1}{placeholder}
+\item{p1}{Matrix of genotypes where each row is the genotype of an individual.}
 
-\item{p2}{placeholder}
+\item{p2}{Matrix of genotypes where each row is the genotype of an individual.}
 }
 \value{
-wd34
+The function returns a matrix of childrens genotypes where each row is a childs genotype calculated
+based on the row on p1 and p2 at the same index.
 }
 \description{
-wdwdwd
+This function is an internal helper function used to calculate the genotypes of
+children given the parents genotypes.
+}
+\details{
+The genotypes for a child are calculated by finding the average genotypes of the parents, and
+randomly rounding non-intergers. SNPs where both parents have 1 are sampled from {0,1, 2}.
 }
 \keyword{internal}

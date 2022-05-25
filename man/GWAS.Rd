@@ -2,15 +2,14 @@
 % Please edit documentation in R/GWAS.R
 \name{GWAS}
 \alias{GWAS}
-\title{GWAS
-Calculates a linear regression}
+\title{GWAS}
 \usage{
 GWAS(person, y, include = bigparallelr::rows_along(person$genotypes))
 }
 \arguments{
-\item{person}{A .rds file with an FBM.code256 and accompanying FAM and MAP.}
+\item{person}{A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP.}
 
-\item{y}{Vector of regressands to regress on}
+\item{y}{Vector of regressands to regress on (case-control status of the genotypes in person)}
 
 \item{include}{Vector of rows to use in regression. Used with cross-validation. Default uses all rows.}
 }
@@ -18,6 +17,6 @@ GWAS(person, y, include = bigparallelr::rows_along(person$genotypes))
 A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
 }
 \description{
-GWAS
-Calculates a linear regression
+This function performs a GWAS on given genotype and phenotype data to find the likelihood that
+SNPs are causal.
 }

@@ -7,19 +7,23 @@
 sim_genotypes_no_family(n, disease, path, overwrite = T, n_blocks = 20)
 }
 \arguments{
-\item{n}{placeholder}
+\item{n}{Integer specifying amount of gentypes/indivduals to simulate.}
 
-\item{disease}{placeholder}
+\item{disease}{A list with all the disease parameters.}
 
-\item{path}{placeholder}
+\item{path}{Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).}
 
-\item{overwrite}{placeholder}
+\item{overwrite}{Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).}
 
-\item{n_blocks}{placeholder}
+\item{n_blocks}{Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.}
 }
 \value{
-placeholder
+Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
+FAM object containing phenotype information on genotypes
 }
 \description{
-Simulation of genotypes with no family
+This function is used to simulate genotypes individuals with no family and accompanying phenotype data.
+}
+\details{
+Simulation can be performed using paralization if a paralization plan has been set prior to excution in the global environment.
 }

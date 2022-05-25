@@ -1,16 +1,18 @@
-#' title Calculation for genetic liability
+#' Calculation of genetic liabilities
 #' 
-#' This is a helper function to used to calculate genetic liabilities.
+#' This is an internal helper function to used to calculate genetic liabilities.
 #' 
-#' @param obj A matrix where colums are genotypes and rows are amout of persons.
+#' @param obj A matrix consisting of 0s, 1s or 2s, where each row represents a genotype.
 #' @param beta List of beta values.
-#' @param mu List of mu vaules.
-#' @param sigma List of sigma vaules.
-#' @return The function returns a matrix with one genetic liability for each row
+#' @param mu List of mu values to normalize on.
+#' @param sigma List of sigma values to normalize on.
+#' @return The function returns a vector of genetic liabilities for each genotype.
 #' @keywords internal
 #' @export
 
 calc_gliab <- function(obj, beta, mu, sigma) {
+  # Uses sweep to normalize obj using the normalization constants mu and sigma, then does 
+  # matrix multiplication with beta.
   g_liab <- sweep(sweep(obj, 
                         MARGIN = 2, 
                         STATS = mu, 

@@ -1,12 +1,12 @@
 #' Truncated
 #' 
-#' Helper function to calculate threshold for truncated distribution.
+#' Helper function used to sample from a truncated normal distribution.
 #' 
-#' @param n Integer
-#' @param range placeholder
-#' @param mu Mu
-#' @param sigma Sigma
-#' @return The threshold value used in a truncated distribution
+#' @param n Integer value specifying the number of samples.
+#' @param range vector with two values specifying the truncated range (lower bound and upper bound). 
+#' @param mu Integer value specifying the mean of normal distribution.
+#' @param sigma Integer value specifying the standard deviation of the normal distribution.
+#' @return Sample values from the truncated normal distribution.
 #' @export
 #' 
 

@@ -1,6 +1,6 @@
 #' Power plot
 #' 
-#' This function plots the power of 
+#' This function plots the power of different analysis methods.
 #' 
 #' @param x 
 #' @return placeholder

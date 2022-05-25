@@ -1,9 +1,10 @@
 #' GWAS
 #' 
-#' This function calculates a linear regression
+#' This function performs a GWAS on given genotype and phenotype data to find the likelihood that 
+#' SNPs are causal.
 #' 
-#' @param person A .rds file with an FBM.code256 and accompanying FAM and MAP.
-#' @param y Vector of regressands to regress on 
+#' @param person A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP.
+#' @param y Vector of regressands to regress on (case-control status of the genotypes in person)
 #' @param include Vector of rows to use in regression. Used with cross-validation. Default uses all rows.
 #' @return A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
 #' @export 

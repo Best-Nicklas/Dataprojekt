@@ -1,9 +1,9 @@
 #' Manhattan plot
 #' 
-#' This function produces a Manhattan plot from a regression.
+#' This function produces a Manhattan plot from p-values found in an association analysis. 
 #' 
-#' @param x A regression
-#' @return A Manhattan plot with each regressor on the x-axis and their -log10(P-values) on the y-axis. 
+#' @param x List object containing p-values from an analysis. 
+#' @return A Manhattan plot with each regressor (SNP) on the x-axis and their -log10(P-values) on the y-axis. 
 #' @export
 #' 
 Manhattan_plot <- function(x) {

@@ -2,22 +2,22 @@
 % Please edit documentation in R/rnorm_trunc.R
 \name{rnorm_trunc}
 \alias{rnorm_trunc}
-\title{placeholder}
+\title{Truncated}
 \usage{
 rnorm_trunc(n, range, mu, sigma)
 }
 \arguments{
-\item{n}{placeholder}
+\item{n}{Integer value specifying the number of samples.}
 
-\item{range}{placeholder}
+\item{range}{vector with two values specifying the truncated range (lower bound and upper bound).}
 
-\item{mu}{placeholder}
+\item{mu}{Integer value specifying the mean of normal distribution.}
 
-\item{sigma}{placeholder}
+\item{sigma}{Integer value specifying the standard deviation of the normal distribution.}
 }
 \value{
-The threshold value used to get the truncated distribution
+Sample values from the truncated normal distribution.
 }
 \description{
-Helper function to calculate threshold for truncated distribution
+Helper function used to sample from a truncated normal distribution.
 }

@@ -2,23 +2,23 @@
 % Please edit documentation in R/calc_gliab.R
 \name{calc_gliab}
 \alias{calc_gliab}
-\title{title}
+\title{Calculation of genetic liabilities}
 \usage{
 calc_gliab(obj, beta, mu, sigma)
 }
 \arguments{
-\item{obj}{placeholder}
+\item{obj}{A matrix consisting of 0s, 1s or 2s, where each row represents a genotype.}
 
-\item{beta}{placeholder}
+\item{beta}{List of beta values.}
 
-\item{mu}{placeholder}
+\item{mu}{List of mu values to normalize on.}
 
-\item{sigma}{placeholder}
+\item{sigma}{List of sigma values to normalize on.}
 }
 \value{
-placeholder
+The function returns a vector of genetic liabilities for each genotype.
 }
 \description{
-Helper function to calculate genetic liabilities.
+This is an internal helper function to used to calculate genetic liabilities.
 }
 \keyword{internal}

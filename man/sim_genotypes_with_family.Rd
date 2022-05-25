@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_genotypes_with_family.R
 \name{sim_genotypes_with_family}
 \alias{sim_genotypes_with_family}
-\title{Simulation with family (Fixed and non fixed)}
+\title{Simulation of family (Fixed and non fixed)}
 \usage{
 sim_genotypes_with_family(
   n,
@@ -14,24 +14,24 @@ sim_genotypes_with_family(
 )
 }
 \arguments{
-\item{n}{placeholder}
+\item{n}{Integer specifying the number of individuals/genotypes to simulate.}
 
-\item{disease}{placeholder}
+\item{disease}{A list with all the disease parameters.}
 
-\item{path}{placeholder}
+\item{path}{Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).}
 
-\item{n_sibs}{placeholder}
+\item{n_sibs}{Integer value for how many sibling to produce for each genotype or vector containing values for
+how many sibs to sample from (ex. c(1,4,6) will produce genotypes randomly with 1, 4 or 6 siblings).}
 
-\item{overwrite}{placeholder}
+\item{overwrite}{Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)}
 
-\item{n_blocks}{placeholder}
+\item{n_blocks}{Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.}
 }
 \value{
-placeholder
+Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
+FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
 }
 \description{
-This function is used to simulate parents and child genotypes. With the parents
-genotypes, the function calculates the status of parents, child and
-siblings, using a LTFH helper function. All the data is stored in a tibble,
-which can then be used for genetic associations studies.
+This function is used to simulate genotypes gentypes for individuals with accompanying phenotype information and
+information on the case-control status of parents annd possible sibling.
 }
