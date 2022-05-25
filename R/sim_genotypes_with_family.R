@@ -11,6 +11,7 @@
 #' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
 #' @param n_blocks Integer used to determine amount of blocks (Default value is 20)
 #' @return  placeholder
+#' @export
 #' 
 
 sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite = T, n_blocks = 20) {
@@ -74,7 +75,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
     
     tibble::tibble(child_gliab, p1_gliab, p2_gliab, sibs_gliab)
     
-  }, future.seed = T) %>% do.call("bind_rows", .)
+  }, future.seed = T) %>% do.call(dplyr::bind_rows, .)
   
   # Calculate full liabilities/status and insert in rds file object
   threshold <- qnorm(prevalence, lower.tail = F)

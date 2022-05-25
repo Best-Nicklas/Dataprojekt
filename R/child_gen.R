@@ -10,6 +10,7 @@
 #' @param p2 List of genotypes.
 #' @return The function returns a list of the childs genotypes.
 #' @keywords internal
+#' @export
 
 child_gen = function(p1, p2){
   #Finds the positions at which both parents have 1

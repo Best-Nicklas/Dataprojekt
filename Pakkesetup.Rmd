@@ -17,8 +17,9 @@ devtools::create("RyouSick") #Husk at tilføje dependencies i import (pipe opera
 usethis::use_package_doc() #docs til ?package_name 
 usethis::use_mit_license() #licens
 usethis::use_readme_md() #Frontside/github tekst   
+usethis::use_pipe()
 
-devtools::document() #konverterer dokumentationer 
+devtools::document() #konverterer dokumentationer og tilføjer namespaces
 usethis::use_vignette("LTFH") #Laver vignettes/artikler. Lav en med samme navn som pakken for at få "get started" siden. 
 
 
@@ -28,7 +29,6 @@ usethis::use_vignette("LTFH") #Laver vignettes/artikler. Lav en med samme navn s
 #installation af pakke fra samme mappe 
 devtools::load_all()
 devtools::install()
-
 #installation af pakke fra github
 devtools::install_github("Best-Nicklas/TestPackageSiteR")
 ```
@@ -40,4 +40,5 @@ pkgdown::build_site() #Bygger siden lokalt
 usethis::use_pkgdown_github_pages() #forbinder til github pages 
 
 ```
+
 

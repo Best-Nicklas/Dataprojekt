@@ -8,7 +8,7 @@
 #' @param sigma List of sigma vaules.
 #' @return The function returns a matrix with one genetic liability for each row
 #' @keywords internal
-#' 
+#' @export
 
 calc_gliab <- function(obj, beta, mu, sigma) {
   g_liab <- sweep(sweep(obj, 

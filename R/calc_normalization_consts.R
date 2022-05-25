@@ -6,6 +6,7 @@
 #' @param causal List of causal SNPs where causal SNPs has the value 1.
 #' @return A list with the theoretical values of mu and sigma.
 #' @keywords internal
+#' @export
 
 calc_normalization_consts <- function(MAF, causal) {
   mu <- 2 * MAF * causal
