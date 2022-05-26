@@ -20,6 +20,6 @@ GWAX <- function(child, include = bigparallelr::rows_along(child$genotypes)) {
   #Creates a vector of the proxy statuses for the child
   x <- (child_status == 1 | p1_Status == 1 | p2_Status == 1) + 0
   
-  GWAS(child, x, include = include)
+  return(list(GWAS_Data = GWAS(child, x, include = include), Proxy_Status = x))
 }
 

@@ -41,5 +41,5 @@ LTFH <- function(child, prevalence, h2) {
     gen_liabs[i] <- config_liabs[child_configs[i]]
   }
   
-  return(list(GWAS_values = GWAS(child, gen_liabs), Mean_Genetic_Liability = gen_liabs))
+  return(list(GWAS_Data = GWAS(child, gen_liabs), Posterior_Mean_Genetic_Liability = gen_liabs))
 }
