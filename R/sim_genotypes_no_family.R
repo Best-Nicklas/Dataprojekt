@@ -10,7 +10,7 @@
 #' @details Simulation can be performed using paralization if a paralization plan has been set prior to excution in the global environment. 
 #' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 #' FAM object containing phenotype information on genotypes
-#' 
+#' @export
 
 sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 20) {
   

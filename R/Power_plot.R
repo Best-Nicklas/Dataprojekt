@@ -2,7 +2,7 @@
 #' 
 #' This function plots the power of different analysis methods.
 #' 
-#' @param x 
+#' @param x placeholder
 #' @return placeholder
 #' @export 
 Power_plot <- function(x) {

@@ -31,7 +31,7 @@ createRds <-  function(path, nrow, ncol) {
     FAM = tibble::tibble(ID = 1:nrow))
   
   # Saves obj.bigsnp in .rds file. 
-  bigstatsr::snp_save(obj.bigsnp)
+  bigsnpr::snp_save(obj.bigsnp)
   
   
   return(obj.bigsnp)

@@ -7,7 +7,7 @@
 Power_plot(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{placeholder}
 }
 \value{
 placeholder

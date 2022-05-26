@@ -12,7 +12,7 @@
 #' @param maf_low Integer specifying lower bound for MAF if none given. 
 #' @param maf_high Integer specifying upper bound for MAF if none given. 
 #' @return A list with all the diesease parameters.
-#'
+#' @export
 #' 
 
 
