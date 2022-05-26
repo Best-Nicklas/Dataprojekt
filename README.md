@@ -1,5 +1,6 @@
 # RyouSick <img src="man/figures/logo.png" align="right" />
 <!-- badges: start -->
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)](https://opensource.org/licenses/MIT/)
 <!-- badges: end -->
 
 The goal of RyouSick is to ...
