@@ -1,4 +1,4 @@
-# RyouSick <img src="man/figures/logo.png" align="right" />
+# RyouSick <img src="man/figures/logo.png" align="right" width="120"/>
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)](https://opensource.org/licenses/MIT/)
 <!-- badges: end -->
