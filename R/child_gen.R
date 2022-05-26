@@ -15,6 +15,8 @@
 #' @export
 
 child_gen = function(p1, p2){
+  if ((ncol(p1) != ncol(p2)) || (nrow(p1) != nrow(p2))) stop("p1 and p2 must have the same dimensions")
+  
   #Finds the positions at which both parents have 1
   ph1 = which(p1 == 1, arr.ind = T) %>% dplyr::as_tibble()
   ph2 = which(p2 == 1, arr.ind = T) %>% dplyr::as_tibble()

@@ -11,6 +11,8 @@
 #' @export
 
 calc_normalization_consts <- function(MAF, causal) {
+  if (length(MAF) != length (causal)) stop("MAF and causal must be vectors of the same length")
+  
   mu <- 2 * MAF * causal
   sigma <- sqrt((2 * MAF * causal)*(1 - MAF * causal))
   sigma[sigma == 0] <- 1

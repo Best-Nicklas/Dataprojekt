@@ -12,7 +12,8 @@
 #' FAM object containing phenotype information on genotypes
 #' @export
 
-sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 20) {
+sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = min(n, 20)) {
+  if (n <= 0) stop("n must positive")
   
   # Load disease information
   cols <- disease$N_SNP

@@ -19,6 +19,8 @@
 
 
 createRds <-  function(path, nrow, ncol) {
+  if(nrow <= 0 || ncol <= 0 ) stop("nrow and ncol must be 1 or higher")
+  
   # Creates a file-backed matrix (.bk file) of the given size with all zeroes.
   G = bigstatsr::FBM.code256(nrow = nrow, # number of rows
                   ncol = ncol, # number of columns

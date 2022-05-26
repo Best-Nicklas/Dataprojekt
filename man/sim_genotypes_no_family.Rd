@@ -4,7 +4,7 @@
 \alias{sim_genotypes_no_family}
 \title{Simulation of genotypes with no family}
 \usage{
-sim_genotypes_no_family(n, disease, path, overwrite = T, n_blocks = 20)
+sim_genotypes_no_family(n, disease, path, overwrite = T, n_blocks = min(n, 20))
 }
 \arguments{
 \item{n}{Integer specifying amount of gentypes/indivduals to simulate.}

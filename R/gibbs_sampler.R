@@ -17,6 +17,10 @@
 #'
 
 gibbs_sampler <- function(config, burn_in, cov_mat, prevalence) {
+  if (length(config) != (ncol(cov_mat) - 1)) stop("cov_mat must match config (same number of family members)")
+  if (burn_in < 0) stop("burn_in must be non negative")
+  if (prevalence <= 0 || prevalence >= 1) stop("prevalence must be between 0 and 1")
+  
   l_n <- nrow(cov_mat) #number of l's
   threshold <- qnorm(prevalence, lower.tail = F) 
   

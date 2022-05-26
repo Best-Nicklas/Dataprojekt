@@ -13,6 +13,8 @@
 
 
 verifyRds <- function(path, overwrite, nrow, ncol) {
+  if(nrow <= 0 || ncol <= 0 ) stop("nrow and ncol must be 1 or higher")
+  
   rds_file <- paste(path, ".rds", sep = "")
   if (file.exists(rds_file)) {
     if (overwrite) {

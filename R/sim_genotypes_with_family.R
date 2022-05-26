@@ -15,7 +15,10 @@
 #' @export
 #' 
 
-sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite = T, n_blocks = 20) {
+sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite = T, n_blocks = min(n, 20)) {
+  if (n <= 0) stop("n must positive")
+  if (any(n_sibs < 0)) stop("all sibling values must be positive")
+  
   # Load disease information
   cols <- disease$N_SNP
   MAF <- disease$MAF

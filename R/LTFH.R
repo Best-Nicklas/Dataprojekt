@@ -14,6 +14,9 @@
 #' 
 
 LTFH <- function(child, prevalence, h2) {
+  if (prevalence <= 0 || prevalence >= 1) stop("prevalence must be between 0 and 1")
+  if (h2 <= 0 || h2 >= 1) stop("h2 must be between 0 and 1")
+  
   child_configs <- purrr::pmap(list(child$FAM$Status,child$FAM$p1_Status, child$FAM$p2_Status, child$FAM$sibs_Status), 
                         function(x1, x2, x3, x4) 
                           paste(toString(x1),

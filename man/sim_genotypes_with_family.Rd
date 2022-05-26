@@ -10,7 +10,7 @@ sim_genotypes_with_family(
   path,
   n_sibs = NULL,
   overwrite = T,
-  n_blocks = 20
+  n_blocks = min(n, 20)
 )
 }
 \arguments{

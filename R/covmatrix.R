@@ -11,6 +11,10 @@
 #' @export
 #' 
 covmatrix <- function(h2, n_sib = 0) {
+  if (n_sib < 0) stop("n_sib must be a positive integer")
+  if (h2 >= 1) stop("h2 must be an integer between 0 and 1")
+  if (h2 <= 0) stop("h2 must be an integer between 0 and 1")
+  
   # the base structure
   cov <- matrix(h2/2, 4 + n_sib, 4 + n_sib)
   # diagnoal entries 1

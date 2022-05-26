@@ -11,6 +11,7 @@
 #' 
 
 rnorm_trunc <- function(n, range, mu, sigma) {
+  if(n <= 0) stop("n must be positive")
   
   lower <- pnorm(min(range), mu, sigma)
   upper <- pnorm(max(range), mu, sigma)

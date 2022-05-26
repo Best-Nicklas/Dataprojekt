@@ -11,6 +11,10 @@
 #' @export
 
 calc_gliab <- function(obj, beta, mu, sigma) {
+  if (ncol(obj) != length(beta)) stop("Number of columns in obj must be equal to length of beta")
+  if (ncol(obj) != length(mu)) stop("Number of columns in obj must be equal to length of mu")
+  if (ncol(obj) != length(sigma)) stop("Number of columns in obj must be equal to length of sigma")
+  
   # Uses sweep to normalize obj using the normalization constants mu and sigma, then does 
   # matrix multiplication with beta.
   g_liab <- sweep(sweep(obj, 
@@ -23,3 +27,4 @@ calc_gliab <- function(obj, beta, mu, sigma) {
   
   return(g_liab)
 }
+
