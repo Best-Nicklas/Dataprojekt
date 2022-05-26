@@ -21,7 +21,7 @@ sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = round(n
   if (prevalence <= 0 || prevalence >= 1) stop("prevalence must be between 0 and 1")
   if (h2 <= 0 || h2 >= 1) stop("h2 must be between 0 and 1")
   if (!is.null(causal) && length(causal) != n_snp) stop("length of causal must be equal to n_snp")
-  if (!is.null(MAF) && length(MAF) != n_snp) stop("length of MAF must be equal to n_snp")
+  if (!is.null(maf) && length(maf) != n_snp) stop("length of MAF must be equal to n_snp")
   if (maf_low < 0 || maf_low >= 1 || maf_low > maf_high) stop("maf_low must be between 0 and 1 and less than or equal maf_high")
   if (maf_high <= 0 || maf_low > 1 || maf_low > maf_high) stop("maf_high must be between 0 and 1 and greater than or equal maf_high")
     
