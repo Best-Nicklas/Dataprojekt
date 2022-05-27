@@ -11,7 +11,7 @@
 #' @param maf Vector of predetermined Minor Allele Frequencies.Leave empty to get random MAF.
 #' @param maf_low Integer specifying lower bound for MAF if none given. 
 #' @param maf_high Integer specifying upper bound for MAF if none given. 
-#' @return A list with all the diesease parameters.
+#' @return A list with all the disease parameters.
 #' @export
 #' 
 
