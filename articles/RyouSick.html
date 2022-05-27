@@ -86,12 +86,12 @@
 <span class="va">bad_knee_syndrome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_disease.html">sim_disease</a></span><span class="op">(</span>n_snp <span class="op">=</span> <span class="fl">10</span>, h2 <span class="op">=</span> <span class="fl">0.8</span>, prevalence <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span>
 <span class="va">bad_knee_syndrome</span>
 <span class="co">#&gt; $MAF</span>
-<span class="co">#&gt;  [1] 0.42675525 0.34946446 0.42550430 0.47779137 0.02043685 0.21412356</span>
-<span class="co">#&gt;  [7] 0.11631557 0.26713169 0.13101672 0.14899455</span>
+<span class="co">#&gt;  [1] 0.02068883 0.16543949 0.41379973 0.26395317 0.35571883 0.21161910</span>
+<span class="co">#&gt;  [7] 0.39891885 0.40081366 0.46009060 0.14487869</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $BETA</span>
-<span class="co">#&gt;  [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="co">#&gt;  [8] 0.0000000 0.0000000 0.3913662</span>
+<span class="co">#&gt;  [1] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
+<span class="co">#&gt;  [9] 0.000000 1.290635</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $CAUSAL</span>
 <span class="co">#&gt;  [1] 0 0 0 0 0 0 0 0 0 1</span>
@@ -119,30 +119,30 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">FAM</span><span class="op">$</span><span class="va">Status</span>
 <span class="co">#&gt;       [,1]</span>
-<span class="co">#&gt;  [1,]    0</span>
+<span class="co">#&gt;  [1,]    1</span>
 <span class="co">#&gt;  [2,]    0</span>
 <span class="co">#&gt;  [3,]    1</span>
-<span class="co">#&gt;  [4,]    1</span>
-<span class="co">#&gt;  [5,]    1</span>
+<span class="co">#&gt;  [4,]    0</span>
+<span class="co">#&gt;  [5,]    0</span>
 <span class="co">#&gt;  [6,]    0</span>
 <span class="co">#&gt;  [7,]    1</span>
 <span class="co">#&gt;  [8,]    1</span>
 <span class="co">#&gt;  [9,]    1</span>
-<span class="co">#&gt; [10,]    1</span></code></pre></div>
+<span class="co">#&gt; [10,]    0</span></code></pre></div>
 <p>Slices of the genotype data can be accessed as well</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
 <span class="co">#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
-<span class="co">#&gt;  [1,]    1    1    0    0    0    0    0    0    0     1</span>
-<span class="co">#&gt;  [2,]    1    2    1    0    0    0    2    0    0     0</span>
-<span class="co">#&gt;  [3,]    1    1    1    1    0    1    1    0    0     0</span>
-<span class="co">#&gt;  [4,]    0    2    2    0    0    1    0    0    0     0</span>
-<span class="co">#&gt;  [5,]    0    0    1    1    1    1    0    1    1     0</span>
-<span class="co">#&gt;  [6,]    0    1    1    1    0    0    0    1    0     0</span>
-<span class="co">#&gt;  [7,]    0    1    1    2    0    1    0    1    0     0</span>
-<span class="co">#&gt;  [8,]    0    2    2    0    0    2    0    0    0     0</span>
-<span class="co">#&gt;  [9,]    2    0    1    1    0    0    0    1    0     0</span>
-<span class="co">#&gt; [10,]    0    0    1    1    0    0    0    1    0     0</span></code></pre></div>
+<span class="co">#&gt;  [1,]    0    0    1    0    0    0    1    1    2     1</span>
+<span class="co">#&gt;  [2,]    0    0    0    0    0    1    1    1    0     0</span>
+<span class="co">#&gt;  [3,]    1    1    1    1    2    0    0    0    1     1</span>
+<span class="co">#&gt;  [4,]    0    1    2    0    1    0    2    2    2     0</span>
+<span class="co">#&gt;  [5,]    0    0    1    0    1    1    1    1    2     0</span>
+<span class="co">#&gt;  [6,]    0    1    2    1    0    0    1    1    1     0</span>
+<span class="co">#&gt;  [7,]    0    0    0    0    0    0    0    1    0     1</span>
+<span class="co">#&gt;  [8,]    0    0    2    1    0    0    1    1    1     0</span>
+<span class="co">#&gt;  [9,]    0    0    0    0    2    1    0    1    1     1</span>
+<span class="co">#&gt; [10,]    0    0    2    1    0    0    1    0    0     0</span></code></pre></div>
 <p>(WARNING: we highly advise against indexing all the data at once using [], as this will try to load the whole file-backed matrix into memory, which depending on the size of the file might cause problems)</p>
 <p>All of the simulated information contained in our example case bad_knee_data can be seen below</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -156,53 +156,53 @@
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
-<td align="center">0.4267553</td>
-<td align="center">0.0000000</td>
+<td align="center">0.0206888</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="even">
 <td align="center">2</td>
-<td align="center">0.3494645</td>
-<td align="center">0.0000000</td>
+<td align="center">0.1654395</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
-<td align="center">0.4255043</td>
-<td align="center">0.0000000</td>
+<td align="center">0.4137997</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="even">
 <td align="center">4</td>
-<td align="center">0.4777914</td>
-<td align="center">0.0000000</td>
+<td align="center">0.2639532</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="odd">
 <td align="center">5</td>
-<td align="center">0.0204369</td>
-<td align="center">0.0000000</td>
+<td align="center">0.3557188</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="even">
 <td align="center">6</td>
-<td align="center">0.2141236</td>
-<td align="center">0.0000000</td>
+<td align="center">0.2116191</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="odd">
 <td align="center">7</td>
-<td align="center">0.1163156</td>
-<td align="center">0.0000000</td>
+<td align="center">0.3989188</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="even">
 <td align="center">8</td>
-<td align="center">0.2671317</td>
-<td align="center">0.0000000</td>
+<td align="center">0.4008137</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="odd">
 <td align="center">9</td>
-<td align="center">0.1310167</td>
-<td align="center">0.0000000</td>
+<td align="center">0.4600906</td>
+<td align="center">0.000000</td>
 </tr>
 <tr class="even">
 <td align="center">10</td>
-<td align="center">0.1489946</td>
-<td align="center">0.3913662</td>
+<td align="center">0.1448787</td>
+<td align="center">1.290635</td>
 </tr>
 </tbody>
 </table>
@@ -221,93 +221,93 @@
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
-<td align="center">0.5455830</td>
-<td align="center">-0.11235019</td>
-<td align="center">0</td>
-<td align="center">1</td>
+<td align="center">1.8415316</td>
+<td align="center">2.3794079</td>
 <td align="center">1</td>
 <td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1, 0</td>
 </tr>
 <tr class="even">
 <td align="center">2</td>
-<td align="center">-0.2315887</td>
-<td align="center">-0.35101890</td>
+<td align="center">-0.7512889</td>
+<td align="center">-0.2509333</td>
 <td align="center">0</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.57541385</td>
+<td align="center">1.8415316</td>
+<td align="center">2.2787472</td>
 <td align="center">1</td>
 <td align="center">1</td>
 <td align="center">0</td>
-<td align="center">1, 1, 1</td>
+<td align="center">1, 1</td>
 </tr>
 <tr class="even">
 <td align="center">4</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.52764240</td>
-<td align="center">1</td>
-<td align="center">1</td>
+<td align="center">-0.7512889</td>
+<td align="center">-0.1651686</td>
 <td align="center">0</td>
-<td align="center">1, 1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0, 0</td>
 </tr>
 <tr class="odd">
 <td align="center">5</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.01089272</td>
-<td align="center">1</td>
+<td align="center">-0.7512889</td>
+<td align="center">-0.8283171</td>
 <td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0, 0, 0</td>
 </tr>
 <tr class="even">
 <td align="center">6</td>
-<td align="center">-0.2315887</td>
-<td align="center">-0.51522678</td>
+<td align="center">-0.7512889</td>
+<td align="center">-1.0503139</td>
 <td align="center">0</td>
+<td align="center">1</td>
 <td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1, 0</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
 <td align="center">7</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.41610997</td>
+<td align="center">1.8415316</td>
+<td align="center">1.6079690</td>
 <td align="center">1</td>
 <td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1, 1</td>
+<td align="center">1</td>
+<td align="center">1, 0</td>
 </tr>
 <tr class="even">
 <td align="center">8</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.13682500</td>
+<td align="center">-0.7512889</td>
+<td align="center">0.1658853</td>
 <td align="center">1</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">1, 1, 1</td>
+<td align="center">0, 0, 0</td>
 </tr>
 <tr class="odd">
 <td align="center">9</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.04394483</td>
+<td align="center">1.8415316</td>
+<td align="center">2.4093795</td>
 <td align="center">1</td>
 <td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
 <td align="center">10</td>
-<td align="center">-0.2315887</td>
-<td align="center">0.12830915</td>
-<td align="center">1</td>
+<td align="center">-0.7512889</td>
+<td align="center">-1.3220650</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">1, 0, 0</td>
+<td align="center">0</td>
+<td align="center">0, 0, 0</td>
 </tr>
 </tbody>
 </table>
@@ -343,64 +343,64 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right">-0.1111111</td>
-<td align="right">0.2383068</td>
-<td align="right">-0.4662524</td>
-<td align="right">0.6534672</td>
+<td align="right">0.5555556</td>
+<td align="right">0.5555556</td>
+<td align="right">1.0000000</td>
+<td align="right">0.3465935</td>
 </tr>
 <tr class="even">
-<td align="right">-0.1666667</td>
-<td align="right">0.2006932</td>
-<td align="right">-0.8304548</td>
-<td align="right">0.4303661</td>
-</tr>
-<tr class="odd">
-<td align="right">0.4482759</td>
-<td align="right">0.2557310</td>
-<td align="right">1.7529196</td>
-<td align="right">0.1177087</td>
-</tr>
-<tr class="even">
-<td align="right">0.2682927</td>
-<td align="right">0.2345779</td>
-<td align="right">1.1437255</td>
-<td align="right">0.2858047</td>
-</tr>
-<tr class="odd">
-<td align="right">0.3333333</td>
-<td align="right">0.5270463</td>
-<td align="right">0.6324555</td>
-<td align="right">0.5447373</td>
-</tr>
-<tr class="even">
-<td align="right">0.4090909</td>
-<td align="right">0.1968240</td>
-<td align="right">2.0784610</td>
-<td align="right">0.0712855</td>
-</tr>
-<tr class="odd">
-<td align="right">-0.2682927</td>
-<td align="right">0.2345779</td>
-<td align="right">-1.1437255</td>
-<td align="right">0.2858047</td>
-</tr>
-<tr class="even">
-<td align="right">0.2000000</td>
-<td align="right">0.3162278</td>
-<td align="right">0.6324555</td>
+<td align="right">-0.2380952</td>
+<td align="right">0.3764616</td>
+<td align="right">-0.6324555</td>
 <td align="right">0.5447373</td>
 </tr>
 <tr class="odd">
-<td align="right">0.3333333</td>
-<td align="right">0.5270463</td>
-<td align="right">0.6324555</td>
-<td align="right">0.5447373</td>
+<td align="right">-0.2173913</td>
+<td align="right">0.1984502</td>
+<td align="right">-1.0954451</td>
+<td align="right">0.3052014</td>
 </tr>
 <tr class="even">
-<td align="right">-0.7777778</td>
-<td align="right">0.4648111</td>
-<td align="right">-1.6733201</td>
-<td align="right">0.1328011</td>
+<td align="right">0.0000000</td>
+<td align="right">0.3608439</td>
+<td align="right">0.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">0.1562500</td>
+<td align="right">0.2139541</td>
+<td align="right">0.7302967</td>
+<td align="right">0.4860420</td>
+</tr>
+<tr class="even">
+<td align="right">-0.2380952</td>
+<td align="right">0.3764616</td>
+<td align="right">-0.6324555</td>
+<td align="right">0.5447373</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.5555556</td>
+<td align="right">0.2196026</td>
+<td align="right">-2.5298221</td>
+<td align="right">0.0352652</td>
+</tr>
+<tr class="even">
+<td align="right">-0.1724138</td>
+<td align="right">0.3225567</td>
+<td align="right">-0.5345225</td>
+<td align="right">0.6075112</td>
+</tr>
+<tr class="odd">
+<td align="right">0.0000000</td>
+<td align="right">0.2282177</td>
+<td align="right">0.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">0.8333333</td>
+<td align="right">0.2083333</td>
+<td align="right">4.0000000</td>
+<td align="right">0.0039498</td>
 </tr>
 </tbody>
 </table>
