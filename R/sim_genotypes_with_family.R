@@ -32,9 +32,8 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
   
   # Create vector with number of sibs for each child
   if (!is.null(n_sibs)) {
-    sibs_pr_child <- if (length(n_sibs) == 1) 
-    {rep(n_sibs,n)} else 
-    sibs_pr_child <- sample(n_sibs, n, replace = T)
+    sibs_pr_child <- if (length(n_sibs) == 1) {rep(n_sibs,n)} else 
+      sample(n_sibs, n, replace = T)
   }
   
   # Calculate normalization constants 
@@ -70,10 +69,12 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
     sibs_gliab <- vector(mode = "list", b_size)
     if (!is.null(n_sibs)) {
       for (s in 1:b_size) {
-        if (sibs_pr_child[s] != 0) {
-          sibs <- child_gen(matrix(rep(p1[s, ], sibs_pr_child[s]), sibs_pr_child[s], cols, byrow = T),
-                            matrix(rep(p2[s, ], sibs_pr_child[s]), sibs_pr_child[s], cols, byrow = T))
-          
+        sibs_pos <- b_start + s - 1
+        if (sibs_pr_child[sibs_pos] != 0) {
+          sibs <- child_gen(matrix(rep(p1[s, ], sibs_pr_child[sibs_pos]), 
+                                   sibs_pr_child[sibs_pos], cols, byrow = T),
+                            matrix(rep(p2[s, ], sibs_pr_child[sibs_pos]), 
+                                   sibs_pr_child[sibs_pos], cols, byrow = T))
           sibs_gliab[[s]] <- calc_gliab(sibs, beta, mu, sigma)  
         } else sibs_gliab[[s]] <- NULL
         
