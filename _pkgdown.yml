@@ -42,15 +42,16 @@ reference:
   - OpenRds
   - rnorm_trunc
 articles:
-- title: Association Studies
+- title: Simulation and Association Studies
   contents:
+  - Simulation_Basis
   - GWAS
   - GWAX
   - LTFH
-- title: Prediction and General R
+- title: General R and Prediction
   contents:
-  - Prediction
   - Writing_efficient_R_code_and_working_with_large_datasets
+  - Prediction
 home:
   sidebar:
     structure:

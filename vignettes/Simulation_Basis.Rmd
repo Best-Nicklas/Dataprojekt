@@ -1,0 +1,23 @@
+---
+title: "Simulation Basis"
+output: rmarkdown::html_vignette
+description:
+  skriv kort bekskrivelse her - ses ved siden artikler
+vignette: >
+  %\VignetteIndexEntry{Simulation Basis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+placeholder rmarkdown
+```{r}
+2+2
+```
+
