@@ -36,9 +36,21 @@ badleg_genotypes <- sim_genotypes_with_family(n = 10, disease = badleg_syndrome,
 
 
 ## Analysis
+When we make a GWAS in R we use the packages `big_univLinReg()` which make a simple linear regression on each SNPs and the case-control status for each individual. Then we get the following output, which can be used to determined which SNPs are causal. 
+
+
+```{r}
+X <- GWAS()
+```
 
 
 ## Visualizations
+
+We can then visualize the GWAS data using the function `Manhattan_plot()`, where we get a Ma
+
+```{r}
+Manhattan_plot(X)
+```
 
 
 ## Prediction

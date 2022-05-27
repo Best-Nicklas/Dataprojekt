@@ -16,8 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Placeholder rmarkdown
-```{r}
-2+2
-```
+## GWAS
+ 
+GWAS is short for genome-wide association study, which is a research approach used to identify genomic variants that are statistically associated with a risk for a disease. The method involves surveying and collecting data of genomes for a large group of people. Then the approach is to look for genomic variants, where we look specially at the single nucleotide polymorphisms, or SNPs that occur more frequently in those with a specific disease compared to those without the disease. More information about GWAS can be found at <https://www.genome.gov/genetics-glossary/Genome-Wide-Association-Studies>;. You also can learn more about SNPs at <https://medlineplus.gov/genetics/understanding/genomicresearch/snp/>;.
 
+
+The goal of genome-wide association studies is to screen the entire genome of large numbers of individuals to look for associations between millions of genetic variants within those individuals to gain information about which genomic variants are more likely to cause illnesses.  
