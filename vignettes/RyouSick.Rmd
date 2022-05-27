@@ -19,7 +19,7 @@ To simulate genotype and case-control phenotype data using RyouSick you first ha
 
 ```{r}
 library("RyouSick")
-bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.5)
+bad_knee_syndrome <- sim_disease(n_snp = 100, h2 = 0.8, prevalence = 0.25)
 bad_knee_syndrome
 
 ```
@@ -31,13 +31,14 @@ We can now chose what kind of simulation we want to perform. Either with family 
 Lets try to do a simulation of 10 genotypes under the badleg_syndrom disease parameters, with 1 to 3 siblings each: 
 
 ```{r}
-bad_knee_data <- sim_genotypes_with_family(n = 10, disease = badleg_syndrome, path = "bad_knee_data",n_sibs = c(1,2,3))
+bad_knee_data <- sim_genotypes_with_family(n = 100, disease = bad_knee_syndrome, path = "bad_knee_data2",n_sibs = c(1,2,3))
 
 ```
 
 the information from the simulation can be accessed using dollar notation as such
 
 ```{r}
+bad_knee_data$genotypes[]
 bad_knee_data$FAM$Status
 ```
 
