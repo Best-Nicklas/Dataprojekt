@@ -10,7 +10,7 @@
 #' 
 
 
-All_models_power_plot <- function(Gwas_data, p){
+Power_plots <- function(Gwas_data, p){
    
    if (!(length(Gwas_data) == 3)) stop("Needs Gwas_data from all three analysis on list format")
   
