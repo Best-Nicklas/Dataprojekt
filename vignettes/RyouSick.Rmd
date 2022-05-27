@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 ## Simulation
-To simulate genotype and case-control phenotype data using RyouSick you first have to simulate the disease parameters. Lets try to simulate disease parameters for genetic disease called badleg_syndrome on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.05:
+To simulate genotype and case-control phenotype data using RyouSick you first have to simulate the disease parameters. Lets try to simulate disease parameters for genetic disease called bad_knee_syndrome on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.5:
 
 ```{r}
 library("RyouSick")
-badleg_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.05)
-badleg_syndrome
+bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.5)
+bad_knee_syndrome
 
 ```
 
@@ -31,33 +31,72 @@ We can now chose what kind of simulation we want to perform. Either with family 
 Lets try to do a simulation of 10 genotypes under the badleg_syndrom disease parameters, with 1 to 3 siblings each: 
 
 ```{r}
-badleg_genotypes <- sim_genotypes_with_family(n = 10, disease = badleg_syndrome, path = "badleg_genos",n_sibs = c(1,2,3))
-badleg_genotypes
+bad_knee_data <- sim_genotypes_with_family(n = 10, disease = badleg_syndrome, path = "bad_knee_data",n_sibs = c(1,2,3))
 
 ```
 
-## Analysis
-When we make a GWAS in R we use the packages `big_univLinReg()` which make a simple linear regression on each SNPs and the case-control status for each individual. Then we get the following output, which can be used to determined which SNPs are causal. 
-
+the information from the simulation can be accessed using dollar notation as such
 
 ```{r}
-X <- GWAS()
+bad_knee_data$FAM$Status
 ```
 
+where we get the vector of case-control status for each individual. 
+
+## Analysis
+We can now perform analysis on our simulated data. The RyouSick package contains three methods for analysing the data: 
+ * `GWAS()` Linear regression using genotype data and case-control status  
+ * `GWAX()` Linear regression using genotype data and proxy case-control status  
+ * `GWAX()` Linear regression using genotype data and posterior mean genetic liabilities
+ 
+Lets now try each of the methods on our data:
+
+```{r}
+x <- GWAS(person = bad_knee_data, y = bad_knee_data$FAM$Status)
+y <- GWAX(child = bad_knee_data)
+z <- LTFH(child = bad_knee_data, h2 = 0.8, prevalence = 0.5)
+
+```
+
+Output will consist of estimated effect sizes, standard error, t-scores and pvalues for each SNP 
+
+```{r}
+x
+```
+Note that to access the analysis data for GWAX and LTFH you have to use `method_result$GWAS_Data`.
 
 ## Visualizations
 
-We can then visualize the GWAS data using the function `Manhattan_plot()`, where we get a Ma
+We can then visualize the data using the function `Manhattan_plot()` to see which SNPs are determined to be causal: 
 
 ```{r}
-Manhattan_plot(X)
+Manhattan_plot(x)
+```
+
+If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. First we need to save the GWAS_data for each method in a list format.
+
+```{r}
+power_plot_data = list(x, y$GWAS_Data, z$GWAS_Data)
+```
+
+```{r}
+Power_plots(power_plot_data, 5e-3)
+
 ```
 
 
+rds.obj
+
+
 ## Prediction
+
+As seen in `vignette("LTFH")´ the best method for evalutating causal SNPs is LTFH. So 
+
 
 
 ## Correct formatting of rds object
 
 ## Paralization
+
+Since different users work on varo
 
