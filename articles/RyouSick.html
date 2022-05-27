@@ -76,11 +76,382 @@
 
     
     
-<p>Placeholder rmarkdown</p>
+<div class="section level2">
+<h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
+</h2>
+<p>To illustrate the use of RyouSick lets go through an example where we try to simulate a disease called bad-knee syndrome in a population.</p>
+<p>When trying to simulate genotype and case-control phenotype data using RyouSick you first have to simulate the disease parameters. Disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">2</span><span class="op">+</span><span class="fl">2</span>
-<span class="co">#&gt; [1] 4</span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://best-nicklas.github.io/Dataprojekt/">"RyouSick"</a></span><span class="op">)</span>
+<span class="va">bad_knee_syndrome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_disease.html">sim_disease</a></span><span class="op">(</span>n_snp <span class="op">=</span> <span class="fl">10</span>, h2 <span class="op">=</span> <span class="fl">0.8</span>, prevalence <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span>
+<span class="va">bad_knee_syndrome</span>
+<span class="co">#&gt; $MAF</span>
+<span class="co">#&gt;  [1] 0.42675525 0.34946446 0.42550430 0.47779137 0.02043685 0.21412356</span>
+<span class="co">#&gt;  [7] 0.11631557 0.26713169 0.13101672 0.14899455</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $BETA</span>
+<span class="co">#&gt;  [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
+<span class="co">#&gt;  [8] 0.0000000 0.0000000 0.3913662</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $CAUSAL</span>
+<span class="co">#&gt;  [1] 0 0 0 0 0 0 0 0 0 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $H2</span>
+<span class="co">#&gt; [1] 0.8</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $PREVALENCE</span>
+<span class="co">#&gt; [1] 0.5</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $N_SNP</span>
+<span class="co">#&gt; [1] 10</span></code></pre></div>
+<p>In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference at the given position. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have.</p>
+<p>We can now chose what kind of simulation we want to perform for our population. Either with family information or without using the two functions:</p>
+<ul>
+<li>
+<code><a href="../reference/sim_genotypes_no_family.html">sim_genotypes_no_family()</a></code> simulates genotype and case-control phenotype without family case-control phenotypes</li>
+<li>
+<code><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family()</a></code> simulates genotype and case-control phenotype with family case-control phenotypes</li>
+</ul>
+<p>Lets try to do a simulation of 10 genotypes under the bad_knee_syndrom disease parameters with 1 to 3 siblings for each genotype and save it under the filename "bad_knee_data10x10:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bad_knee_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, disease <span class="op">=</span> <span class="va">bad_knee_syndrome</span>, path <span class="op">=</span> <span class="st">"bad_knee_data10x10"</span>,n_sibs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>The bad_knee_data will now contain a list object with reference to a file-backed matrix (matrix stored on disk), a tibble containing information on the disease (MAP) and a tibble containing phenotype information on the genotypes. Individual columns in the data can be accesed using the dollar notation</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">FAM</span><span class="op">$</span><span class="va">Status</span>
+<span class="co">#&gt;       [,1]</span>
+<span class="co">#&gt;  [1,]    0</span>
+<span class="co">#&gt;  [2,]    0</span>
+<span class="co">#&gt;  [3,]    1</span>
+<span class="co">#&gt;  [4,]    1</span>
+<span class="co">#&gt;  [5,]    1</span>
+<span class="co">#&gt;  [6,]    0</span>
+<span class="co">#&gt;  [7,]    1</span>
+<span class="co">#&gt;  [8,]    1</span>
+<span class="co">#&gt;  [9,]    1</span>
+<span class="co">#&gt; [10,]    1</span></code></pre></div>
+<p>Slices of the genotype data can be accessed as well</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
+<span class="co">#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
+<span class="co">#&gt;  [1,]    1    1    0    0    0    0    0    0    0     1</span>
+<span class="co">#&gt;  [2,]    1    2    1    0    0    0    2    0    0     0</span>
+<span class="co">#&gt;  [3,]    1    1    1    1    0    1    1    0    0     0</span>
+<span class="co">#&gt;  [4,]    0    2    2    0    0    1    0    0    0     0</span>
+<span class="co">#&gt;  [5,]    0    0    1    1    1    1    0    1    1     0</span>
+<span class="co">#&gt;  [6,]    0    1    1    1    0    0    0    1    0     0</span>
+<span class="co">#&gt;  [7,]    0    1    1    2    0    1    0    1    0     0</span>
+<span class="co">#&gt;  [8,]    0    2    2    0    0    2    0    0    0     0</span>
+<span class="co">#&gt;  [9,]    2    0    1    1    0    0    0    1    0     0</span>
+<span class="co">#&gt; [10,]    0    0    1    1    0    0    0    1    0     0</span></code></pre></div>
+<p>(WARNING: we highly advise against indexing all the data at once using [], as this will try to load the whole file-backed matrix into memory, which depending on the size of the file might cause problems)</p>
+<p>All of the simulated information contained in our example case bad_knee_data can be seen below</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">MAP</span>, align <span class="op">=</span> <span class="st">"ccc"</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="center">SNP_ID</th>
+<th align="center">MAF</th>
+<th align="center">BETA</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.4267553</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">0.3494645</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0.4255043</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0.4777914</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">0.0204369</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">0.2141236</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">0.1163156</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">0.2671317</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">0.1310167</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">0.1489946</td>
+<td align="center">0.3913662</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">FAM</span>, align <span class="op">=</span> <span class="st">"ccccccc"</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="center">ID</th>
+<th align="center">Genetic_Liability</th>
+<th align="center">Full_Liability</th>
+<th align="center">Status</th>
+<th align="center">p1_Status</th>
+<th align="center">p2_Status</th>
+<th align="center">sibs_Status</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.5455830</td>
+<td align="center">-0.11235019</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">-0.2315887</td>
+<td align="center">-0.35101890</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.57541385</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1, 1, 1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.52764240</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1, 1</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.01089272</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">-0.2315887</td>
+<td align="center">-0.51522678</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1, 0</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.41610997</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1, 1</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.13682500</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1, 1, 1</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.04394483</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">-0.2315887</td>
+<td align="center">0.12830915</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1, 0, 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="analysis">Analysis<a class="anchor" aria-label="anchor" href="#analysis"></a>
+</h2>
+<p>We now perform analysis on our simulated data. The RyouSick package contains three methods for analysing the data:</p>
+<ul>
+<li>
+<code><a href="../reference/GWAS.html">GWAS()</a></code> Linear regression using genotype data and case-control status<br>
+</li>
+<li>
+<code><a href="../reference/GWAX.html">GWAX()</a></code> Linear regression using genotype data and proxy case-control status<br>
+</li>
+<li>
+<code><a href="../reference/GWAX.html">GWAX()</a></code> Linear regression using genotype data and posterior mean genetic liabilities</li>
+</ul>
+<p>Lets now try each of the methods on our data:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GWAS.html">GWAS</a></span><span class="op">(</span>person <span class="op">=</span> <span class="va">bad_knee_data</span>, y <span class="op">=</span> <span class="va">bad_knee_data</span><span class="op">$</span><span class="va">FAM</span><span class="op">$</span><span class="va">Status</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GWAX.html">GWAX</a></span><span class="op">(</span>child <span class="op">=</span> <span class="va">bad_knee_data</span><span class="op">)</span>
+<span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/LTFH.html">LTFH</a></span><span class="op">(</span>child <span class="op">=</span> <span class="va">bad_knee_data</span>, h2 <span class="op">=</span> <span class="fl">0.8</span>, prevalence <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
+<p>Output will consist of estimated effect sizes, standard error, t-scores and pvalues for each SNP, which again can be accessed using dollar notation.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">estim</th>
+<th align="right">std.err</th>
+<th align="right">score</th>
+<th align="right">p.value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.1111111</td>
+<td align="right">0.2383068</td>
+<td align="right">-0.4662524</td>
+<td align="right">0.6534672</td>
+</tr>
+<tr class="even">
+<td align="right">-0.1666667</td>
+<td align="right">0.2006932</td>
+<td align="right">-0.8304548</td>
+<td align="right">0.4303661</td>
+</tr>
+<tr class="odd">
+<td align="right">0.4482759</td>
+<td align="right">0.2557310</td>
+<td align="right">1.7529196</td>
+<td align="right">0.1177087</td>
+</tr>
+<tr class="even">
+<td align="right">0.2682927</td>
+<td align="right">0.2345779</td>
+<td align="right">1.1437255</td>
+<td align="right">0.2858047</td>
+</tr>
+<tr class="odd">
+<td align="right">0.3333333</td>
+<td align="right">0.5270463</td>
+<td align="right">0.6324555</td>
+<td align="right">0.5447373</td>
+</tr>
+<tr class="even">
+<td align="right">0.4090909</td>
+<td align="right">0.1968240</td>
+<td align="right">2.0784610</td>
+<td align="right">0.0712855</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.2682927</td>
+<td align="right">0.2345779</td>
+<td align="right">-1.1437255</td>
+<td align="right">0.2858047</td>
+</tr>
+<tr class="even">
+<td align="right">0.2000000</td>
+<td align="right">0.3162278</td>
+<td align="right">0.6324555</td>
+<td align="right">0.5447373</td>
+</tr>
+<tr class="odd">
+<td align="right">0.3333333</td>
+<td align="right">0.5270463</td>
+<td align="right">0.6324555</td>
+<td align="right">0.5447373</td>
+</tr>
+<tr class="even">
+<td align="right">-0.7777778</td>
+<td align="right">0.4648111</td>
+<td align="right">-1.6733201</td>
+<td align="right">0.1328011</td>
+</tr>
+</tbody>
+</table>
+<p>Note that to access the analysis data for GWAX and LTFH you have to use <code>method_result$GWAS_Data$</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="visualizations">Visualizations<a class="anchor" aria-label="anchor" href="#visualizations"></a>
+</h2>
+<p>We can then visualize the data using the function <code><a href="../reference/Manhattan_plot.html">Manhattan_plot()</a></code> to get a picture of which SNPs have been determined to be causal:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#Manhattan_plot(x)</span></code></pre></div>
+<p>If we want to visually compare the accumulated power for each of the methods, we can use the function <code>Power_plots()</code>. First we need to save the GWAS_data for each method in a list format.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#power_plot_data = list(x, y$GWAS_Data, z$GWAS_Data)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#Power_plots(power_plot_data, 5e-3)</span></code></pre></div>
+<p>rds.obj</p>
+</div>
+<div class="section level2">
+<h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
+</h2>
+<p>As seen in `vignette(“LTFH”)´ the best method for evalutating causal SNPs is LTFH. So</p>
+</div>
+<div class="section level2">
+<h2 id="correct-formatting-of-rds-object">Correct formatting of rds object<a class="anchor" aria-label="anchor" href="#correct-formatting-of-rds-object"></a>
+</h2>
+<p>If you wish to run the analysis methods on your own data it must first be formatted properly. To do so you must first initialize an empty .rds file and object matching the size of your data using the <code><a href="../reference/createRds.html">createRds()</a></code> function.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">user_input_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRds.html">createRds</a></span><span class="op">(</span><span class="st">"user_input_data"</span>, nrow <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">user_input_obj</span></code></pre></div>
+<p>The rds object that is returned can then be filled up by adding columns in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below</p>
+<ul>
+<li>MAF: minor allele frequency for given SNP</li>
+<li>Status: vector with status for genotypes</li>
+<li>p1_Status: vector with parent 1 status for genotypes (only used in GWAX and LTFH)</li>
+<li>p2_Status: vector with parent 2 status for genotypes (only used in GWAX and LTFH)</li>
+<li>sibs_Status: list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)</li>
+</ul>
+<p>Note that the names are case-sensitive. addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article <code>vignette(""Writing_efficient_R_code_and_working_with_large_datasets"")</code>). The rds file can later be opened again using the <code>openRds()</code> function.</p>
+</div>
+<div class="section level2">
+<h2 id="paralization">Paralization<a class="anchor" aria-label="anchor" href="#paralization"></a>
+</h2>
+<p>Since most users work on very different computers with various setups paralization is not enabled by default. To run simulations using paralization, which is recommended as it provides a significant speedup, you must first set a paralaization plan. For most basic computers running on windows the paralization plan below will work just fine.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/re-exports.html" class="external-link">availableCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>The function should be called once before any simulations have been run.</p>
+<p>We refer the reader to <a href="https://future.futureverse.org/reference/plan.html" class="external-link uri">https://future.futureverse.org/reference/plan.html</a> and the future backend to read up on on how to set up a plan that might work best on their machine.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
