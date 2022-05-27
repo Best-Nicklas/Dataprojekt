@@ -32,8 +32,9 @@ Lets try to do a simulation of 10 genotypes under the badleg_syndrom disease par
 
 ```{r}
 badleg_genotypes <- sim_genotypes_with_family(n = 10, disease = badleg_syndrome, path = "badleg_genos",n_sibs = c(1,2,3))
-```
+badleg_genotypes
 
+```
 
 ## Analysis
 
