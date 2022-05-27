@@ -7,7 +7,7 @@
 #' @export
 #' 
 Manhattan_plot <- function(x) {
-  ggplot2::ggplot(x, aes(x=1:length(p.value), y=-log10(p.value), size=-log10(p.value))) + 
+  ggplot2::ggplot(x, ggplot2::aes(x=1:length(p.value), y=-log10(p.value), size=-log10(p.value))) + 
     ggplot2::geom_point(color="blue") + 
     ggplot2::ylim(0,15) +
     ggplot2::geom_hline(yintercept=-log10(5e-7), linetype=2) +
