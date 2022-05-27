@@ -9,7 +9,6 @@
 #' @export
 #' 
 
-
 Power_plots <- function(Gwas_data, p){
    
    if (!(length(Gwas_data) == 3)) stop("Needs Gwas_data from all three analysis on list format")
@@ -34,7 +33,6 @@ Power_plots <- function(Gwas_data, p){
       dplyr::mutate (Model = "LTFH")
     
     
-    ggplot(rbind(T1, T2, T3)) + 
-      geom_line(aes(x = estim, y = cpower, group = Model, colour = Model))
-
+    ggplot2::ggplot(rbind(T1, T2, T3)) + 
+      ggplot2::geom_line(ggplot2::aes(x = estim, y = cpower, group = Model, colour = Model))
 }
