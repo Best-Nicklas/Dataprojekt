@@ -34,7 +34,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
   if (!is.null(n_sibs)) {
     sibs_pr_child <- if (length(n_sibs) == 1) 
     {rep(n_sibs,n)} else 
-      sample(n_sibs, n, replace = T)
+    sibs_pr_child <- sample(n_sibs, n, replace = T)
   }
   
   # Calculate normalization constants 

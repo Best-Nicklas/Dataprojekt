@@ -14,8 +14,37 @@ knitr::opts_chunk$set(
 )
 ```
 
-Placeholder rmarkdown
+## Simulation
+To simulate genotype and case-control phenotype data using RyouSick you first have to simulate the disease parameters. Lets try to simulate disease parameters for genetic disease called badleg_syndrome on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.05:
+
 ```{r}
-2+2
+library("RyouSick")
+badleg_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.05)
+badleg_syndrome
+
 ```
+
+We can now chose what kind of simulation we want to perform. Either with family or without using the two functions:
+ * `sim_genotypes_no_family()` simulates genotype and case-control phenotype without family case-control phenotypes.
+ * `sim_genotypes_with_family()` simulates genotype and case-control phenotype with family case-control phenotypes.
+
+Lets try to do a simulation of 10 genotypes under the badleg_syndrom disease parameters, with 1 to 3 siblings each: 
+
+```{r}
+badleg_genotypes <- sim_genotypes_with_family(n = 10, disease = badleg_syndrome, path = "badleg_genos",n_sibs = c(1,2,3))
+```
+
+
+## Analysis
+
+
+## Visualizations
+
+
+## Prediction
+
+
+## Correct formatting of rds object
+
+## Paralization
 
