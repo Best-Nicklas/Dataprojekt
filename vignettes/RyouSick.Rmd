@@ -22,12 +22,13 @@ Disease parameters for our target disorder is simulated on 10 SNPs with a herita
 
 ```{r, eval = FALSE}
 library("RyouSick")
-bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.5)
+bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.25)
 ```
 
 ```{r, include = FALSE}
-#THIS BLOCK IS NOT SEEN IN KNITTED VERSION - external data loaded as seed cannot be set in examples 
-bad_knee_data <- RyouSick::OpenRds(tools::file_path_sans_ext(system.file("extdata", "bad_knee_data.rds", package = "RyouSick")))
+#THIS BLOCK IS NOT SEEN IN KNITTED VERSION - external data loaded as seed is unusable in examples 
+library("RyouSick")
+bad_knee_data <- RyouSick::OpenRds(tools::file_path_sans_ext(system.file("extdata", "bad_knee_example_data.rds", package = "RyouSick")))
 bad_knee_syndrome <- list(MAF = bad_knee_data$MAP$MAF, BETA = bad_knee_data$MAP$BETA, CAUSAL = ((bad_knee_data$MAP$BETA != 0) + 0), H2 = 0.8, PREVALENCE = 0.25, N_SNP = 10)
 
 ```
@@ -47,8 +48,8 @@ We can now chose what kind of simulation we want to perform for our population. 
 
 Lets try to do a simulation of 10 genotypes under the bad_knee_syndrom disease parameters with 1 to 3 siblings for each genotype and save it under the filename "bad_knee_data10x10: 
 
-```{r, warning = FALSE}
-bad_knee_data <- sim_genotypes_with_family(n = 10, disease = bad_knee_syndrome, path = "bad_knee_data10x10",n_sibs = c(1,2,3))
+```{r, eval = FALSE}
+bad_knee_data <- sim_genotypes_with_family(n = 10, disease = bad_knee_syndrome, path = "bad_knee_data", n_sibs = c(1,2,3))
 ```
 
 The bad_knee_data will now contain a list object with reference to a file-backed matrix (matrix stored on disk), a tibble containing information on the disease (MAP) and a tibble containing phenotype information on the genotypes. Individual columns in the data can be accesed using the dollar notation
@@ -61,7 +62,8 @@ Slices of the genotype data can be accessed as well
 bad_knee_data$genotypes[1:10, 1:10]
 
 ```
-(WARNING: we highly advise against indexing all the data at once using [], as this will try to load the whole file-backed matrix into memory, which depending on the size of the file might cause problems)
+Here each row represents a genotype and each column a SNP. 
+(WARNING: we highly advise against indexing all the data at once using [], as this will try to load the whole file-backed matrix into memory, which, depending on the size of the file, might cause problems)
 
 All of the simulated information contained in our example case bad_knee_data can be seen below
 
@@ -95,6 +97,13 @@ Output will consist of estimated effect sizes, standard error, t-scores and pval
 knitr::kable(x)
 ```
 Note that to access the analysis data for GWAX and LTFH you have to use `method_result$GWAS_Data$`.
+
+Statistics for the data can be calculated by passing the p-values, the true causal SNPs and a pvalue threshold to the `get_stats()` function
+
+```{r}
+knitr::kable(get_stats(pvalues = x$p.value, true_causal = bad_knee_syndrome$CAUSAL, threshold_pvalue = 0.05))
+```
+
 
 ## Visualizations
 
@@ -134,7 +143,6 @@ If you wish to run the analysis methods on your own data it must first be format
 
 ```{r, eval=FALSE}
 user_input_obj <- createRds("user_input_data", nrow = 10, ncol = 10)
-user_input_obj
 ```
 
 The rds object that is returned can then be filled up by adding columns in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below
@@ -157,9 +165,9 @@ Since most users work on very different computers with various setups paralizati
 future::plan(future::multisession, workers = max(1, future::availableCores(logical = F) - 1))
 ```
 
-The function should be called once before any simulations have been run.
+The function should be called once at the beginning before any simulations have been run.
 
-We refer the reader to https://future.futureverse.org/reference/plan.html and the future backend to read up on on how to set up a plan that might work best on their machine. 
+We refer the reader to https://future.futureverse.org/reference/plan.html and the future backend to read up on on how to set up a plan that might work best on their setup. 
 
 
 

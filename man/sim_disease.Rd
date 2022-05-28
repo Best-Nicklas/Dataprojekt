@@ -33,7 +33,7 @@ sim_disease(
 \item{maf_high}{Integer specifying upper bound for MAF if none given.}
 }
 \value{
-A list with all the diesease parameters.
+A list with all the disease parameters.
 }
 \description{
 This function is used to simulate disease parameters. If not predetermined,
