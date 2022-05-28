@@ -24,6 +24,15 @@ Disease parameters for our target disorder is simulated on 10 SNPs with a herita
 library("RyouSick")
 bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.5)
 ```
+
+```{r, include = FALSE}
+#THIS BLOCK IS NOT SEEN IN KNITTED VERSION - external data loaded as seed cannot be set in examples 
+bad_knee_data <- RyouSick::OpenRds(tools::file_path_sans_ext(system.file("extdata", "bad_knee_data.rds", package = "RyouSick")))
+bad_knee_syndrome <- list(MAF = bad_knee_data$MAP$MAF, BETA = bad_knee_data$MAP$BETA, CAUSAL = ((bad_knee_data$MAP$BETA != 0) + 0), H2 = 0.8, PREVALENCE = 0.25, N_SNP = 10)
+
+```
+
+
 which outputs 
 ```{r}
 bad_knee_syndrome

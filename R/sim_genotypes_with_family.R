@@ -104,7 +104,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
                                         {if ( is.null(.x)) NULL
                                           else(.x > threshold) + 0})
   }
-  
+  bigsnpr::snp_save(FBM)
   return(FBM)
   
   
