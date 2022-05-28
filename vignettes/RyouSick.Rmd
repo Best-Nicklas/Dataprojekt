@@ -20,11 +20,15 @@ To illustrate the use of RyouSick lets go through an example where we try to sim
 When trying to simulate genotype and case-control phenotype data using RyouSick you first have to simulate the disease parameters. 
 Disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:
 
-```{r}
+```{r, eval = FALSE}
 library("RyouSick")
-bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.50)
+bad_knee_syndrome <- sim_disease(n_snp = 10, h2 = 0.8, prevalence = 0.5)
+```
+which outputs 
+```{r}
 bad_knee_syndrome
 ```
+
 In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference at the given position. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. 
 
 We can now chose what kind of simulation we want to perform for our population. Either with family information or without using the two functions:
