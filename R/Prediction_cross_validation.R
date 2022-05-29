@@ -1,6 +1,6 @@
 #' Perform Prediction Cross-validation to determine best model
 #' 
-#' This function is used to calculate predictive powers of different models.
+#' This function is used to calculate predictive powers of different models at different thresholds.
 #' 
 #' @param rds.obj A .rds file with an FBM.code256 and accompanying FAM and MAP.
 #' @param k Number of folds to be used in cross-validation. Default is 10.
@@ -112,5 +112,5 @@ Prediction_cross_validation <- function(rds.obj, k = 10, threshold = 0, disease,
   results <- tibble::tibble(Pvalue = threshold, Average_Score = avg_scores, Best_Score = best_scores, R2 = best_scores^2)
   fittedvals <- bigsnpr::snp_PRS(G = rds.obj$genotypes, betas.keep = bestest_model$estim, ind.test = c(1:n)[-(bestest_block_start:bestest_block_end)], lpS.keep = -log10(bestest_model$p.value), thr.list = bestest_pval)
   resids <- liabilities[-(bestest_block_start:bestest_block_end)]-fittedvals
-  return(list(Results = results, Best_Model = list(Regression = data.frame(bestest_model), Liabilities = as.vector(liabilities), Fittedvalues = as.vector(fittedvals), Residuals = as.vector(resids), Score = bestest_score, Pvalue = bestest_pval)))
+  return(list(Results = results, Best_Model = list(Regression = data.frame(bestest_model), Fittedvalues = as.vector(fittedvals), Residuals = as.vector(resids), Score = bestest_score, Pvalue = bestest_pval)))
 }
