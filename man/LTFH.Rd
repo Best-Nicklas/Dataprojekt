@@ -4,10 +4,10 @@
 \alias{LTFH}
 \title{Perform GWAS on posterior mean genetic liabilities}
 \usage{
-LTFH(child, prevalence, h2)
+LTFH(rds.obj, prevalence, h2)
 }
 \arguments{
-\item{child}{A list object with an FBM.code256 and accompanying FAM and MAP.}
+\item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP.}
 
 \item{prevalence}{The likelihood of having the disease in the population}
 

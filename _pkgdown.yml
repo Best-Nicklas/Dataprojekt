@@ -13,14 +13,16 @@ navbar:
 reference:
 - title: Simulation
   description: |
-    **Simulation** functions that can be used to....(skal fyldes ud)
+    **Simulation** functions that can be used to generate genotype data for a given population and related case-control 
+    phenotype data for the population with respect to a simulated target disease. 
   contents:
   - sim_disease
   - sim_genotypes_no_family
   - sim_genotypes_with_family
 - title: Analysis
   description: |
-    **Analysis** functions used to.... (skal fyldes ud)
+    **Analysis** functions used to infer which SNPs might be causally related to a specific disease and to find a model 
+    that can predict future cases based on a individuals genotypes.
   contents:
   - GWAS
   - GWAX
@@ -28,18 +30,20 @@ reference:
   - Prediction_cross_validation
 - title: Visualizations
   description: |
-    **Visualizations** to show.... (skal fyldes ud)
+    **Visualization** functions to illustrate a basic overview of the results from analyis.
   contents:
   - Manhattan_plot
-  - Power_plot
+  - Power_plots
 - title: Helpers
   description: |
-    **Helpers** for various....(skal fyldes ud)
+    **Helpers** functions that can be used to perform various tasks.
   contents:
-  - gibbs_sampler
-  - covmatrix
   - createRds
   - OpenRds
+  - saveRds
+  - get_stats
+  - gibbs_sampler
+  - covmatrix
   - rnorm_trunc
 articles:
 - title: Simulation and Association Studies

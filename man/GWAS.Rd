@@ -4,10 +4,10 @@
 \alias{GWAS}
 \title{Perform genome wide association study (GWAS)}
 \usage{
-GWAS(person, y, include = bigparallelr::rows_along(person$genotypes))
+GWAS(rds.obj, y, include = bigparallelr::rows_along(rds.obj$genotypes))
 }
 \arguments{
-\item{person}{A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP.}
+\item{rds.obj}{A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP.}
 
 \item{y}{Vector of regressands to regress on (case-control status of the genotypes in person)}
 

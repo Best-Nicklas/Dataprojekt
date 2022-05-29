@@ -10,11 +10,11 @@
 #' @export 
 #' 
 #' 
-GWAS <- function(rds.obj, y, include = bigparallelr::rows_along(person$genotypes)) {
-  FBM <- person$genotypes
+GWAS <- function(rds.obj, y, include = bigparallelr::rows_along(rds.obj$genotypes)) {
+  FBM <- rds.obj$genotypes
   
   #Uses function from bigSNPr package to do regression on FBM
-  regr <- bigstatsr::big_univLinReg(rds.obj, y[include], ind.train = include)
+  regr <- bigstatsr::big_univLinReg(FBM, y[include], ind.train = include)
   #Adds column with P-values
   regr$p.value <- predict(regr, log10 = FALSE)
   

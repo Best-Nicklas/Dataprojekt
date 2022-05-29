@@ -2,7 +2,7 @@
 title: "GWAX"
 output: rmarkdown::html_vignette
 description:
-  skriv kort bekskrivelse her - ses ved siden artikler 
+  A short overview of the GWAX method and results from a run on simulated 100.000x100.000 dataset.
 vignette: >
   %\VignetteIndexEntry{GWAX}
   %\VignetteEngine{knitr::rmarkdown}
@@ -18,7 +18,16 @@ knitr::opts_chunk$set(
 
 ## GWAX
 
-GWAX is short for genome-wide association study by proxy, which is an approach used to identify genomic variants that are statistically associated with a risk for a disease, exactly as GWAS (For more information read “”). The key difference is the case-control status, which GWAS uses a simple linear regression on. GWAX makes a proxy case-control status based on the individual´s family history. So if the individual case-control status is zero, meaning not having the disease, but just one the individual´s parents case-control status is one, meaning having the disease, the individual gets a proxy status as being one. GWAX therefore accounts for some family history and herabillity, which should give more useful information to the analysis. 
+GWAX is short for genome-wide association study by proxy, which is an approach used to identify genomic variants that are statistically associated with a risk for a disease, exactly as GWAS. The key difference is the case-control status, which GWAS uses a simple linear regression on. GWAX makes a proxy case-control status based on the individual´s family history. So if the individual case-control status is zero, meaning not having the disease, but just one the individual´s parents case-control status is one, meaning having the disease, the individual gets a proxy status as being one. GWAX therefore accounts for some family history and herabillity, which should give more useful information to the analysis. 
+
+Using GWAX on the same simulated data that we analyzed in the GWAS article we get the following results
+
+Tabel
+
+Plot 
+
+
+We see that GWAX performs slightly better than GWAS. See a full comparison between all the methods in the LTFH article.
 
 More information about the method of GWAX can be read in the article under references <https://pubmed.ncbi.nlm.nih.gov/28092683/>;
 

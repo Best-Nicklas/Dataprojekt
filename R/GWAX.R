@@ -10,7 +10,7 @@
 #' @export 
 #' 
 
-GWAX <- function(rds.obj, include = bigparallelr::rows_along(child$genotypes)) {
+GWAX <- function(rds.obj, include = bigparallelr::rows_along(rds.obj$genotypes)) {
   
   p1_Status <- rds.obj$FAM$p1_Status
   p2_Status <- rds.obj$FAM$p2_Status

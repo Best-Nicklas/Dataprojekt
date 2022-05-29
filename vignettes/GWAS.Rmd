@@ -2,7 +2,7 @@
 title: "GWAS"
 output: rmarkdown::html_vignette
 description:
-  skriv kort bekskrivelse her - ses ved siden artikler
+  A short overview of the GWAS method and results from a run on simulated 100.000x100.000 dataset.
 vignette: >
   %\VignetteIndexEntry{GWAS}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,8 +17,23 @@ knitr::opts_chunk$set(
 ```
 
 ## GWAS
- 
-GWAS is short for genome-wide association study, which is a research approach used to identify genomic variants that are statistically associated with a risk for a disease. The method involves surveying and collecting data of genomes for a large group of people. Then the approach is to look for genomic variants, where we look specially at the single nucleotide polymorphisms, or SNPs that occur more frequently in those with a specific disease compared to those without the disease. More information about GWAS can be found at <https://www.genome.gov/genetics-glossary/Genome-Wide-Association-Studies>;. You also can learn more about SNPs at <https://medlineplus.gov/genetics/understanding/genomicresearch/snp/>;.
-
+GWAS is short for genome-wide association study, which is a research approach used to identify genomic variants that are statistically associated with a risk for a disease. The method involves surveying and collecting genome data for a large group of people. Then the approach is to look for genomic variants that occur more frequently in those with a specific disease compared to those without the disease. GWAS in pracsis makes a simple linear regression on each genomic variant and the case-control status for each individual.
 
 The goal of genome-wide association studies is to screen the entire genome of large numbers of individuals to look for associations between millions of genetic variants within those individuals to gain information about which genomic variants are more likely to cause illnesses.  
+
+when performing gwas using the RySICK GWAS() function on a large population of 100.000 individuals on 100.000 SNPs we receive the following statistics given that we choose around 10% of the 100.000 SNPS to be causal: 
+
+tabel
+
+We note that to determine whether a snp is causal or not we check to see if the pvalue is lower than the bonferroni corrected pvalue of 0.0005, since we perform so many tests. As a general standard we choose the bonferroni correction for 1.000.000 tests instead of only 100.000, as this is the usual value used in genome analysis. 
+
+
+The results can also be visualized using our manhattan plot function. where snp over the dotted line represents snps that are counted as causal. 
+
+plot
+
+This gives us an indiciation of where in the sequence the causal SNPs appear.
+A comparison between the results of the different association studies can be seen in the LTFH article. 
+
+
+<https://www.genome.gov/genetics-glossary/Genome-Wide-Association-Studies>;. You also can learn more about SNPs at <https://medlineplus.gov/genetics/understanding/genomicresearch/snp/>;.

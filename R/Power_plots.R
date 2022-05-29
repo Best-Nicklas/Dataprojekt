@@ -11,7 +11,7 @@
 
 Power_plots <- function(Gwas_data, p){
    
-   if (!(length(Gwas_data) == 3)) stop("Needs Gwas_data from all three analysis on list format")
+   if (!(length(Gwas_data) == 3)) stop("Needs Gwas_data from all three analysis in list format")
   
     Gwas <- Gwas_data[[1]]
     Gwax <- Gwas_data[[2]]
