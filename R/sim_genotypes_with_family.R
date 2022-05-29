@@ -16,7 +16,7 @@
 #' 
 
 sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite = T, n_blocks = min(n, 20)) {
-  if (n <= 0) stop("n must positive")
+  if (n <= 0) stop("n must be positive")
   if (any(n_sibs < 0)) stop("all sibling values must be positive")
   
   # Load disease information
