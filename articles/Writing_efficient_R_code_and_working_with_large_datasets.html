@@ -106,7 +106,7 @@
  
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.986   0.020   1.006</span>
+<span class="co">#&gt;   0.992   0.016   1.008</span>
 
 <span class="co">#utilizing vectorization </span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span>
@@ -115,7 +115,7 @@
  
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.028   0.036   0.063</span></code></pre></div>
+<span class="co">#&gt;   0.043   0.012   0.055</span></code></pre></div>
 <p>So whenever we want to make a loop in R it might be a good idea to first see if there is an inbuilt function R that can do it for us faster. Some useful function that work in most cases are those belonging to the apply family of functions such as apply(), sapply(), lapply() and tapply(). If we have no other choice but to loop through elements of a vector another useful tip is to always allocate the necessary memory beforehand. As shown below this also provides a significant speedup.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000000</span>
@@ -129,7 +129,7 @@
  
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   2.613   0.220   2.834</span>
+<span class="co">#&gt;   2.403   0.160   2.563</span>
 
 <span class="co">#Allocating memory beforehand</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span>
@@ -140,7 +140,7 @@
  
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.484   0.016   0.499</span></code></pre></div>
+<span class="co">#&gt;   0.480   0.016   0.496</span></code></pre></div>
 <p>finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
