@@ -8,7 +8,7 @@
 #' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP.
 #' @param prevalence The likelihood of having the disease in the population
 #' @param h2 Heritability parameter.
-#' @return A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and the configurations and the associated liabilities.
+#' @return A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and a data frame with the configurations and the associated liabilities.
 #' @export
 #' 
 
