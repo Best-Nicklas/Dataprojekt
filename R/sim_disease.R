@@ -1,4 +1,4 @@
-#' Simulation of disease parameters
+111#' Simulation of disease parameters
 #' 
 #' This function is used to simulate disease parameters. If not predetermined,
 #' the function will randomly calculate causal SNPs, MAF vaules and beta values. 
@@ -36,7 +36,7 @@ sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = round(n
     maf <- runif(n_snp, maf_low, maf_high)
     
   }
-  #Calcualtes betas for causal SNPs
+  #Calculates betas for causal SNPs
   c <- sum(causal)
   beta <- ifelse(causal == 1, rnorm(n_snp, 0, sqrt(h2 / c)), 0)
   
