@@ -5,7 +5,7 @@
 #' configurations using gibbs sampling. The calculated posterior mean genetic 
 #' liabilities are then matched to each person in the dataset and used to perform GWAS.
 #' 
-#' @param child A list object with an FBM.code256 and accompanying FAM and MAP.
+#' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP.
 #' @param prevalence The likelihood of having the disease in the population
 #' @param h2 Heritability parameter.
 #' @return The function returns a list, where the first entrance is the GWAS 
@@ -13,11 +13,11 @@
 #' @export
 #' 
 
-LTFH <- function(child, prevalence, h2) {
+LTFH <- function(rds.obj, prevalence, h2) {
   if (prevalence <= 0 || prevalence >= 1) stop("prevalence must be between 0 and 1")
   if (h2 <= 0 || h2 >= 1) stop("h2 must be between 0 and 1")
   
-  child_configs <- purrr::pmap(list(child$FAM$Status,child$FAM$p1_Status, child$FAM$p2_Status, child$FAM$sibs_Status), 
+  child_configs <- purrr::pmap(list(rds.obj$FAM$Status, rds.obj$FAM$p1_Status, rds.obj$FAM$p2_Status, rds.obj$FAM$sibs_Status), 
                         function(x1, x2, x3, x4) 
                           paste(toString(x1),
                                 toString(max(x2, x3)),
@@ -36,7 +36,7 @@ LTFH <- function(child, prevalence, h2) {
     config_liabs[config] <- gibbs_sampler(gibb_input, 100, covmatrix(h2 = h2, n_sib = length(gibb_input) - 3), prevalence)
   }
   
-  n  <- nrow(child$genotypes)
+  n  <- nrow(rds.obj$genotypes)
   gen_liabs <- numeric(n)
   
   #Matches config of child to calculated mean posterior genetic liability
@@ -44,5 +44,5 @@ LTFH <- function(child, prevalence, h2) {
     gen_liabs[i] <- config_liabs[child_configs[i]]
   }
   
-  return(list(GWAS_Data = GWAS(child, gen_liabs), Posterior_Mean_Genetic_Liability = gen_liabs))
+  return(list(GWAS_Data = GWAS(rds.obj, gen_liabs), Posterior_Mean_Genetic_Liability = gen_liabs))
 }
