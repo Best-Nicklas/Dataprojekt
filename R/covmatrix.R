@@ -4,7 +4,7 @@
 #' multivariate normal distribution which is used to model the liabilities.
 #' 
 #' @param h2 Integer specifying heritability parameter (0 < h2 < 1).
-#' @param sib Integer specifying number of siblings (default 0).
+#' @param n_sib Integer specifying number of siblings (default 0).
 #' @return A co-variance matrix, created from the value of h2 and 
 #' the number of sibs. 
 #' 

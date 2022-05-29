@@ -40,7 +40,7 @@ bad_knee_syndrome
 
 In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. 
 
-We can now chose what kind of simulation we want to perform for our population. Either with family information or without using the two functions:
+We can now chose what kind of simulation we want to perform for our population. Either with family history or without using one of the two functions:
 
 * `sim_genotypes_no_family()` simulates genotype and case-control phenotype without family case-control phenotypes
 * `sim_genotypes_with_family()` simulates genotype and case-control phenotype with family case-control phenotypes

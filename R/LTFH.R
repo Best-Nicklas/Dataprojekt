@@ -8,8 +8,7 @@
 #' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP.
 #' @param prevalence The likelihood of having the disease in the population
 #' @param h2 Heritability parameter.
-#' @return The function returns a list, where the first entrance is the GWAS 
-#' output and the second entrance are the calculated posterior mean genetic liabilities.
+#' @return A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and a data frame with the configurations and the associated liabilities.
 #' @export
 #' 
 
@@ -44,5 +43,5 @@ LTFH <- function(rds.obj, prevalence, h2) {
     gen_liabs[i] <- config_liabs[child_configs[i]]
   }
   
-  return(list(GWAS_Data = GWAS(rds.obj, gen_liabs), Posterior_Mean_Genetic_Liability = gen_liabs))
+  return(list(GWAS_Data = GWAS(rds.obj, gen_liabs), Posterior_Mean_Genetic_Liability = gen_liabs, Configs = data.frame(Config = unique_configs, Liability = config_liabs)))
 }

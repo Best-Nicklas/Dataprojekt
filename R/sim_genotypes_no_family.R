@@ -3,16 +3,20 @@
 #' This function is used to simulate genotypes individuals with no family and accompanying phenotype data. 
 #' 
 #' @param n Integer specifying amount of gentypes/indivduals to simulate. 
-#' @param disease A list with all the disease parameters.
+#' @param disease A list with all the disease parameters. Can be created using the sim_disease() function. 
 #' @param path Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).
 #' @param overwrite Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).
-#' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.
-#' @details Simulation can be performed using paralization if a paralization plan has been set prior to excution in the global environment. 
-#' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
+#' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory 
+#' issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.
+#' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space.  
+#' Simulation can be performed using parallelization if a parallelization plan has been set prior to execution in the global environment. 
+#' WARNING: using parallelization will with a n_blocks of 500 use up a maximum of 2 GB of RAM for EACH process 
+#' when running a simulation of 100.000x100.000 with 2 siblings for each genotype.
+#' @return Returns list object, also refered to as a rds object, containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 #' FAM object containing phenotype information on genotypes
 #' @export
 
-sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = min(n, 20)) {
+sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = min(n, 500)) {
   if (n <= 0) stop("n must positive")
   
   # Load disease information

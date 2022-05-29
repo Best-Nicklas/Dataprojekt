@@ -9,13 +9,19 @@
 #' @param n_sibs Integer value for how many sibling to produce for each genotype or vector containing values for
 #' how many sibs to sample from (ex. c(1,4,6) will produce genotypes randomly with 1, 4 or 6 siblings).  
 #' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
-#' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.
+#' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory 
+#' issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.
 #' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 #' FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
+#' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. The default n_blocks parameter has been set to 500 as this
+#' is the number at which a 100.000x100.000 with 2 siblings for each genotype will use a maximum of 2 GB of RAM for calculating a single block. 
+#' Simulation can be performed using parallelization if a parallelization plan has been set prior to execution in the global environment. 
+#' WARNING: using parallelization will with a n_blocks of 500 use up a maximum of 2 GB of RAM for EACH process 
+#' when running a simulation of 100.000x100.000 with 2 siblings for each genotype.
 #' @export
 #' 
 
-sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite = T, n_blocks = min(n, 20)) {
+sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite = T, n_blocks = min(n, 500)) {
   if (n <= 0) stop("n must positive")
   if (any(n_sibs < 0)) stop("all sibling values must be positive")
   
