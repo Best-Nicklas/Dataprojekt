@@ -16,8 +16,9 @@
 #' 
 
 
-sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = round(n_snp / 10), maf = NULL, maf_low = 0.01, maf_high = 0.49){
-  if(n_snp <= 0) stop("n_snp must be positive")
+sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = max(1,round(n_snp / 10)), maf = NULL, maf_low = 0.01, maf_high = 0.49){
+  if (n_snp <= 0) stop("n_snp must be positive")
+  if (causal_n < 0) stop("causal_n must be non-negative")
   if (prevalence <= 0 || prevalence >= 1) stop("prevalence must be between 0 and 1")
   if (h2 <= 0 || h2 >= 1) stop("h2 must be between 0 and 1")
   if (!is.null(causal) && length(causal) != n_snp) stop("length of causal must be equal to n_snp")
