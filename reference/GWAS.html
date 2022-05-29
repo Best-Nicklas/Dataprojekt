@@ -51,12 +51,12 @@ SNPs are causal.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">GWAS</span><span class="op">(</span><span class="va">person</span>, <span class="va">y</span>, include <span class="op">=</span> <span class="fu">bigparallelr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigparallelr/man/seq-dim.html" class="external-link">rows_along</a></span><span class="op">(</span><span class="va">person</span><span class="op">$</span><span class="va">genotypes</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">GWAS</span><span class="op">(</span><span class="va">rds.obj</span>, <span class="va">y</span>, include <span class="op">=</span> <span class="fu">bigparallelr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigparallelr/man/seq-dim.html" class="external-link">rows_along</a></span><span class="op">(</span><span class="va">rds.obj</span><span class="op">$</span><span class="va">genotypes</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>person</dt>
+    <dl><dt>rds.obj</dt>
 <dd><p>A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP.</p></dd>
 <dt>y</dt>
 <dd><p>Vector of regressands to regress on (case-control status of the genotypes in person)</p></dd>
