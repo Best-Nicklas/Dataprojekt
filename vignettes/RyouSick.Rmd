@@ -120,12 +120,13 @@ Manhattan_plot(x)
 ```
 
 
-If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. First we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the pvalue threshold to 0.5. 
+If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. The power for each of the methods gives us an idea of which of the methods, that finds most of the causal SNP´s. Since we randomly assign causal SNP´s when we simulate disease parameters, it´s possible to calculate the amount of false positives each of the method have, which ensures us, that the methods does not analyze SNP´s to be causal, that are predetermined not to be causal. The function `get_stats()` can be used to get information about false positives and more for each of the methods. 
+
+Before we use the the function `Power_plots()` we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the pvalue threshold to 0.5. 
 
 ```{r}
 power_plot_data = list(x, y$GWAS_Data, z$GWAS_Data)
 Power_plots(Gwas_data = power_plot_data, p = 0.5)
-
 ```
 
 We also note that line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX which when using such a low sample size produces identical results to GWAS.
@@ -133,7 +134,6 @@ We also note that line for GWAS cannot be seen in the above plot because it lays
 ## Prediction
 
 As seen in `vignette("LTFH")´ the best method for evalutating causal SNPs is LTFH. So 
-
 
 
 ## Correct formatting of rds object
