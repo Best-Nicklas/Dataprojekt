@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-This package does this and this
+RyouSick is an R package designed to simulate both small and large data sets containing genotype and phenotype information on individuals. It furthermore provides tools to analyse such datasets to find out which genetic compositions might cause various inherited disorders. As such, RyouSick provides a dual functionality. Firstly, users will be able input real genotype and phenotype data, provided that it is correctly formatted and loaded, and analyze it using one of the provided analysis methods to find out which SNPs might be causing a disorder. The output of the analysis can then be passed on to the prediction function provided in the package, which will generate a model than can be used to predict the disease status of future genotype cases. Secondly, users can simulate genetic data using the in-package functions and perform their own analysis on it and then compare their performance with more established analysis methods that are provided in the package.
 }
 \seealso{
 Useful links:
