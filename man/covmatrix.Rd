@@ -9,7 +9,7 @@ covmatrix(h2, n_sib = 0)
 \arguments{
 \item{h2}{Integer specifying heritability parameter (0 < h2 < 1).}
 
-\item{sib}{Integer specifying number of siblings (default 0).}
+\item{n_sib}{Integer specifying number of siblings (default 0).}
 }
 \value{
 A co-variance matrix, created from the value of h2 and

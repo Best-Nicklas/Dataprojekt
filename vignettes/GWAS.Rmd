@@ -21,15 +21,14 @@ GWAS is short for genome-wide association study, which is a method used to ident
 
 when performing GWAS using the RyouSick package's `GWAS()` function on a large population of 100.000 individuals on 100.000 SNPs we receive the following statistics given that we choose around 10% of the 100.000 SNPS to be causal: 
 
-tabel
+![](../man/figures/GWAS_stats.PNG)
 
 We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected p-value of $5\cdot10^{-7}$, since we perform 100.000 tests/regressions. 
 
 
 The results can also be visualized using a Manhattan plot that can be produced using the function `Manhattan_plot()` where SNPs over the dotted line represents SNPs that are counted as causal. 
 
-plot
-
+![](../man/figures/GWAS.PNG)
 This gives us an indication of where in the sequence the causal SNPs appear.
 A comparison between the results of the different association studies can be seen in the LTFH article `vignette("LTFH")`. 
 

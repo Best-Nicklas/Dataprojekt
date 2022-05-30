@@ -2,7 +2,7 @@
 % Please edit documentation in R/Power_plots.R
 \name{Power_plots}
 \alias{Power_plots}
-\title{Power plots}
+\title{Create power plots from GWAS, GWAX and LTFH data}
 \usage{
 Power_plots(Gwas_data, p)
 }

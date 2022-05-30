@@ -22,10 +22,9 @@ GWAX is short for genome-wide association study by proxy, which is an approach u
 
 Using GWAX on the same simulated data that we analyzed in the GWAS article we get the following results
 
-Tabel
+![](../man/figures/GWAX_stats.PNG)
 
-Plot 
-
+![](../man/figures/GWAX.PNG)
 
 We see that GWAX performs slightly better than GWAS. See a full comparison between all the methods in the LTFH article. We refer the reader to the original paper on GWAX by Liu, J.Z. et al. (2017) for more information about the method.
 
