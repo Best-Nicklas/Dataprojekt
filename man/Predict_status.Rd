@@ -4,7 +4,7 @@
 \alias{Predict_status}
 \title{Predict Status for new data with pre-existing model}
 \usage{
-Predict_status(rds.obj, model, configs = NULL)
+Predict_status(rds.obj, model, configs = NULL, prevalence = 0.05)
 }
 \arguments{
 \item{rds.obj}{A rds object containing an FBM.code256.}
