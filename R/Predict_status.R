@@ -5,6 +5,7 @@
 #' @param rds.obj A rds object containing an FBM.code256.
 #' @param model A model to use for predicting.
 #' @param configs A data frame with configurations and their liabilities. Only used for LTFH.
+#' @param prevalence The likelihood of having the disease in the population.
 #' @return A vector of 1's and 0's indicating predicted status.
 #' @export
 #' 
