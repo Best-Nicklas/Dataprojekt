@@ -81,11 +81,10 @@
 </h2>
 <p>GWAS is short for genome-wide association study, which is a method used to identify gene variations that are statistically associated with a risk for a disease. Once a large enough dataset has been collected the approach is to look for genomic variants that occur more frequently in those with a specific disease compared to those without the disease. GWAS in practices makes a simple linear regression on each genomic variant (values at a particular SNP) and the case-control status for each individual. We note that other implementations of GWAS exist, but that this is the one used in RyouSick. Among other statistics it gives us a p-value indicating the statistical significance of our observations. Choosing a threshold p-value we can then determine whether a SNP might be causal or not based on if its p-value higher or lower than our chosen threshold.</p>
 <p>when performing GWAS using the RyouSick package’s <code><a href="../reference/GWAS.html">GWAS()</a></code> function on a large population of 100.000 individuals on 100.000 SNPs we receive the following statistics given that we choose around 10% of the 100.000 SNPS to be causal:</p>
-<p>tabel</p>
+<p><img src="../reference/figures/GWAS_stats.PNG"></p>
 <p>We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected p-value of <span class="math inline">\(5\cdot10^{-7}\)</span>, since we perform 100.000 tests/regressions.</p>
 <p>The results can also be visualized using a Manhattan plot that can be produced using the function <code><a href="../reference/Manhattan_plot.html">Manhattan_plot()</a></code> where SNPs over the dotted line represents SNPs that are counted as causal.</p>
-<p>plot</p>
-<p>This gives us an indication of where in the sequence the causal SNPs appear. A comparison between the results of the different association studies can be seen in the LTFH article <code><a href="../articles/LTFH.html">vignette("LTFH")</a></code>.</p>
+<p><img src="../reference/figures/GWAS.PNG"> This gives us an indication of where in the sequence the causal SNPs appear. A comparison between the results of the different association studies can be seen in the LTFH article <code><a href="../articles/LTFH.html">vignette("LTFH")</a></code>.</p>
 </div>
   </main>
 </div>

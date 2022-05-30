@@ -99,20 +99,18 @@ h^2 &amp; 1 &amp; 0.5h^2&amp; 0.5h^2&amp; 0.5h^2\\
 <p>Here <span class="math inline">\(l_g\)</span> is the target individuals genetic liability, <span class="math inline">\(l_o\)</span> the full liablilty, <span class="math inline">\(l_{p1}\)</span> the full liability of parent 1, <span class="math inline">\(l_{p2}\)</span> the full liability of parent 2 and <span class="math inline">\(l_s\)</span> the liability of a sibling. In the above the liabilities have been modeled using only 1 sibling. The model can be extended with more siblings by adding another row and column containing <span class="math inline">\(0.5h^2\)</span> in every entrance except the diagonal entrance which should be 1.</p>
 <p>To calculate the posterior mean genetic liabilities RyouSick first Gibbs samples genetic liabilities from the above distribution. This specific approach is a light implementation of method for calculating posterior mean genetic liabilites outlined the LT-FH++ method (see Pedersen, E.M. et al (2022)). It takes advantage of the fact that by calculating conditional liabilities in the Gibbs sampling process, fx. <span class="math inline">\(l_g\)</span> conditional on <span class="math inline">\(l_o, l_{p1},l_{p2} \text{ and }l_s\)</span>, we can get samples from our multivariate distribution. To further take case-control status into account we sample from truncated conditional normal distributions. This kind of distribution is derived from that of a normally distributed random variable by bounding it from either below or above. When applying the information about the case-control status, we are able to bound the distribution from below when an the liability for an individual is a case, and from above when not a case. Once the Gibbs sampling process converges to the target distribution for our configuration, which we check by evaluating the SEM (standard error of the mean), we begin to sample the genetic liabilities from the converged distribution. These are then used to calculate our posterior mean genetic liability for the configuration.</p>
 <p>Since we only have to sample a mean genetic liability for each configuration, which are made from the status of parents, child and siblings, and not for every genotype, as two genotypes can have the same configuration, posterior mean genetic liabilities can be calculated relatively quickly. When the posterior mean genetic liabilities have been calculated for all configurations available in our data we match it to the individuals in our dataset and finally perform GWAS on the genotypes and the posterior mean genetic liabilities.</p>
-<p>Using the LT-FH approach on the same simulated data that we analyzed in the GWAS and GWAX articles we get the following results, with results from GWAS and GWAX included for comparision.</p>
-<p>Tabel</p>
-<p>Plot</p>
-<p>We see that the LT-FH method as expected performs better than both GWAS and GWAX.</p>
+<p>Using the LT-FH approach on the same simulated data that we analyzed in the GWAS and GWAX articles we get the following results, with results from GWAS and GWAX included for comparison.</p>
+<p>For GWAS</p>
+<p><img src="../reference/figures/GWAS.PNG"><img src="../reference/figures/GWAS_stats.PNG" style="width:100.0%"> For GWAX <img src="../reference/figures/GWAX.PNG"><img src="../reference/figures/GWAX_stats.PNG" style="width:100.0%"> For LTFH</p>
+<p><img src="../reference/figures/LTFH.PNG"><img src="../reference/figures/LTFH_stats.PNG" style="width:100.0%"></p>
+<p>Addtionally we get the following power plots:</p>
+<p><img src="../reference/figures/power_plot.PNG"> We see that the LT-FH method as expected performs better at finding true positives than both GWAS and GWAX.</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <ul>
-<li>Hujoel, M.L.A., Gazal, S., Loh, P. et al. Liability threshold modeling of case-control status and family history of disease increases association power. Nat Genet, 52(5) p541-547 (2020). <a href="https://pubmed.ncbi.nlm.nih.gov/32313248/" class="external-link uri">https://pubmed.ncbi.nlm.nih.gov/32313248/</a>
-</li>
-</ul>
-<p>Pedersen, E.M., Agerbo, E., Plana-Ripoll, et al. Accounting for age of onset and family history improves power in genome-wide association studies. The American Journal of Human Genetics, Volume 109, issue 3, P417-432 (2022). <a href="https://www.cell.com/ajhg/fulltext/S0002-9297(22)00009-X/" class="external-link uri">https://www.cell.com/ajhg/fulltext/S0002-9297(22)00009-X/</a></p>
-<ul>
-<li>
+<li><p>Hujoel, M.L.A., Gazal, S., Loh, P. et al. Liability threshold modeling of case-control status and family history of disease increases association power. Nat Genet, 52(5) p541-547 (2020). <a href="https://pubmed.ncbi.nlm.nih.gov/32313248/" class="external-link uri">https://pubmed.ncbi.nlm.nih.gov/32313248/</a></p></li>
+<li><p>Pedersen, E.M., Agerbo, E., Plana-Ripoll, et al. Accounting for age of onset and family history improves power in genome-wide association studies. The American Journal of Human Genetics, Volume 109, issue 3, P417-432 (2022). <a href="https://www.cell.com/ajhg/fulltext/S0002-9297(22)00009-X/" class="external-link uri">https://www.cell.com/ajhg/fulltext/S0002-9297(22)00009-X/</a></p></li>
 </ul>
 </div>
   </main>

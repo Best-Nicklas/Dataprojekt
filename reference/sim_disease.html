@@ -56,7 +56,7 @@ the function will randomly calculate causal SNPs, MAF vaules and beta values.</p
   <span class="va">prevalence</span>,
   <span class="va">h2</span>,
   causal <span class="op">=</span> <span class="cn">NULL</span>,
-  causal_n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">n_snp</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span>,
+  causal_n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">n_snp</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>,
   maf <span class="op">=</span> <span class="cn">NULL</span>,
   maf_low <span class="op">=</span> <span class="fl">0.01</span>,
   maf_high <span class="op">=</span> <span class="fl">0.49</span>

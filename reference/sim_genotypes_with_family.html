@@ -57,7 +57,7 @@ information on the case-control status of parents annd possible sibling.</p>
   <span class="va">path</span>,
   n_sibs <span class="op">=</span> <span class="cn">NULL</span>,
   overwrite <span class="op">=</span> <span class="cn">T</span>,
-  n_blocks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">20</span><span class="op">)</span>
+  n_blocks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">500</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -75,12 +75,23 @@ how many sibs to sample from (ex. c(1,4,6) will produce genotypes randomly with 
 <dt>overwrite</dt>
 <dd><p>Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)</p></dd>
 <dt>n_blocks</dt>
-<dd><p>Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.</p></dd>
+<dd><p>Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory
+issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. Since the running time depends on a number of variables,
+such as the parallelization settings, core speed, core amount and sibling configuration, we cannot accurately give an estimation how long the simulation will take.
+Instead we simply warn the user that simulations might take upwards of multiple hours for large datasets such as a 100.000x100.000. The default n_blocks parameter has been set to 500 as this
+is the number at which a 100.000x100.000 with 2 siblings for each genotype will use a maximum of 2 GB of RAM for calculating a single block.
+Simulation can be performed using parallelization if a parallelization plan has been set prior to execution in the global environment.
+WARNING: using parallelization will, with a n_blocks of 500, use up to a maximum of 2 GB of RAM for EACH process
+when running a simulation of 100.000x100.000 with 2 siblings for each genotype.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
