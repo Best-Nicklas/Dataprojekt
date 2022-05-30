@@ -463,7 +463,7 @@
 <div class="section level2">
 <h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h2>
-<p>As seen in <code>vignette(“LTFH”)</code> the best method for evaluating causal SNPs is LT-FH. So let’s try to use <code><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation()</a></code> on our LT-FH data to get a model that can predict future cases.</p>
+<p>As seen in <code><a href="../articles/LTFH.html">vignette("LTFH")</a></code> the best method for evaluating causal SNPs is LT-FH. So let’s try to use <code><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation()</a></code> on our LT-FH data to get a model that can predict future cases.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>,
                                              k <span class="op">=</span> <span class="fl">2</span>,
@@ -485,18 +485,18 @@
 <code class="sourceCode R"><span class="va">user_input_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRds.html">createRds</a></span><span class="op">(</span><span class="st">"user_input_data"</span>, nrow <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below</p>
 <ul>
-<li>MAF: vector with minor allele frequencies for SNPs</li>
-<li>Status: vector with status for genotypes</li>
-<li>p1_Status: vector with parent 1 status for genotypes (only used in GWAX and LTFH)</li>
-<li>p2_Status: vector with parent 2 status for genotypes (only used in GWAX and LTFH)</li>
-<li>sibs_Status: list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)</li>
+<li>MAF (in MAP): vector with minor allele frequencies for SNPs</li>
+<li>Status (in FAM): vector with status for genotypes</li>
+<li>p1_Status (in FAM): vector with parent 1 status for genotypes (only used in GWAX and LTFH)</li>
+<li>p2_Status (in FAM): vector with parent 2 status for genotypes (only used in GWAX and LTFH)</li>
+<li>sibs_Status (in FAM): list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)</li>
 </ul>
 <p>Note that the names are case-sensitive. An example of filling up the genotypes with a matrix consisting of only 1’s and creating a Status column can be seen below. Remember that when making changes to the tibbles FAM and MAP, the changes to the rds object must be saved using <code><a href="../reference/saveRds.html">saveRds()</a></code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">user_input_obj</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">10</span>, <span class="va">nrow</span><span class="op">)</span>
 <span class="va">user_input_obj</span><span class="op">$</span><span class="va">Status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>
 <span class="fu"><a href="../reference/saveRds.html">saveRds</a></span><span class="op">(</span><span class="va">user_input_obj</span><span class="op">)</span></code></pre></div>
-<p>addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article <code><a href="../articles/Writing_efficient_R_code_and_working_with_large_datasets.html">vignette("Writing_efficient_R_code_and_working_with_large_datasets")</a></code>). The rds file can later be opened again using the <code>openRds()</code> function.</p>
+<p>addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article <code><a href="../articles/Writing_efficient_R_code_and_working_with_large_datasets.html">vignette("Writing_efficient_R_code_and_working_with_large_datasets")</a></code>). The rds file can later be opened again using the <code><a href="../reference/OpenRds.html">OpenRds()</a></code> function.</p>
 </div>
 <div class="section level2">
 <h2 id="parallelization">Parallelization<a class="anchor" aria-label="anchor" href="#parallelization"></a>
