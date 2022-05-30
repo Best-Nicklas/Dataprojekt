@@ -2,7 +2,7 @@
 title: "LTFH"
 output: rmarkdown::html_vignette
 description:
-  Overview of the LT-FH method, results from a run on a simulated 100.000x100.000 dataset and comparison with runs using GWAS and GWAX.
+  Overview of the LT-FH method, results from a run on a simulated 100,000x100,000 dataset and comparison with runs using GWAS and GWAX.
 vignette: >
   %\VignetteIndexEntry{LTFH}
   %\VignetteEngine{knitr::rmarkdown}

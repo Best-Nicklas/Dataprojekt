@@ -7,7 +7,7 @@
 Prediction_cross_validation(
   rds.obj,
   k,
-  threshold = 0,
+  threshold = 1,
   method = "GWAS",
   liabilities = rds.obj$FAM$Status
 )
