@@ -131,7 +131,7 @@ We also note that the line for GWAS cannot be seen in the above plot because it 
 
 ## Prediction
 
-As seen in `vignette(“LTFH”)` the best method for evaluating causal SNPs is LT-FH. So let's try to use `Prediction_cross_validation()` on our LT-FH data to get a model that can predict future cases.
+As seen in `vignette("LTFH")` the best method for evaluating causal SNPs is LT-FH. So let's try to use `Prediction_cross_validation()` on our LT-FH data to get a model that can predict future cases.
 
 ```{r, warning=FALSE, include = FALSE, message = FALSE}
 model_results <- Prediction_cross_validation(rds.obj = bad_knee_data,
@@ -174,11 +174,11 @@ user_input_obj <- createRds("user_input_data", nrow = 10, ncol = 10)
 
 The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below
 
-* MAF:  vector with minor allele frequencies for SNPs
-* Status:  vector with status for genotypes
-* p1_Status:  vector with parent 1 status for genotypes (only used in GWAX and LTFH)
-* p2_Status:  vector with parent 2 status for genotypes (only used in GWAX and LTFH)
-* sibs_Status:  list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)
+* MAF (in MAP):  vector with minor allele frequencies for SNPs
+* Status (in FAM):  vector with status for genotypes
+* p1_Status (in FAM):  vector with parent 1 status for genotypes (only used in GWAX and LTFH)
+* p2_Status (in FAM):  vector with parent 2 status for genotypes (only used in GWAX and LTFH)
+* sibs_Status (in FAM):  list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)
 
 Note that the names are case-sensitive. An example of filling up the genotypes with a matrix consisting of only 1's and creating a Status column can be seen below. Remember that when making changes to the tibbles FAM and MAP, the changes to the rds object must be saved using `saveRds()`.
 
@@ -188,7 +188,7 @@ user_input_obj$Status <- c(1,1,1,0,0,0,0,1,0,0)
 saveRds(user_input_obj)
 ```
 
-addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article `vignette("Writing_efficient_R_code_and_working_with_large_datasets")`). The rds file can later be opened again using the `openRds()` function.
+addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article `vignette("Writing_efficient_R_code_and_working_with_large_datasets")`). The rds file can later be opened again using the `OpenRds()` function.
 
 
 ## Parallelization
