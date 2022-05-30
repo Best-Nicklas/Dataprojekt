@@ -12,6 +12,8 @@ Predict_status(rds.obj, model, configs = NULL, prevalence = 0.05)
 \item{model}{A model to use for predicting.}
 
 \item{configs}{A data frame with configurations and their liabilities. Only used for LTFH.}
+
+\item{prevalence}{The likelihood of having the disease in the population.}
 }
 \value{
 A vector of 1's and 0's indicating predicted status.

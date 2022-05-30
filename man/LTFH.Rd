@@ -9,7 +9,7 @@ LTFH(rds.obj, prevalence, h2)
 \arguments{
 \item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP.}
 
-\item{prevalence}{The likelihood of having the disease in the population}
+\item{prevalence}{The likelihood of having the disease in the population.}
 
 \item{h2}{Heritability parameter.}
 }
