@@ -48,10 +48,15 @@ Since we only have to sample a mean genetic liability for each configuration, wh
 Using the LT-FH approach on the same simulated data that we analyzed in the GWAS and GWAX articles we get the following results, with results from GWAS and GWAX included for comparison.
 
 For GWAS
+
 ![](../man/figures/GWAS.PNG)
+
 For GWAX
+
 ![](../man/figures/GWAX.PNG)
+
 For LTFH
+
 ![](../man/figures/LTFH.PNG)
 
 Stats for GWAS, GWAS and LTFH respectivly: 
