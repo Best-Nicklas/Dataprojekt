@@ -28,6 +28,7 @@ reference:
   - GWAX
   - LTFH
   - Prediction_cross_validation
+  - Predict_status
 - title: Visualizations
   description: |
     **Visualization** functions to illustrate a basic overview of the results from analyis.
@@ -36,7 +37,7 @@ reference:
   - Power_plots
 - title: Helpers
   description: |
-    **Helpers** functions that can be used to perform various tasks.
+    **Helper** functions that can be used to perform various tasks.
   contents:
   - createRds
   - OpenRds

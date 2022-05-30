@@ -1,4 +1,4 @@
-#' Perform GWAS on posterior mean genetic liabilities
+#' Perform GWAS on posterior mean genetic liabilities (LTFH)
 #' 
 #' This function finds all the unique status configurations in the data and 
 #' calculates the mean posterior genetic liability for each of these unique 

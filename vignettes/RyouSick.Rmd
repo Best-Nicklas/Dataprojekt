@@ -54,7 +54,7 @@ bad_knee_data <- sim_genotypes_with_family(n = 10,
                                            n_sibs = c(1,2,3))
 ```
 
-The bad_knee_data will now contain a list object with reference to a file-backed matrix (matrix stored on disk), a tibble containing information on the disease (MAP) and a tibble containing phenotype information on the genotypes. Individual columns in the data can be accesed using the dollar notation.
+The bad_knee_data will now contain a list object, which we will refer to as an rds object, with a reference to a file-backed matrix (matrix stored on disk), a tibble containing information on the disease (MAP) and a tibble containing phenotype information on the genotypes. Individual columns in the data can be accessed using the dollar notation.
 
 ```{r}
 bad_knee_data$FAM$Status
@@ -75,14 +75,12 @@ knitr::kable(bad_knee_data$FAM, align = "ccccccc")
 ```
 
 
-
-
 ## Analysis
 We now perform analysis on our simulated data. The RyouSick package contains three methods for analyzing the data: 
 
  * `GWAS()` Linear regression using genotype data and case-control status  
  * `GWAX()` Linear regression using genotype data and proxy case-control status  
- * `GWAX()` Linear regression using genotype data and posterior mean genetic liabilities
+ * `LTFH()` Linear regression using genotype data and posterior mean genetic liabilities
  
 Lets now try each of the methods on our data:
 
@@ -94,7 +92,7 @@ z <- LTFH(rds.obj = bad_knee_data, h2 = 0.8, prevalence = 0.5)
 
 ```
 
-Output will consist of estimated effect sizes, standard error, t-scores and pvalues for each SNP, which again can be accessed using dollar notation.
+Output will consist of estimated effect sizes, standard errors, t-scores and p-values for each SNP, which again can be accessed using dollar notation.
 
 ```{r}
 knitr::kable(x)
@@ -120,16 +118,16 @@ Manhattan_plot(x)
 ```
 
 
-If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. The power for each of the methods gives us an idea of which of the methods, that finds most of the causal SNP´s. Since we randomly assign causal SNP´s when we simulate disease parameters, it´s possible to calculate the amount of false positives each of the method have, which ensures us, that the methods does not analyze SNP´s to be causal, that are predetermined not to be causal. The function `get_stats()` can be used to get information about false positives and more for each of the methods. 
+If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. The power for each of the methods gives us an idea of which of the methods, that finds most of the causal SNP´s. Since we randomly assign causal SNP´s when we simulate disease parameters, it´s possible to calculate the amount of false positives each of the methods have, which ensures us, that the methods does not analyze SNP´s to be causal, that are predetermined not to be causal. 
 
-Before we use the the function `Power_plots()` we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the pvalue threshold to 0.5. 
+Before we use the the function `Power_plots()` we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the p-value threshold to 0.5. 
 
 ```{r}
 power_plot_data = list(x, y$GWAS_Data, z$GWAS_Data)
 Power_plots(Gwas_data = power_plot_data, p = 0.5)
 ```
 
-We also note that line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX which when using such a low sample size produces identical results to GWAS.
+We also note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.
 
 ## Prediction
 
@@ -146,13 +144,13 @@ user_input_obj <- createRds("user_input_data", nrow = 10, ncol = 10)
 
 The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below
 
-* MAF:  minor allele frequency for given SNP
+* MAF:  vector with minor allele frequencies for SNPs
 * Status:  vector with status for genotypes
 * p1_Status:  vector with parent 1 status for genotypes (only used in GWAX and LTFH)
 * p2_Status:  vector with parent 2 status for genotypes (only used in GWAX and LTFH)
 * sibs_Status:  list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)
 
-Note that the names are case-sensitive. An example of filling up the genotypes with a matrix consisting of only 1's and creating a Status column can be seen below. Remember that when making changes to the tibbles FAM and MAP, the changes to the rds object must be saved using ´saveRds()´.
+Note that the names are case-sensitive. An example of filling up the genotypes with a matrix consisting of only 1's and creating a Status column can be seen below. Remember that when making changes to the tibbles FAM and MAP, the changes to the rds object must be saved using `saveRds()`.
 
 ```{r, eval =FALSE}
 user_input_obj$genotypes[1:10,1:10] <- matrix(1, ncol = 10, nrow)
@@ -160,12 +158,12 @@ user_input_obj$Status <- c(1,1,1,0,0,0,0,1,0,0)
 saveRds(user_input_obj)
 ```
 
-addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article `vignette(""Writing_efficient_R_code_and_working_with_large_datasets"")`). The rds file can later be opened again using the `openRds()` function.
+addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article `vignette("Writing_efficient_R_code_and_working_with_large_datasets")`). The rds file can later be opened again using the `openRds()` function.
 
 
-## Paralization
+## Parallelization
 
-Since most users work on very different computers with various setups paralization is not enabled by default. To run simulations using paralization, which is recommended as it provides a significant speedup, you must first set a paralaization plan. For most basic computers running on windows the paralization plan below will work just fine. 
+Since most users work on very different computers with various setups Parallelization is not enabled by default. To run simulations using Parallelization, which is recommended as it provides a significant speedup in most cases, you must first set a Parallelization plan. For most basic computers running on windows the Parallelization plan below will work just fine. 
 
 ```{r, eval = FALSE}
 future::plan(future::multisession, 
@@ -174,7 +172,7 @@ future::plan(future::multisession,
 
 The function should be called once at the beginning before any simulations have been run.
 
-We refer the reader to https://future.futureverse.org/reference/plan.html and the future backend to read up on on how to set up a plan that might work best on their setup. 
+We refer the reader to <https://future.futureverse.org/reference/plan.html> and the future backend to read up on on how to set up a plan that might work best on their setup. 
 
 
 

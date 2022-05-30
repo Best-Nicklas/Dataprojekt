@@ -13,10 +13,12 @@
 #' issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.
 #' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 #' FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
-#' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. The default n_blocks parameter has been set to 500 as this
+#' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. Since the running time depends on a number of variables,
+#' such as the parallelization settings, core speed, core amount and sibling configuration, we cannot accurately give an estimation how long the simulation will take.
+#' Instead we simply warn the user that simulations might take upwards of multiple hours for large datasets such as a 100.000x100.000. The default n_blocks parameter has been set to 500 as this
 #' is the number at which a 100.000x100.000 with 2 siblings for each genotype will use a maximum of 2 GB of RAM for calculating a single block. 
 #' Simulation can be performed using parallelization if a parallelization plan has been set prior to execution in the global environment. 
-#' WARNING: using parallelization will with a n_blocks of 500 use up a maximum of 2 GB of RAM for EACH process 
+#' WARNING: using parallelization will, with a n_blocks of 500, use up to a maximum of 2 GB of RAM for EACH process 
 #' when running a simulation of 100.000x100.000 with 2 siblings for each genotype.
 #' @export
 #' 

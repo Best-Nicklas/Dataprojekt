@@ -2,7 +2,7 @@
 #' 
 #' This function produces a Manhattan plot from p-values found in an association analysis. 
 #' 
-#' @param x List object containing p-values from an analysis. 
+#' @param List object containing gwas data from an analysis. 
 #' @return A Manhattan plot with each regressor (SNP) on the x-axis and their -log10(P-values) on the y-axis. 
 #' @export
 #' 

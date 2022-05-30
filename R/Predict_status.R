@@ -2,7 +2,7 @@
 #' 
 #' This function is used to predict the status of one or more new persons.
 #' 
-#' @param rds.obj A .rds file with an FBM.code256.
+#' @param rds.obj A rds object containing an FBM.code256.
 #' @param model A model to use for predicting.
 #' @param configs A data frame with configurations and their liabilities. Only used for LTFH.
 #' @return A vector of 1's and 0's indicating predicted status.

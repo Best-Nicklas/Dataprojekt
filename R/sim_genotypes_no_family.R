@@ -8,10 +8,10 @@
 #' @param overwrite Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).
 #' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory 
 #' issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.
-#' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space.  
+#' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. Since the running time depends on a number of variables,
+#' such as the parallelization settings, core speed and core amount, we cannot accurately give an estimation how long the simulation will take.
+#' Instead we simply warn the user that simulations might take upwards of multiple hours for large datasets such as a 100.000x100.000.  
 #' Simulation can be performed using parallelization if a parallelization plan has been set prior to execution in the global environment. 
-#' WARNING: using parallelization will with a n_blocks of 500 use up a maximum of 2 GB of RAM for EACH process 
-#' when running a simulation of 100.000x100.000 with 2 siblings for each genotype.
 #' @return Returns list object, also refered to as a rds object, containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 #' FAM object containing phenotype information on genotypes
 #' @export

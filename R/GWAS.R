@@ -1,7 +1,6 @@
 #' Perform genome wide association study (GWAS)
 #' 
-#' This function performs a GWAS on given genotype and phenotype data to find the likelihood that 
-#' SNPs are causal.
+#' This function performs a GWAS on given genotype and phenotype data to find out how statistically associated SNPs are with a target disease.
 #' 
 #' @param rds.obj A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP.
 #' @param y Vector of regressands to regress on (case-control status of the genotypes in person)

@@ -1,4 +1,4 @@
-#' Power plots
+#' Create power plots from GWAS, GWAX and LTFH data
 #' 
 #' This function is used to calculate and plot the power for each of the models GWAS, GWAX and LTFH.
 #' This function is only design to plot all three plots against each other to get a visual comparison of the power plots for each model. 
