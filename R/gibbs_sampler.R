@@ -25,7 +25,7 @@ gibbs_sampler <- function(config, burn_in, cov_mat, prevalence) {
   threshold <- qnorm(prevalence, lower.tail = F) 
   
   gen_liabs <- numeric(burn_in + 10000)
-  liabs_current <- rep(10,l_n) #initializing l's
+  liabs_current <- rep(10, l_n) #initializing l's
   
   #pre-calculations for each l
   means <- matrix(ncol = l_n - 1, nrow = l_n)
@@ -52,7 +52,7 @@ gibbs_sampler <- function(config, burn_in, cov_mat, prevalence) {
       }
       
       #For liabilties when we dont have case (0)
-      else if (config[p-1] == 0) {
+      else if (config[p - 1] == 0) {
         liabs_current[p] <- rnorm_trunc(1, c(-Inf, threshold), new_mean, sqrt(sigmas[p]))
         
       }

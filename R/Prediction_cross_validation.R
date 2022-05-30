@@ -13,11 +13,13 @@
 
 
 Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWAS", liabilities = rds.obj$FAM$Status) {
-  if (k < 1) stop("k must be positive")
-  if (k%%1 != 0) stop("k must be an integer")
   n <- nrow(rds.obj$genotypes)
+  
+  if (k < 1) stop("k must be positive")
+  if (k %% 1 != 0) stop("k must be an integer")
   if (n < k*2) stop("number of rows must be at least twice as large as k")
-  block_size <- n%/%k
+  
+  block_size <- n %/% k
   bestest_score <- 0
   bestest_model <- NULL
   bestest_pval <- 0
@@ -25,6 +27,7 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
   bestest_block_end <- 0
   best_scores <- numeric(length(threshold))
   avg_scores <- numeric(length(threshold))
+  
   # Get proxy status from GWAX for ease
   if(method == "GWAX"){
     liabilities <- GWAX(rds.obj)$Proxy_Status
@@ -33,12 +36,12 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
   for (i in 1:length(threshold)){
     scores <- numeric(k)
     best_score <- 0
-    for (j in 0:(k-1)){
+    for (j in 0:(k - 1)){
+      
       #Create blocks
-      block_start <- j*block_size + 1
-      if (j == k-1){
-        block_end <- n} else {
-          block_end <- (j+1)*block_size}
+      block_start <- j * block_size + 1
+      if (j == k - 1) {
+        block_end <- n } else block_end <- (j + 1) * block_size
       
       #Train on k-1 folds
       if(method == "GWAS"){
@@ -58,16 +61,20 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
       }
       
       #Calculate PRS on 1 fold
-      PRS <- bigsnpr::snp_PRS(G = rds.obj$genotypes, betas.keep = regr$estim, ind.test = block_start:block_end, lpS.keep = -log10(regr$p.value), thr.list = -log10(threshold)[i])
+      PRS <- bigsnpr::snp_PRS(G = rds.obj$genotypes, 
+                              betas.keep = regr$estim, 
+                              ind.test = block_start:block_end, 
+                              lpS.keep = -log10(regr$p.value), 
+                              thr.list = -log10(threshold)[i])
       
       #Normalize PRS with mean = 0 and sd = 1
-      PRS <- (PRS - mean(PRS))/sd(PRS)
+      PRS <- (PRS - mean(PRS)) / sd(PRS)
       
       #Correlation between PRS and status
       score <- cor(PRS, rds.obj$FAM$Status[block_start:block_end])
       
       #Update best models, scores
-      scores[j+1] <- score
+      scores[j + 1] <- score
       if(score > best_score){
         best_score <- score
         best_model <- regr
@@ -75,6 +82,7 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
         best_block_end <- block_end
       }
     }
+    
     #Update best models, scores
     best_scores[i] <- best_score[1,1]
     avg_scores[i] <- mean(scores)
@@ -86,8 +94,23 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
       bestest_block_end <- best_block_end
     }
   }
-  results <- tibble::tibble(Pvalue = threshold, Average_Score = avg_scores, Best_Score = best_scores, R2 = best_scores^2)
-  fittedvals <- bigsnpr::snp_PRS(G = rds.obj$genotypes, betas.keep = bestest_model$estim, ind.test = c(1:n)[-(bestest_block_start:bestest_block_end)], lpS.keep = -log10(bestest_model$p.value), thr.list = bestest_pval)
-  resids <- liabilities[-(bestest_block_start:bestest_block_end)]-fittedvals
-  return(list(Results = results, Best_Model = list(Regression = data.frame(bestest_model), Fittedvalues = as.vector(fittedvals), Residuals = as.vector(resids), Score = bestest_score, Pvalue = bestest_pval)))
+  results <- tibble::tibble(Pvalue = threshold, 
+                            Average_Score = avg_scores, 
+                            Best_Score = best_scores, 
+                            R2 = best_scores^2)
+  
+  fittedvals <- bigsnpr::snp_PRS(G = rds.obj$genotypes, 
+                                 betas.keep = bestest_model$estim, 
+                                 ind.test = c(1:n)[-(bestest_block_start:bestest_block_end)], 
+                                 lpS.keep = -log10(bestest_model$p.value), 
+                                 thr.list = bestest_pval)
+  
+  resids <- liabilities[-(bestest_block_start:bestest_block_end)] - fittedvals
+  
+  return(list(Results = results, 
+              Best_Model = list(Regression = data.frame(bestest_model), 
+                                Fittedvalues = as.vector(fittedvals), 
+                                Residuals = as.vector(resids), 
+                                Score = bestest_score, 
+                                Pvalue = bestest_pval)))
 }

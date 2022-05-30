@@ -19,18 +19,17 @@
 
 
 createRds <-  function(path, nrow, ncol) {
-  if(nrow <= 0 || ncol <= 0 ) stop("nrow and ncol must be 1 or higher")
+  if(nrow <= 0 || ncol <= 0) stop("nrow and ncol must be 1 or higher")
   
   # Creates a file-backed matrix (.bk file) of the given size with all zeroes.
   G = bigstatsr::FBM.code256(nrow = nrow, # number of rows
-                  ncol = ncol, # number of columns
-                  code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)),
-                  backingfile = path) 
+                             ncol = ncol, # number of columns
+                             code = c(0L, 1L, 2L, rep(NA_integer_, 256 - 3)),
+                             backingfile = path) 
   # creates list containing FAM/MAP info and a pointer to a file_backed matrix 
-  obj.bigsnp = list(
-    genotypes = G,
-    MAP = tibble::tibble(SNP_ID = 1:ncol),
-    FAM = tibble::tibble(ID = 1:nrow))
+  obj.bigsnp = list(genotypes = G,
+                    MAP = tibble::tibble(SNP_ID = 1:ncol),
+                    FAM = tibble::tibble(ID = 1:nrow))
   
   # Saves obj.bigsnp in .rds file. 
   bigsnpr::snp_save(obj.bigsnp)

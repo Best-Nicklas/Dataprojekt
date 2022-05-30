@@ -16,11 +16,11 @@ covmatrix <- function(h2, n_sib = 0) {
   if (h2 <= 0) stop("h2 must be an integer between 0 and 1")
   
   # the base structure
-  cov <- matrix(h2/2, 4 + n_sib, 4 + n_sib)
+  cov <- matrix(h2 / 2, 4 + n_sib, 4 + n_sib)
   # diagnoal entries 1
   diag(cov) <- 1
   # positions where 0
-  cov[3,4] <- cov[4,3] <- 0
+  cov[3, 4] <- cov[4, 3] <- 0
   # positions where h2
   cov[1:2, 1] <- cov[1, 1:2] <- h2
   

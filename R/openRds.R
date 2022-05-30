@@ -9,10 +9,11 @@
 #' 
 
 OpenRds <- function(path){
+  # Format correct file name
   rds_file <- paste(path, ".rds", sep = "")
+  
+  # Open file or give error
   if (file.exists(rds_file)) {
     bigsnpr::snp_attach(rds_file)  
-  } else {
-    stop("No file with that name.")
-  }
+  } else stop("No file with that name.")
 } 

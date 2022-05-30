@@ -64,5 +64,6 @@ sim_genotypes_no_family <- function(n, disease, path, overwrite = T, n_blocks = 
   FBM$MAP$BETA <- beta
   
   bigsnpr::snp_save(FBM)
+  
   return(FBM)
 }

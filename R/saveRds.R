@@ -7,5 +7,6 @@
 
 
 saveRds <- function(rds.obj) {
+  # Wrapper to conform with RyouSick name conventions
   bigsnpr::snp_save(rds.obj)
 } 

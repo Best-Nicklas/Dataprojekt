@@ -17,13 +17,14 @@ get_stats <- function(pvalues,  true_causal, threshold_pvalue) {
   # find predicted causal SNPs 
   pred_causal <- (pvalues < threshold_pvalue) + 0
 
-  #calculate true negatives, false negatives, true positives and false positives
+  # calculate true negatives, false negatives, true positives and false positives
   false_negatives <- sum(pred_causal == 0 & true_causal == 1)
   true_negatives <- sum(pred_causal == 0 & true_causal == 0)
   false_positives <- sum(pred_causal == 1 & true_causal == 0)
   true_positives <- sum(pred_causal == 1 & true_causal == 1)
   total <- length(pred_causal)
   
+  # Collect stats in dataframe
   stats <- c(false_negatives, true_negatives, false_positives, true_positives, total)
   data <- matrix(c(stats, stats / total), ncol = 5, byrow = T)
   rownames(data) <- c("Count", "Frequency")

@@ -40,7 +40,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
   
   # Create vector with number of sibs for each child
   if (!is.null(n_sibs)) {
-    sibs_pr_child <- if (length(n_sibs) == 1) {rep(n_sibs,n)} else 
+    sibs_pr_child <- if (length(n_sibs) == 1) {rep(n_sibs, n)} else 
       sample(n_sibs, n, replace = T)
   }
   
@@ -73,9 +73,10 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
     FBM$genotypes[b_start:b_end, ] <- child
     child_gliab <- calc_gliab(child, beta, mu, sigma)
     
-    # Generate sibs for each child and calculate their genetic liabilities
+    # Generate sibs for each child and calculate their genetic liabilities if n_sibs not set to null
     sibs_gliab <- vector(mode = "list", b_size)
     if (!is.null(n_sibs)) {
+      # generate sib and cacluclate g liab for every person in block
       for (s in 1:b_size) {
         sibs_pos <- b_start + s - 1
         if (sibs_pr_child[sibs_pos] != 0) {
@@ -112,7 +113,9 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
                                         {if ( is.null(.x)) NULL
                                           else(.x > threshold) + 0})
   }
+  
   bigsnpr::snp_save(FBM)
+  
   return(FBM)
   
   

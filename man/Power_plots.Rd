@@ -9,7 +9,7 @@ Power_plots(Gwas_data, p)
 \arguments{
 \item{Gwas_data}{A list with exactly three entrances, with the GWAS-values gained from from each model (GWAS, GWAX and LTFH), where the data from GWAS has to be the first entrance, the data from Gwax has to be the second entrance and the data from LTFH has to be on the last entrance.}
 
-\item{p}{P-value used to determind causal SNPs}
+\item{p}{significance level used to determine causal SNPs}
 }
 \value{
 Ggplot with power plots from GWAS, GWAX and LTFH, to get a visual comparison of the prediction power for each model.
