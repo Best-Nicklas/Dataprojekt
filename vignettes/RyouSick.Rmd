@@ -131,7 +131,37 @@ We also note that the line for GWAS cannot be seen in the above plot because it 
 
 ## Prediction
 
-As seen in `vignette("LTFH")` the best method for evaluating causal SNPs is LTFH method. So what if we want use. 
+As seen in `vignette(“LTFH”)` the best method for evaluating causal SNPs is LT-FH. So let's try to use `Prediction_cross_validation()` on our LT-FH data to get a model that can predict future cases.
+
+```{r, warning=FALSE, include = FALSE, message = FALSE}
+model_results <- Prediction_cross_validation(rds.obj = bad_knee_data,
+                                             k = 2,
+                                             method = "LTFH")
+```
+
+```{r, eval=FALSE}
+model_results <- Prediction_cross_validation(rds.obj = bad_knee_data,
+                                             k = 2,
+                                             method = "LTFH")
+```
+
+This information can now be used in the `Predict_status()` to predict a status for future genotypes. For illustrative purposes we will use our old data again, as the input needs to be formatted as an rds object.
+
+```{r, warning=FALSE, include = FALSE, message = FALSE}
+predicted_status <- Predict_status(rds.obj = bad_knee_data,
+                                   model = model_results$Best_Model)
+```
+
+
+```{r, eval=FALSE}
+predicted_status <- Predict_status(rds.obj = bad_knee_data,
+                                   model = model_results$Best_Model)
+```
+This gives us the following results.
+
+```{r}
+predicted_status
+```
 
 
 ## Correct formatting of rds object
