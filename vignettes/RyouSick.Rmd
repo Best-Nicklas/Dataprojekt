@@ -131,7 +131,7 @@ We also note that the line for GWAS cannot be seen in the above plot because it 
 
 ## Prediction
 
-As seen in `vignette("LTFH")´ the best method for evalutating causal SNPs is LTFH. So 
+As seen in `vignette("LTFH")` the best method for evaluating causal SNPs is LTFH method. So what if we want use. 
 
 
 ## Correct formatting of rds object
