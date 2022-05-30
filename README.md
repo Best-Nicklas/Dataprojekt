@@ -12,7 +12,7 @@ RyouSick is an R package designed to simulate both small and large data sets con
 As such, RyouSick provides a dual functionality. Firstly, users will be able input real genotype and phenotype data, provided that it is correctly formatted and loaded (See more on the "Get Started" page and the article `vignette("Writing_efficient_R_code_and_working_with_large_datasets")`), and analyze it using one of the provided analysis methods to find out which SNPs might be causing a disorder. The output of the analysis can then be passed on to the prediction function provided in the package (read more in  `vignette("Prediction")`), which will generate a model than can be used to predict the disease status of future genotype cases.    
 Secondly, users can simulate genetic data using the in-package functions and perform their own analysis on it and then compare their performance with more established analysis methods that are provided in the package. 
 
-Reading the articles in the presented order will present an introduction to the subject matter, but if you are just dying to begin using the package head over to the "Get Started" page to dive right into the RyouSick and its functionality. 
+Reading the articles in the presented order will present an introduction to the subject matter, but if you are just dying to begin using the package head over to the "Get Started" page to dive right into RyouSick and its functionality. 
 
 ## Installation
 

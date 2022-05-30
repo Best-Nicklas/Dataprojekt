@@ -17,6 +17,5 @@ GWAS(rds.obj, y, include = bigparallelr::rows_along(rds.obj$genotypes))
 A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
 }
 \description{
-This function performs a GWAS on given genotype and phenotype data to find the likelihood that
-SNPs are causal.
+This function performs a GWAS on given genotype and phenotype data to find out how statistically associated SNPs are with a target disease.
 }

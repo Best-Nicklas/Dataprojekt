@@ -5,18 +5,18 @@
 \title{Perform Prediction Cross-validation to determine best model}
 \usage{
 Prediction_cross_validation(
-  person,
-  k = 10,
+  rds.obj,
+  k,
   threshold = 0,
   disease,
   method = "GWAS",
-  liabilities = person$FAM$Status
+  liabilities = rds.obj$FAM$Status
 )
 }
 \arguments{
-\item{person}{A .rds file with an FBM.code256 and accompanying FAM and MAP.}
+\item{rds.obj}{A .rds file with an FBM.code256 and accompanying FAM and MAP.}
 
-\item{k}{Number of folds to be used in cross-validation. Default is 10.}
+\item{k}{Number of folds to be used in cross-validation. The number of rows in the FBM must be at least twice as large as k. Highly recommended to choose k to be at most ~1\% of the number of rows, unless working with a very small dataset, as errors may occur.}
 
 \item{threshold}{Vector of P-values to be used in thresholding. Default does not use thresholding.}
 
@@ -27,8 +27,8 @@ Prediction_cross_validation(
 \item{liabilities}{Vector of liabilities used for prediction with "LTFH" method. If not specified, uses "GWAS" method instead.}
 }
 \value{
-A list with 3 values: a tibble with average and best scores for each threshold, the best score, and the best model.
+A list with 2 values: a tibble with average and best scores for each threshold, and a data.frame with the best model, fitted values, residuals, best p-value and its R^2.
 }
 \description{
-This function is used to calculate predictive powers of different models.
+This function is used to calculate predictive powers of different models at different thresholds.
 }

@@ -7,7 +7,7 @@
 Manhattan_plot(x)
 }
 \arguments{
-\item{x}{List object containing p-values from an analysis.}
+\item{x}{List object containing gwas data from an analysis.}
 }
 \value{
 A Manhattan plot with each regressor (SNP) on the x-axis and their -log10(P-values) on the y-axis.

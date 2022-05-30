@@ -20,19 +20,21 @@ Power_plots <- function(Gwas_data, p){
     T1 <- Gwas %>% dplyr::mutate (causal_snp = p.value < p) %>%
       dplyr::arrange(abs(estim)) %>%
       dplyr::mutate (cpower = cumsum(causal_snp)) %>%
-      dplyr::mutate (Model = "GWAS")
+      dplyr::mutate (Method = "GWAS")
     
     T2 <- Gwax %>% dplyr::mutate (causal_snp = p.value < p) %>%
       dplyr::arrange(abs(estim)) %>%
       dplyr::mutate (cpower = cumsum(causal_snp)) %>%
-      dplyr::mutate (Model = "GWAX")
+      dplyr::mutate (Method = "GWAX")
     
     T3 <- Ltfh %>% dplyr::mutate (causal_snp = p.value < p) %>%
       dplyr::arrange(abs(estim)) %>%
       dplyr::mutate (cpower = cumsum(causal_snp)) %>%
-      dplyr::mutate (Model = "LTFH")
+      dplyr::mutate (Method = "LTFH")
     
     
     ggplot2::ggplot(rbind(T1, T2, T3)) + 
-      ggplot2::geom_line(ggplot2::aes(x = estim, y = cpower, group = Model, colour = Model))
+      ggplot2::geom_line(ggplot2::aes(x = estim, y = cpower, group = Method, colour = Method)) +
+      ggplot2::xlab("Estimated Effect Size") +
+      ggplot2::ylab("Cumulative Power (Cumulative number of SNPs found Causal)") 
 }

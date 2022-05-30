@@ -9,7 +9,7 @@ sim_disease(
   prevalence,
   h2,
   causal = NULL,
-  causal_n = round(n_snp/10),
+  causal_n = max(1, round(n_snp/10)),
   maf = NULL,
   maf_low = 0.01,
   maf_high = 0.49

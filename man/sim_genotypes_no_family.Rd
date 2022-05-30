@@ -4,26 +4,36 @@
 \alias{sim_genotypes_no_family}
 \title{Simulation of genotypes with no family}
 \usage{
-sim_genotypes_no_family(n, disease, path, overwrite = T, n_blocks = min(n, 20))
+sim_genotypes_no_family(
+  n,
+  disease,
+  path,
+  overwrite = T,
+  n_blocks = min(n, 500)
+)
 }
 \arguments{
 \item{n}{Integer specifying amount of gentypes/indivduals to simulate.}
 
-\item{disease}{A list with all the disease parameters.}
+\item{disease}{A list with all the disease parameters. Can be created using the sim_disease() function.}
 
 \item{path}{Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).}
 
 \item{overwrite}{Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).}
 
-\item{n_blocks}{Integer used to determine number of blocks to run simulation in (Default value is 20). Set higher if running into memory issues.}
+\item{n_blocks}{Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory
+issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.}
 }
 \value{
-Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
+Returns list object, also refered to as a rds object, containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
 FAM object containing phenotype information on genotypes
 }
 \description{
 This function is used to simulate genotypes individuals with no family and accompanying phenotype data.
 }
 \details{
-Simulation can be performed using paralization if a paralization plan has been set prior to excution in the global environment.
+Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. Since the running time depends on a number of variables,
+such as the parallelization settings, core speed and core amount, we cannot accurately give an estimation how long the simulation will take.
+Instead we simply warn the user that simulations might take upwards of multiple hours for large datasets such as a 100.000x100.000.
+Simulation can be performed using parallelization if a parallelization plan has been set prior to execution in the global environment.
 }
