@@ -84,7 +84,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
                             matrix(rep(p2[s, ], sibs_pr_child[sibs_pos]), 
                                    sibs_pr_child[sibs_pos], cols, byrow = T))
           sibs_gliab[[s]] <- calc_gliab(sibs, beta, mu, sigma)  
-        } else sibs_gliab[[s]] <- NULL
+        } else sibs_gliab[[s]] <- NA
         
       }
     }
@@ -106,7 +106,7 @@ sim_genotypes_with_family <- function(n, disease, path, n_sibs = NULL, overwrite
   
   if (!is.null(n_sibs)) {
     sibs_Full_Liability <- purrr::map(g_liabs$sibs_gliab, .f = ~ 
-                                        {if ( is.null(.x)) NULL 
+                                        {if (any(is.na(.x))) NULL 
                                           else .x + rnorm(length(.x), 0, sqrt(1 - h2))})
     FBM$FAM$sibs_Status <- purrr::map(sibs_Full_Liability, .f = ~ 
                                         {if ( is.null(.x)) NULL
