@@ -10,11 +10,11 @@
 #' 
 
 
-Predict_status <- function(rds.obj, model, configs = NULL){
+Predict_status <- function(rds.obj, model, configs = NULL, prevalence = 0.05){
   pred_value <- bigsnpr::snp_PRS(G = rds.obj$genotypes, betas.keep = model$Regression$estim, lpS.keep = -log10(model$Regression$p.value), thr.list = model$Pvalue)
   normalized_pred_value <- (pred_value - mean(pred_value))/sd(pred_value)
   if (is.null(configs)){
-    predicted_status <- as.vector((normalized_pred_value > qnorm(0.05, lower.tail = FALSE)) + 0)
+    predicted_status <- as.vector((normalized_pred_value > qnorm(prevalence, lower.tail = FALSE)) + 0)
   }
   else {
     configs <- configs[order(configs$Liability),]
