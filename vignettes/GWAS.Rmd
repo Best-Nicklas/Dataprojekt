@@ -19,16 +19,16 @@ knitr::opts_chunk$set(
 ## GWAS
 GWAS is short for genome-wide association study, which is a method used to identify gene variations that are statistically associated with a risk for a disease. Once a large enough dataset has been collected the approach is to look for genomic variants that occur more frequently in those with a given disease compared to those without the disease. GWAS in practices makes a simple linear regression on each genomic variant (values at a particular SNP) and the case-control status for each individual. We note that other implementations of GWAS exist, but that this simple implementation is the one used in RyouSick. Among other statistics it gives us a p-value indicating the statistical significance of our observations. Using a threshold p-value we can then determine whether a SNP might be causal or not based on whether its p-value is higher or lower than our chosen threshold. 
 
-when performing GWAS using the RyouSick package's `GWAS()` function on a large population of 100,000 individuals on 100,000 SNPs we receive the following statistics given that we choose around 10% of the 100,000 SNPS to be causal: 
+when performing GWAS using the RyouSick package's `GWAS()` function on a large population of 100,000 individuals on 100,000 SNPs we receive the following statistics given that we randomly choose 200 SNPs between SNP 1 and SNP 12500, 200 SNPs between SNP 37500 and SNP 50000 and 600 SNPs between SNP 75000 and SNP 100000 to be causal: 
 
 ![](../man/figures/GWAS_stats.PNG)
 
-We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected significance level of $5\cdot10^{-7}$, given an alpha value of 0.05, since we perform 100,000 tests/regressions. 
+We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected significance level of $5\cdot10^{-7}$, given an alpha value of 0.05, since we perform 100,000 tests/regressions.
 
 
 The results can also be visualized using a Manhattan plot that can be produced using the function `Manhattan_plot()` where SNPs over the dotted line represents SNPs that are counted as causal. 
 
 ![](../man/figures/GWAS.PNG)
-This gives us an indication of where in the sequence the causal SNPs appear.
-A comparison between the results of the different association studies can be seen in the LTFH article `vignette("LTFH")`. 
+
+This gives us an indication of where in the sequence the causal SNPs appear. We very clearly see that the GWAS analysis finds statistically significant SNPs in the SNP positions that we have chosen to be causal. A comparison between the results of the different association studies can be seen in the LTFH article `vignette("LTFH")`. 
 
