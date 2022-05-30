@@ -463,13 +463,25 @@
 <div class="section level2">
 <h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h2>
-<p>As seen in <code><a href="../articles/LTFH.html">vignette("LTFH")</a></code> the best method for evaluating causal SNPs is LTFH method. So what if we want use.</p>
+<p>As seen in <code>vignette(“LTFH”)</code> the best method for evaluating causal SNPs is LT-FH. So let’s try to use <code><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation()</a></code> on our LT-FH data to get a model that can predict future cases.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>,
+                                             k <span class="op">=</span> <span class="fl">2</span>,
+                                             method <span class="op">=</span> <span class="st">"LTFH"</span><span class="op">)</span></code></pre></div>
+<p>This information can now be used in the <code><a href="../reference/Predict_status.html">Predict_status()</a></code> to predict a status for future genotypes. For illustrative purposes we will use our old data again, as the input needs to be formatted as an rds object.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">predicted_status</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Predict_status.html">Predict_status</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>,
+                                   model <span class="op">=</span> <span class="va">model_results</span><span class="op">$</span><span class="va">Best_Model</span><span class="op">)</span></code></pre></div>
+<p>This gives us the following results.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">predicted_status</span>
+<span class="co">#&gt;  [1] 1 0 0 0 0 0 0 0 0 0</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="correct-formatting-of-rds-object">Correct formatting of rds object<a class="anchor" aria-label="anchor" href="#correct-formatting-of-rds-object"></a>
 </h2>
 <p>If you wish to run the analysis methods on your own data it must first be formatted properly. To do so you must first initialize an empty .rds file and object matching the size of your data using the <code><a href="../reference/createRds.html">createRds()</a></code> function.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">user_input_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRds.html">createRds</a></span><span class="op">(</span><span class="st">"user_input_data"</span>, nrow <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below</p>
 <ul>
@@ -480,7 +492,7 @@
 <li>sibs_Status: list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)</li>
 </ul>
 <p>Note that the names are case-sensitive. An example of filling up the genotypes with a matrix consisting of only 1’s and creating a Status column can be seen below. Remember that when making changes to the tibbles FAM and MAP, the changes to the rds object must be saved using <code><a href="../reference/saveRds.html">saveRds()</a></code>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">user_input_obj</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">10</span>, <span class="va">nrow</span><span class="op">)</span>
 <span class="va">user_input_obj</span><span class="op">$</span><span class="va">Status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>
 <span class="fu"><a href="../reference/saveRds.html">saveRds</a></span><span class="op">(</span><span class="va">user_input_obj</span><span class="op">)</span></code></pre></div>
@@ -490,7 +502,7 @@
 <h2 id="parallelization">Parallelization<a class="anchor" aria-label="anchor" href="#parallelization"></a>
 </h2>
 <p>Since most users work on very different computers with various setups Parallelization is not enabled by default. To run simulations using Parallelization, which is recommended as it provides a significant speedup in most cases, you must first set a Parallelization plan. For most basic computers running on windows the Parallelization plan below will work just fine.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, 
              workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/re-exports.html" class="external-link">availableCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The function should be called once at the beginning before any simulations have been run.</p>
