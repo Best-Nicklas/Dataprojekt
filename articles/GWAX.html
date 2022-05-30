@@ -79,14 +79,22 @@
 <div class="section level2">
 <h2 id="gwax">GWAX<a class="anchor" aria-label="anchor" href="#gwax"></a>
 </h2>
-<p>GWAX is short for genome-wide association study by proxy, which is an approach used to identify genomic variants that are statistically associated with a risk for a disease, exactly as GWAS. The key difference is the case-control status, which GWAS uses a simple linear regression on. GWAX makes a proxy case-control status based on the individual´s family history. So if the individual case-control status is zero, meaning not having the disease, but just one the individual´s parents case-control status is one, meaning having the disease, the individual gets a proxy status as being one. GWAX therefore accounts for some family history and herabillity, which should give more useful information to the analysis.</p>
+<p>GWAX is short for genome-wide association study by proxy, which is an approach used to identify genomic variants that are statistically associated with a risk for a disease, exactly as GWAS. The key difference is the regressand, which GWAS uses to do simple linear regression on. GWAX makes a proxy case-control status based on the individual´s family history. So if the individual case-control status is zero, meaning not having the disease, but just one the individual´s parents case-control status is one, meaning having the disease, the individual gets a proxy status as being one. GWAX therefore accounts for some family history and herabillity, which should give more useful information to the analysis.</p>
 <p>Using GWAX on the same simulated data that we analyzed in the GWAS article we get the following results</p>
 <p>Tabel</p>
 <p>Plot</p>
-<p>We see that GWAX performs slightly better than GWAS. See a full comparison between all the methods in the LTFH article.</p>
-<p>More information about the method of GWAX can be read in the article under references <a href="https://pubmed.ncbi.nlm.nih.gov/28092683/" class="external-link uri">https://pubmed.ncbi.nlm.nih.gov/28092683/</a>;</p>
+<p>We see that GWAX performs slightly better than GWAS. See a full comparison between all the methods in the LTFH article. We refer the reader to the original paper on GWAX by Liu, J.Z. et al. (2017) for more information about the method.</p>
 </div>
-  </main>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<ul>
+<li>Liu, J.Z., Erlich, Y., Pickrell. Case-control association mapping by proxy using family history of disease. Nat Genet, 49(3) p325-331 (2017). <a href="https://pubmed.ncbi.nlm.nih.gov/28092683/" class="external-link uri">https://pubmed.ncbi.nlm.nih.gov/28092683/</a>
+</li>
+</ul>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
