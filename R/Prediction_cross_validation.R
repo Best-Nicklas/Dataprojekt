@@ -12,7 +12,7 @@
 #' 
 
 
-Prediction_cross_validation <- function(rds.obj, k, threshold = 0, method = "GWAS", liabilities = rds.obj$FAM$Status) {
+Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWAS", liabilities = rds.obj$FAM$Status) {
   if (k < 1) stop("k must be positive")
   if (k%%1 != 0) stop("k must be an integer")
   n <- nrow(rds.obj$genotypes)
@@ -23,12 +23,8 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 0, method = "GWA
   bestest_pval <- 0
   bestest_block_start <- 0
   bestest_block_end <- 0
-  #bestest_score1 <- 0
-  #bestest_score2 <- 0
   best_scores <- numeric(length(threshold))
   avg_scores <- numeric(length(threshold))
-  #best_score1s <- numeric(length(threshold))
-  #best_score2s <- numeric(length(threshold))
   # Get proxy status from GWAX for ease
   if(method == "GWAX"){
     liabilities <- GWAX(rds.obj)$Proxy_Status
@@ -37,8 +33,6 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 0, method = "GWA
   for (i in 1:length(threshold)){
     scores <- numeric(k)
     best_score <- 0
-    #best_score1 <- 0
-    #best_score2 <- 0
     for (j in 0:(k-1)){
       #Create blocks
       block_start <- j*block_size + 1
@@ -64,33 +58,13 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 0, method = "GWA
       }
       
       #Calculate PRS on 1 fold
-      PRS <- bigsnpr::snp_PRS(G = rds.obj$genotypes, betas.keep = regr$estim, ind.test = block_start:block_end, lpS.keep = -log10(regr$p.value), thr.list = threshold[i])
+      PRS <- bigsnpr::snp_PRS(G = rds.obj$genotypes, betas.keep = regr$estim, ind.test = block_start:block_end, lpS.keep = -log10(regr$p.value), thr.list = -log10(threshold)[i])
       
       #Normalize PRS with mean = 0 and sd = 1
-      
       PRS <- (PRS - mean(PRS))/sd(PRS)
-      
-      #Find score of model
-      #Correlation between predicted fitted values and status = R2
-      # if(method == "GWAS"){
-      #   regr2 <- lm(rds.obj$FAM$Status[block_start:block_end] ~ normalized_PRS - 1)
-      #   score1 <- cor(regr2$fitted.values, rds.obj$FAM$Status[block_start:block_end])^2
-      #   print(cor(regr2$fitted.values, normalized_PRS))
-      # }
-      # else if(method == "GWAX"){
-      #   regr2 <- lm(proxy_status[block_start:block_end] ~ normalized_PRS - 1)
-      #   score1 <- cor(regr2$fitted.values, proxy_status[block_start:block_end])^2
-      # }
-      # else if(method == "LTFH"){
-      #   regr2 <- lm(liabilities[block_start:block_end] ~ normalized_PRS - 1)
-      #   score1 <- cor(regr2$fitted.values, proxy_status[block_start:block_end])^2
-      # }
-      #
       
       #Correlation between PRS and status
       score <- cor(PRS, rds.obj$FAM$Status[block_start:block_end])
-      
-      #score <- score1 + score2
       
       #Update best models, scores
       scores[j+1] <- score
@@ -99,23 +73,17 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 0, method = "GWA
         best_model <- regr
         best_block_start <- block_start
         best_block_end <- block_end
-        #best_score1 <- score1
-        #best_score2 <- score2
       }
     }
     #Update best models, scores
     best_scores[i] <- best_score[1,1]
     avg_scores[i] <- mean(scores)
-    #best_score1s[i] <- best_score1
-    #best_score2s[i] <- best_score2
     if(best_score > bestest_score){
       bestest_score <- best_score[1,1]
       bestest_model <- best_model
       bestest_pval <- threshold[i]
       bestest_block_start <- best_block_start
       bestest_block_end <- best_block_end
-      #bestest_score1 <- best_score1
-      #bestest_score2 <- best_score2
     }
   }
   results <- tibble::tibble(Pvalue = threshold, Average_Score = avg_scores, Best_Score = best_scores, R2 = best_scores^2)
