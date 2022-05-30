@@ -1,9 +1,12 @@
 # RyouSick <img src="man/figures/logo.png" align="right" width="120"/>
 <!-- badges: start -->
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)](https://opensource.org/licenses/MIT/)
-[![reposize](https://img.shields.io/github/repo-size/Best-Nicklas/Dataprojekt)](https://github.com/Best-Nicklas/Dataprojekt)
+[![CodeFactor](https://www.codefactor.io/repository/github/Best-Nicklas/Dataprojekt/badge)](https://www.codefactor.io/repository/github/Best-Nicklas/Dataprojekt)
 
-[![R-CMD-check](https://github.com/Best-Nicklas/Dataprojekt/workflows/R-CMD-check/badge.svg)](https://github.com/Best-Nicklas/Dataprojekt/actions)
+[![reposize](https://img.shields.io/github/repo-size/Best-Nicklas/Dataprojekt)](https://github.com/Best-Nicklas/Dataprojekt)
+[![](https://img.shields.io/github/languages/code-size/Best-Nicklas/Dataprojekt.svg)](https://github.com/Best-Nicklas/Dataprojekt)
+
 <!-- badges: end -->
 
 ## Overview

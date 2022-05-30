@@ -2,7 +2,7 @@
 title: "Prediction"
 output: rmarkdown::html_vignette
 description:
-  Short overview of how to perform prediction and methods used
+  Short overview of how to perform prediction and methods used.
 vignette: >
   %\VignetteIndexEntry{Prediction}
   %\VignetteEngine{knitr::rmarkdown}

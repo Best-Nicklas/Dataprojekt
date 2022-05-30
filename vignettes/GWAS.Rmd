@@ -2,7 +2,7 @@
 title: "GWAS"
 output: rmarkdown::html_vignette
 description:
-  A short overview of the GWAS method and results from a run on simulated 100.000x100.000 dataset.
+  A short overview of the GWAS method and results from a run on simulated 100,000x100,000 dataset.
 vignette: >
   %\VignetteIndexEntry{GWAS}
   %\VignetteEngine{knitr::rmarkdown}
@@ -19,11 +19,11 @@ knitr::opts_chunk$set(
 ## GWAS
 GWAS is short for genome-wide association study, which is a method used to identify gene variations that are statistically associated with a risk for a disease. Once a large enough dataset has been collected the approach is to look for genomic variants that occur more frequently in those with a given disease compared to those without the disease. GWAS in practices makes a simple linear regression on each genomic variant (values at a particular SNP) and the case-control status for each individual. We note that other implementations of GWAS exist, but that this simple implementation is the one used in RyouSick. Among other statistics it gives us a p-value indicating the statistical significance of our observations. Using a threshold p-value we can then determine whether a SNP might be causal or not based on whether its p-value is higher or lower than our chosen threshold. 
 
-when performing GWAS using the RyouSick package's `GWAS()` function on a large population of 100.000 individuals on 100.000 SNPs we receive the following statistics given that we choose around 10% of the 100.000 SNPS to be causal: 
+when performing GWAS using the RyouSick package's `GWAS()` function on a large population of 100,000 individuals on 100,000 SNPs we receive the following statistics given that we choose around 10% of the 100,000 SNPS to be causal: 
 
 ![](../man/figures/GWAS_stats.PNG)
 
-We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected p-value of $5\cdot10^{-7}$, since we perform 100.000 tests/regressions. 
+We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected significance level of $5\cdot10^{-7}$, given an alpha value of 0.05, since we perform 100,000 tests/regressions. 
 
 
 The results can also be visualized using a Manhattan plot that can be produced using the function `Manhattan_plot()` where SNPs over the dotted line represents SNPs that are counted as causal. 

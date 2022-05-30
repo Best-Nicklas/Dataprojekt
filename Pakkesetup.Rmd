@@ -39,7 +39,9 @@ devtools::install_github("Best-Nicklas/TestPackageSiteR")
 usethis::use_pkgdown() #laver yaml fil
 pkgdown::build_site() #Bygger siden lokalt
 usethis::use_pkgdown_github_pages() #forbinder til github pages 
+devtools::check()
 
 ```
+
 
 

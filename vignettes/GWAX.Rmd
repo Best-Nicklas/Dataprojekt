@@ -2,7 +2,7 @@
 title: "GWAX"
 output: rmarkdown::html_vignette
 description:
-  A short overview of the GWAX method and results from a run on simulated 100.000x100.000 dataset.
+  A short overview of the GWAX method and results from a run on simulated 100,000x100,000 dataset.
 vignette: >
   %\VignetteIndexEntry{GWAX}
   %\VignetteEngine{knitr::rmarkdown}
