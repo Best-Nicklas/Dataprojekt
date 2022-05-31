@@ -461,6 +461,8 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/Power_plots.html">Power_plots</a></span><span class="op">(</span>Gwas_data <span class="op">=</span> <span class="va">power_plot_data</span>, a <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
 <p><img src="RyouSick_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>For output from <code><a href="../reference/Power_plots.html">Power_plots()</a></code> we note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.</p>
+<p>The x axis of the power plots are estimated effect sizes, which are correlated with the p-value for each SNP. A larger numerical estimated effect size for a SNP, will therefore result in a greater chance of the methods analyzing the SNP to be causal.</p>
+<p>The y axis is the cumulative number of SNP´s found causal by the methods.</p>
 </div>
 <div class="section level2">
 <h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
