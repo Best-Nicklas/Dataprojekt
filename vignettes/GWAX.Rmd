@@ -16,17 +16,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GWAX
+## Overview
 
-GWAX is short for genome-wide association study by proxy, which is an approach used to identify genomic variants that are statistically associated with a risk for a disease, exactly as GWAS. The key difference is the regressand which GWAS uses to do simple linear regression on. GWAX makes a proxy case-control status based on the individual´s family history. So if the individuals case-control status is zero, meaning not having the disease, but just one the individual´s parents case-control status is one, meaning having the disease, the individual gets a proxy status as being one. GWAX therefore accounts for some family history and herabillity, which should give more useful information to the analysis. 
+GWAX is short for genome-wide association study by proxy, which is an approach used to identify genomic variants that are statistically associated with a risk for a disease, exactly as GWAS. The key difference is the regressand which GWAS uses to do simple linear regression on. GWAX makes a proxy case-control status based on the individual´s family history. So if the individuals case-control status is zero, meaning not having the disease, but just one the individual´s parents case-control status is one, meaning having the disease, the individual gets a proxy status as being one. In other words any  GWAX therefore accounts for some family history and herabillity, which should give more useful information to the analysis. 
 
+
+## Example run on 100,000x100,000 dataset
 Using GWAX on the same simulated data that we analyzed in the GWAS article we get the following results
 
 ![](../man/figures/GWAX_stats.PNG)
 
 ![](../man/figures/GWAX.PNG)
 
-We see that GWAX performs slightly better than GWAS. See a full comparison between all the methods in the LTFH article `vignette("LTFH")`. We refer the reader to the original paper on GWAX by Liu, J.Z. et al. (2017) for more information about the method.
+We see that GWAX performs slightly better than GWAS with 177 true positives compared to 164 for GWAS. See a full comparison between all the methods in the LTFH article `vignette("LTFH")`. We refer the reader to the original paper on GWAX by Liu, J.Z. et al. (2017) for more information about the method.
 
 ## References
 

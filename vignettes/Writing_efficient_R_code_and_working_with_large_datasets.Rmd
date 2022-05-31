@@ -26,7 +26,6 @@ So how do we create efficient code, when working with simulated genetic data?  O
 ## Speed Efficiency and Parallelization
 But then how to we make it all run faster? Code in R can be made faster by utilizing the inbuilt vectorization that exists in most R functions. Coming from other programming languages it might be easy to fall into the trap of using for loops and indexes every time we want to address elements of a vector. But this type of operation makes our code much slower as seen below.
 ```{r}
-
 n <- 10000000
   a <- 1:n
   b <- 1:n
@@ -70,7 +69,6 @@ system.time({
 })
 
 ```
-
 
 
 finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously by taking advantage of each of our CPU cores at once, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel. 
