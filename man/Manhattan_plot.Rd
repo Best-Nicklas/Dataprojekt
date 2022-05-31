@@ -7,7 +7,7 @@
 Manhattan_plot(x, a)
 }
 \arguments{
-\item{x}{List object containing vector with numbering on SNPs and vector with p-values. Example could be GWAS data from analysis.}
+\item{x}{List object containing vector with numbering on SNPs and vector with P-values. Example could be GWAS data from analysis.}
 
 \item{a}{significance level used to determine whether SNPs are causal or not.}
 }
@@ -15,5 +15,5 @@ Manhattan_plot(x, a)
 A Manhattan plot with each regressor (SNP) on the x-axis and their -log10(P-values) on the y-axis.
 }
 \description{
-This function produces a Manhattan plot from p-values found in an association analysis.
+This function produces a Manhattan plot from P-values found in an association analysis.
 }

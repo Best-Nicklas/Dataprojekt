@@ -4,7 +4,7 @@
 #' 
 #' @param rds.obj A list of length 3 containing an FBM.code256 named genotypes and accompanying FAM and MAP tibbles.
 #' @param y Vector of regressands to regress on (typically case-control status of the genotypes in rds.obj)
-#' @param include Vector of rows to use in regression. Used with cross-validation. Default uses all rows.
+#' @param include Vector of rows to use in regression. Used for prediction. Default uses all rows.
 #' @return A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
 #' @export 
 #' 

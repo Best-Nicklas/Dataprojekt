@@ -3,7 +3,7 @@
 #' This function creates the theoretical co-variance matrix for the 
 #' multivariate normal distribution which is used to model the liabilities.
 #' 
-#' @param h2 Integer specifying heritability parameter (0 < h2 < 1).
+#' @param h2 Number specifying heritability parameter.
 #' @param n_sib Integer specifying number of siblings (default 0).
 #' @return A co-variance matrix, created from the value of h2 and 
 #' the number of sibs. 
@@ -12,8 +12,8 @@
 #' 
 covmatrix <- function(h2, n_sib = 0) {
   if (n_sib < 0) stop("n_sib must be a positive integer")
-  if (h2 >= 1) stop("h2 must be an integer between 0 and 1")
-  if (h2 <= 0) stop("h2 must be an integer between 0 and 1")
+  if (h2 >= 1) stop("h2 must be between 0 and 1")
+  if (h2 <= 0) stop("h2 must be between 0 and 1")
   
   # the base structure
   cov <- matrix(h2 / 2, 4 + n_sib, 4 + n_sib)

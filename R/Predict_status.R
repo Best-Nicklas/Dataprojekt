@@ -12,10 +12,11 @@
 
 
 Predict_status <- function(rds.obj, model, configs = NULL, prevalence){
+  if (prevalence <= 0 || prevalence >= 1) stop("prevalence must be between 0 and 1")
   pred_value <- bigsnpr::snp_PRS(G = rds.obj$genotypes, 
                                  betas.keep = model$Regression$estim, 
                                  lpS.keep = -log10(model$Regression$p.value), 
-                                 thr.list = -log10(model$Pvalue))
+                                 thr.list = -log10(model$Alpha))
   
   normalized_pred_value <- (pred_value - mean(pred_value)) / sd(pred_value)
   if (is.null(configs)){

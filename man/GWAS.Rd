@@ -11,7 +11,7 @@ GWAS(rds.obj, y, include = bigparallelr::rows_along(rds.obj$genotypes))
 
 \item{y}{Vector of regressands to regress on (typically case-control status of the genotypes in rds.obj)}
 
-\item{include}{Vector of rows to use in regression. Used with cross-validation. Default uses all rows.}
+\item{include}{Vector of rows to use in regression. Used for prediction. Default uses all rows.}
 }
 \value{
 A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.

@@ -7,12 +7,12 @@
 Power_plots(Gwas_data, a)
 }
 \arguments{
-\item{Gwas_data}{A list with exactly three entrances, with the GWAS-data obtained from from each model (GWAS, GWAX and LTFH), where the data from GWAS has to be the first entrance, the data from Gwax has to be the second entrance and the data from LTFH has to be on the last entrance.}
+\item{Gwas_data}{A list with exactly three entrances, with the GWAS-data obtained from each model (GWAS, GWAX and LTFH), where the data from GWAS has to be the first entrance, the data from GWAX has to be the second entrance and the data from LTFH has to be on the last entrance.}
 
-\item{a}{significance level used to determine causal SNPs}
+\item{a}{Significance level used to determine causal SNPs.}
 }
 \value{
-Ggplot object with power plots from GWAS, GWAX and LTFH, to get a visual comparison of the prediction power for each model.
+A ggplot object with power plots from GWAS, GWAX and LTFH, to get a visual comparison of the prediction power for each model.
 }
 \description{
 This function is used to calculate and plot the power for each of the models GWAS, GWAX and LTFH.

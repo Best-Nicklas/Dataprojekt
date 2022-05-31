@@ -18,9 +18,9 @@ sim_disease(
 \arguments{
 \item{n_snp}{Integer specifying amount of SNPs.}
 
-\item{prevalence}{Integer specifying prevalence of disease in simulated population.}
+\item{prevalence}{Number specifying prevalence of disease in the population.}
 
-\item{h2}{Integer specifying heritability parameter.}
+\item{h2}{Number specifying heritability parameter.}
 
 \item{causal}{Vector of predetermined causal SNPs (0 if not causal, 1 if causal). Leave empty to get random causal SNPs.}
 
@@ -28,9 +28,9 @@ sim_disease(
 
 \item{maf}{Vector of predetermined Minor Allele Frequencies. Leave empty to get random MAF.}
 
-\item{maf_low}{Integer specifying lower bound for MAF if none given.}
+\item{maf_low}{Number specifying lower bound for MAF if none given.}
 
-\item{maf_high}{Integer specifying upper bound for MAF if none given.}
+\item{maf_high}{Number specifying upper bound for MAF if none given.}
 }
 \value{
 A list with all the disease parameters.

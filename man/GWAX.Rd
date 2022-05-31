@@ -4,13 +4,11 @@
 \alias{GWAX}
 \title{Perform GWAS with proxy information on family case-control status (GWAX)}
 \usage{
-GWAX(rds.obj, include = bigparallelr::rows_along(rds.obj$genotypes))
+GWAX(rds.obj)
 }
 \arguments{
 \item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP tibbles. Must contain case-control status for
 parents in FAM.}
-
-\item{include}{Vector of rows to use in regression. Used with cross-validation. Default uses all rows.}
 }
 \value{
 A list containing GWAS data and a vector of proxy status for each genotype.

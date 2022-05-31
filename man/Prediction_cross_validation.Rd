@@ -24,7 +24,7 @@ Prediction_cross_validation(
 \item{liabilities}{Vector of liabilities used for prediction with "LTFH" method. If not specified, uses "GWAS" method instead.}
 }
 \value{
-A list with 2 values: a tibble with average and best scores for each threshold, and a data.frame with the best model, fitted values, residuals, best p-value and its R^2.
+A list with 2 entries: a tibble with average and best scores for each threshold, and a data.frame with the best model, fitted values, residuals, best P-value and its R^2.
 }
 \description{
 This function is used to calculate predictive powers of different models at different thresholds.

@@ -3,9 +3,9 @@
 #' Helper function used to sample from a truncated normal distribution.
 #' 
 #' @param n Integer value specifying the number of samples.
-#' @param range vector with two values specifying the truncated range (lower bound and upper bound). 
-#' @param mu Integer value specifying the mean of the normal distribution.
-#' @param sigma Integer value specifying the standard deviation of the normal distribution.
+#' @param range Vector with two values specifying the truncated range (lower bound and upper bound). 
+#' @param mu Number specifying the mean of the normal distribution.
+#' @param sigma Number specifying the standard deviation of the normal distribution.
 #' @return Sample values from the truncated normal distribution.
 #' @export
 #' 

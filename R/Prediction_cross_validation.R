@@ -7,7 +7,7 @@
 #' @param threshold Vector of significance levels to be used in thresholding. Default does not use thresholding.
 #' @param method Method to use for prediction. Possible methods are "GWAS", "GWAX", "LTFH". Default is "GWAS".
 #' @param liabilities Vector of liabilities used for prediction with "LTFH" method. If not specified, uses "GWAS" method instead.
-#' @return A list with 2 values: a tibble with average and best scores for each threshold, and a data.frame with the best model, fitted values, residuals, best p-value and its R^2.
+#' @return A list with 2 entries: a tibble with average and best scores for each threshold, and a data.frame with the best model, fitted values, residuals, best P-value and its R^2.
 #' @export
 #' 
 
@@ -94,7 +94,7 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
       bestest_block_end <- best_block_end
     }
   }
-  results <- tibble::tibble(Pvalue = threshold, 
+  results <- tibble::tibble(Alpha = threshold, 
                             Average_Score = avg_scores, 
                             Best_Score = best_scores, 
                             R2 = best_scores^2)
@@ -112,5 +112,5 @@ Prediction_cross_validation <- function(rds.obj, k, threshold = 1, method = "GWA
                                 Fittedvalues = as.vector(fittedvals), 
                                 Residuals = as.vector(resids), 
                                 Score = bestest_score, 
-                                Pvalue = bestest_pval)))
+                                Alpha = bestest_pval)))
 }

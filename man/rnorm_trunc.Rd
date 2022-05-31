@@ -9,11 +9,11 @@ rnorm_trunc(n, range, mu, sigma)
 \arguments{
 \item{n}{Integer value specifying the number of samples.}
 
-\item{range}{vector with two values specifying the truncated range (lower bound and upper bound).}
+\item{range}{Vector with two values specifying the truncated range (lower bound and upper bound).}
 
-\item{mu}{Integer value specifying the mean of the normal distribution.}
+\item{mu}{Number specifying the mean of the normal distribution.}
 
-\item{sigma}{Integer value specifying the standard deviation of the normal distribution.}
+\item{sigma}{Number specifying the standard deviation of the normal distribution.}
 }
 \value{
 Sample values from the truncated normal distribution.

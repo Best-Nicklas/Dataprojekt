@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 ```
 
 ## Simulation
-To illustrate the use of the package RyouSick lets go through an example, where we simulate a disease called bad-knee syndrome in a population.
+To illustrate the use of the RyouSick package, lets go through an example, where we simulate a disease called bad-knee syndrome in a population.
 
-Before simulating genotypes and case-control phenotype data using RyouSick, we first need to simulate the disease parameters with the function `sim_disease()`. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:
+Before simulating genotypes and case-control phenotype data using RyouSick, we first need to simulate the disease parameters with the function `sim_disease()`. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability $h^2$ of 0.8 and a prevalence in the population of 0.25:
 
 ```{r, eval = FALSE}
 library("RyouSick")
@@ -38,7 +38,7 @@ Output disease parameters:
 bad_knee_syndrome
 ```
 
-In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal. 
+In the above output, each MAF value at a given index indicates the frequency at which the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal. 
 
 We can now chose what kind of simulation we want to perform for our population. Either with family history or without using one of the two functions:
 
@@ -64,7 +64,7 @@ Slices of the genotype data can be accessed as well.
 bad_knee_data$genotypes[1:10, 1:10]
 
 ```
-Here each row represents an individuals genotypes and each column a SNP. 
+Here each row represents an individual's genotype and each column a SNP. 
 (WARNING: we highly advise against indexing all the data at once using [ ], as this will try to load the whole file-backed matrix into memory, which, depending on the size of the file, might cause problems)
 
 All of the simulated information contained in our example case bad_knee_data can be seen below.
@@ -87,7 +87,7 @@ Lets now try each of the methods on our data:
 ```{r, warning=FALSE}
 x <- GWAS(rds.obj = bad_knee_data, y = bad_knee_data$FAM$Status)
 y <- GWAX(rds.obj = bad_knee_data)
-z <- LTFH(rds.obj = bad_knee_data, h2 = 0.8, prevalence = 0.5)
+z <- LTFH(rds.obj = bad_knee_data, h2 = 0.8, prevalence = 0.25)
 
 ```
 
@@ -96,9 +96,9 @@ The output will consist of estimated effect sizes, standard errors, t-scores and
 ```{r}
 knitr::kable(x)
 ```
-Note that to access the analysis data for GWAX and LTFH you have to use `method_result$GWAS_Data$`.
+Note that to access the analysis data for GWAX and LTFH you have to use `method_result$GWAS_Data`.
 
-Statistics for the data can be calculated by passing the p-values, the true causal SNPs and a significance level to the `get_stats()` function
+Statistics for the data can be calculated by passing the p-values, the true causal SNPs and a chosen significance level to the `get_stats()` function
 
 ```{r}
 gwas_stats <- get_stats(pvalues = x$p.value, 
@@ -110,15 +110,15 @@ knitr::kable(gwas_stats)
 
 ## Visualizations
 
-We can then visualize the data using the function `Manhattan_plot()` to get a picture of which SNPs and where in the genome they have been determined to be causal: 
+We can then visualize the data using the function `Manhattan_plot()` to get a picture of which SNPs are causal and where in the genome they have been found: 
 
 ```{r}
 Manhattan_plot(x, a = 5e-7)
 ```
 
-If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. We basically want to see which method finds most causal SNP´s, and that the SNP´s are actually predetermined to be causal. To check for this we use the output from `get_stats()` which tells us about the frequency for false positives for each method. 
+When checking our analysis results we basically want to see which method finds the most causal SNPs, and that the SNPs are actually predetermined to be causal. The function `get_stats()` will tell us about the frequency of false positives, true positives, false negatives and true negatives for each method, but if we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. 
 
-Before we use the function `Power_plots()` we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the significance level to 0.5. 
+Before we use the function `Power_plots()` we need to save the GWAS_data for each method in list format. For illustrative purposes we set the significance level to 0.5. 
 
 ```{r}
 power_plot_data = list(x, y$GWAS_Data, z$GWAS_Data)
@@ -130,11 +130,9 @@ With the data saved, we can now use `Power_plots()`:
 Power_plots(Gwas_data = power_plot_data, a = 0.5)
 ```
 
-For output from `Power_plots()` we note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.
+For the output from `Power_plots()` we note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.
 
-The x axis of the power plots are estimated effect sizes, which are correlated with the p-value for each SNP. A larger numerical estimated effect size for a SNP, will therefore result in a greater chance of the methods analyzing the SNP to be causal. 
-
-The y axis is the cumulative number of SNP´s found causal by the methods. 
+The x axis of the power plots are estimated effect sizes, which are correlated with the p-value for each SNP. A larger numerical estimated effect size for a SNP, will therefore result in a greater chance of the methods analyzing the SNP to be causal. The y axis is the cumulative number of SNP´s found causal by the methods. 
 
 ## Prediction
 
@@ -172,16 +170,21 @@ This gives us the following results.
 predicted_status
 ```
 
+Compared with the true statuses.
+```{r}
+as.vector(bad_knee_data$FAM$Status)
+```
+
 
 ## Correct formatting of rds object
 
-If you wish to run the analysis methods on your own data it must first be formatted properly. To do so you must first initialize an empty rds file and object matching the size of your data using the `createRds()` function.
+If you wish to run the analysis methods on your own data, it must first be formatted properly. To do so, you must first initialize an empty rds file and object matching the size of your data using the `createRds()` function.
 
 ```{r, eval=FALSE}
 user_input_obj <- createRds("user_input_data", nrow = 10, ncol = 10)
 ```
 
-The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below
+The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below:
 
 * MAF (in MAP):  vector with minor allele frequencies for SNPs
 * Status (in FAM):  vector with status for genotypes
@@ -202,7 +205,7 @@ Additionally, it is recommended that the file-backed matrix be filled in blocks 
 
 ## Parallelization
 
-Since most users work on very different computers with various setups Parallelization is not enabled by default. To run simulations using Parallelization, which is recommended as it provides a significant speedup in most cases, you must first set a Parallelization plan. For most basic computers running on windows the Parallelization plan below will work just fine. 
+Since most users work on very different computers with various setups, parallelization is not enabled by default. To run simulations using parallelization, which is recommended as it provides a significant speedup in most cases, you must first set a parallelization plan. For most basic computers running on Windows, the parallelization plan below will work just fine. 
 
 ```{r, eval = FALSE}
 future::plan(future::multisession, 

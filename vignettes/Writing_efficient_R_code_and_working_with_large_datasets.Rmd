@@ -2,7 +2,7 @@
 title: "Writing Efficient R Code and Working with Large Genetic Datasets"
 output: rmarkdown::html_vignette
 description:
-  A short guide to making you R code run better when working with large genetic datsets.
+  A short guide to making your R code run better when working with large genetic datasets.
 vignette: >
   %\VignetteIndexEntry{Writing Efficient R Code and Working with Large Genetic Datasets}
   %\VignetteEngine{knitr::rmarkdown}
@@ -21,10 +21,10 @@ How do we write efficient code in R when working with simulated genetic data?
 Firstly it's important to understand what efficient code is. If we simply look at the term efficiency, efficiency roughly means ‘working well’ in everyday life. An example is a vehicle that goes far without guzzling gas or a worker that gets the job done fast without stress. When translating efficiency to programming, efficient code can be broadly understood, but efficient code often comes down to code that’s fast and/or storage fulfilling. 
 
 ## Memory Efficiency and FBMs
-So how do we create efficient code, when working with simulated genetic data?  One of the first bottlenecks when working with genetic data, is the amount of information which needs to be stored. Genetic data, such as data for genotypes, is often stored for millions of SNPs for millions of people. When running code in R, objects are stored in RAM (Random Access Memory), which is a lot faster than any hard disk memory, but there is often an upper limit to how much data can be stored at a time. We therefore have to make use of files stored on disk, also known as FBMs (file-backed matrices). To this end the RyouSick package uses the bigsnpr and bigstatr packages which makes working with FBMs easy and fast. FMBs allow us to store as much information as our disc allows. But since we are still limited by how much data we can work with at a time in R, we have to load and save our data onto the FBMs in blocks of data that fit in our RAM. The downside is that this in turn leads to additional I/O time. So if want to make our code more efficient, we must also work to make it faster to make up for this. 
+So how do we create efficient code, when working with simulated genetic data?  One of the first bottlenecks when working with genetic data, is the amount of information which needs to be stored. Genetic data, such as data for genotypes, is often stored for millions of SNPs for millions of people. When running code in R, objects are stored in RAM (Random Access Memory), which is a lot faster than any hard disk memory, but there is often an upper limit to how much data can be stored at a time. We therefore have to make use of files stored on disk, also known as FBMs (file-backed matrices). To this end, the RyouSick package uses the bigsnpr and bigstatr packages, which make working with FBMs easy and fast. FMBs allow us to store as much information as our disk allows. But since we are still limited by how much data we can work with at a time in R, we have to load and save our data onto the FBMs in blocks of data that fit in our RAM. The downside is that this in turn leads to additional I/O time. So if we want to make our code more efficient, we must also work to make it faster to make up for this. 
 
 ## Speed Efficiency and Parallelization
-But then how to we make it all run faster? Code in R can be made faster by utilizing the inbuilt vectorization that exists in most R functions. Coming from other programming languages it might be easy to fall into the trap of using for loops and indexes every time we want to address elements of a vector. But this type of operation makes our code much slower as seen below.
+But then how do we make it all run faster? Code in R can be made faster by utilizing the inbuilt vectorization that exists in most R functions. Coming from other programming languages it might be easy to fall into the trap of using for-loops and indexes every time we want to address elements of a vector. But this type of operation makes our code much slower as seen below.
 ```{r}
 n <- 10000000
   a <- 1:n
@@ -43,10 +43,9 @@ system.time({
   c <- a + b
 })
 
-
 ```
 
-So whenever we want to make a loop in R it might be a good idea to first see if there is an inbuilt function in R that can do it for us faster. Some useful function that work often are those belonging to the apply family of functions such as apply(), sapply(), lapply() and tapply().
+So whenever we want to make a loop in R, it might be a good idea to first see if there is an inbuilt function in R that can do it for us faster. Some useful function that work often are those belonging to the apply family of functions such as apply(), sapply(), lapply() and tapply().
 If we have no other choice but to loop through elements of a vector another useful tip is to always allocate the necessary memory beforehand. As shown below this also provides a significant speedup. 
 
 ```{r}
@@ -71,5 +70,5 @@ system.time({
 ```
 
 
-finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously by taking advantage of each of our CPU cores at once, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel. 
+Finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously by taking advantage of each of our CPU cores at once, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel. 
 

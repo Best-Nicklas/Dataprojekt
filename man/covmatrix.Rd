@@ -7,7 +7,7 @@
 covmatrix(h2, n_sib = 0)
 }
 \arguments{
-\item{h2}{Integer specifying heritability parameter (0 < h2 < 1).}
+\item{h2}{Number specifying heritability parameter.}
 
 \item{n_sib}{Integer specifying number of siblings (default 0).}
 }

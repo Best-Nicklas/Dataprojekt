@@ -4,13 +4,13 @@
 #' the function will randomly calculate causal SNPs, MAF values and beta values. 
 #' 
 #' @param n_snp Integer specifying amount of SNPs.
-#' @param prevalence Integer specifying prevalence of disease in simulated population.
-#' @param h2 Integer specifying heritability parameter.
+#' @param prevalence Number specifying prevalence of disease in the population.
+#' @param h2 Number specifying heritability parameter.
 #' @param causal Vector of predetermined causal SNPs (0 if not causal, 1 if causal). Leave empty to get random causal SNPs. 
 #' @param causal_n Integer specifying amount of causal SNPs if no causal param given. Default value is 10 procent of total SNPs.
 #' @param maf Vector of predetermined Minor Allele Frequencies. Leave empty to get random MAF.
-#' @param maf_low Integer specifying lower bound for MAF if none given. 
-#' @param maf_high Integer specifying upper bound for MAF if none given. 
+#' @param maf_low Number specifying lower bound for MAF if none given. 
+#' @param maf_high Number specifying upper bound for MAF if none given. 
 #' @return A list with all the disease parameters.
 #' @export
 #' 
@@ -23,8 +23,8 @@ sim_disease <- function(n_snp, prevalence, h2, causal = NULL, causal_n = max(1,r
   if (h2 <= 0 || h2 >= 1) stop("h2 must be between 0 and 1")
   if (!is.null(causal) && length(causal) != n_snp) stop("length of causal must be equal to n_snp")
   if (!is.null(maf) && length(maf) != n_snp) stop("length of MAF must be equal to n_snp")
-  if (maf_low < 0 || maf_low >= 1 || maf_low > maf_high) stop("maf_low must be between 0 and 1 and less than or equal maf_high")
-  if (maf_high <= 0 || maf_low > 1 || maf_low > maf_high) stop("maf_high must be between 0 and 1 and greater than or equal maf_high")
+  if (maf_low < 0 || maf_low >= 1 || maf_low > maf_high) stop("maf_low must be between 0 and 1 and less than or equal to maf_high")
+  if (maf_high <= 0 || maf_low > 1 || maf_low > maf_high) stop("maf_high must be between 0 and 1 and greater than or equal to maf_high")
     
   #Calculates a vector with causal SNPs at random positions if a causal vector not given
   if (is.null(causal)) {
