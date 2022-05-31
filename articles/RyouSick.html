@@ -80,11 +80,11 @@
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
 <p>To illustrate the use of the package RyouSick lets go through an example, where we simulate a disease called bad-knee syndrome in a population.</p>
-<p>Before simulating genotypes and case-control phenotypes data using RyouSick, we need to simulate the disease parameters with the function <code><a href="../reference/sim_disease.html">sim_disease()</a></code>. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:</p>
+<p>Before simulating genotypes and case-control phenotype data using RyouSick, we first need to simulate the disease parameters with the function <code><a href="../reference/sim_disease.html">sim_disease()</a></code>. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://best-nicklas.github.io/Dataprojekt/">"RyouSick"</a></span><span class="op">)</span>
 <span class="va">bad_knee_syndrome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_disease.html">sim_disease</a></span><span class="op">(</span>n_snp <span class="op">=</span> <span class="fl">10</span>, h2 <span class="op">=</span> <span class="fl">0.8</span>, prevalence <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></code></pre></div>
-<p>Disease parameters:</p>
+<p>Output disease parameters:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_syndrome</span>
 <span class="co">#&gt; $MAF</span>
@@ -106,7 +106,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $N_SNP</span>
 <span class="co">#&gt; [1] 10</span></code></pre></div>
-<p>In the above output each MAF value at a given index indicates the frequency that the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal.</p>
+<p>In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal.</p>
 <p>We can now chose what kind of simulation we want to perform for our population. Either with family history or without using one of the two functions:</p>
 <ul>
 <li>
@@ -114,13 +114,13 @@
 <li>
 <code><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family()</a></code> simulates genotype and case-control phenotype with family case-control phenotypes</li>
 </ul>
-<p>Lets try to use the simulation <code><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family()</a></code>, with the bad_knee_syndrome disease parameters, and with 1 to 3 siblings for each individual and save it under the filename “bad_knee_data10x10”:</p>
+<p>Lets try to simulate 10 genotypes/individuals with the simulation <code><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family()</a></code>, with the bad_knee_syndrome disease parameters, and with 1 to 3 siblings for each individual and save it under the filename “bad_knee_data10x10”:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, 
                                            disease <span class="op">=</span> <span class="va">bad_knee_syndrome</span>, 
                                            path <span class="op">=</span> <span class="st">"bad_knee_data10x10"</span>, 
                                            n_sibs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>The bad_knee_data will now contain a list object, which we will refer to as an rds object, with a reference to a file-backed matrix (matrix stored on disk), a tibble containing information on the disease (MAP) and a tibble containing phenotype information on the genotypes. Individual columns in the data can be accessed using the dollar notation.</p>
+<p>The bad_knee_data will now contain a list object, which we will refer to as an rds object, with a reference to a file-backed matrix (matrix stored on disk), a tibble containing information on SNPs (MAP) and a tibble containing phenotype information on the genotypes (FAM). Individual columns in the data can be accessed using the dollar notation.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">FAM</span><span class="op">$</span><span class="va">Status</span>
 <span class="co">#&gt;       [,1]</span>
@@ -134,7 +134,7 @@
 <span class="co">#&gt;  [8,]    0</span>
 <span class="co">#&gt;  [9,]    1</span>
 <span class="co">#&gt; [10,]    0</span></code></pre></div>
-<p>Slices of the genotypes can be accessed as well.</p>
+<p>Slices of the genotype data can be accessed as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
 <span class="co">#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
