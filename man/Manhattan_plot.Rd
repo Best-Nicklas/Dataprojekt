@@ -4,10 +4,12 @@
 \alias{Manhattan_plot}
 \title{Make a Manhattan plot from analysis data}
 \usage{
-Manhattan_plot(x)
+Manhattan_plot(x, a)
 }
 \arguments{
 \item{x}{List object containing gwas data from an analysis.}
+
+\item{a}{significance level used to determine whether SNPs are causal or not}
 }
 \value{
 A Manhattan plot with each regressor (SNP) on the x-axis and their -log10(P-values) on the y-axis.

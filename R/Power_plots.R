@@ -4,12 +4,12 @@
 #' This function is only design to plot all three plots against each other to get a visual comparison of the power plots for each model. 
 #' 
 #' @param Gwas_data A list with exactly three entrances, with the GWAS-values gained from from each model (GWAS, GWAX and LTFH), where the data from GWAS has to be the first entrance, the data from Gwax has to be the second entrance and the data from LTFH has to be on the last entrance. 
-#' @param p significance level used to determine causal SNPs
+#' @param a significance level used to determine causal SNPs
 #' @return Ggplot with power plots from GWAS, GWAX and LTFH, to get a visual comparison of the prediction power for each model. 
 #' @export
 #' 
 
-Power_plots <- function(Gwas_data, p){
+Power_plots <- function(Gwas_data, a){
    
    if (!(length(Gwas_data) == 3)) stop("Needs Gwas_data from all three analysis in list format")
   
@@ -18,17 +18,17 @@ Power_plots <- function(Gwas_data, p){
     Ltfh <- Gwas_data[[3]]
     
     # Calculate correct input data, causal SNPs
-    T1 <- Gwas %>% dplyr::mutate(causal_snp = p.value < p) %>%
+    T1 <- Gwas %>% dplyr::mutate(causal_snp = p.value < a) %>%
       dplyr::arrange(abs(estim)) %>%
       dplyr::mutate(cpower = cumsum(causal_snp)) %>%
       dplyr::mutate(Method = "GWAS")
     
-    T2 <- Gwax %>% dplyr::mutate(causal_snp = p.value < p) %>%
+    T2 <- Gwax %>% dplyr::mutate(causal_snp = p.value < a) %>%
       dplyr::arrange(abs(estim)) %>%
       dplyr::mutate (cpower = cumsum(causal_snp)) %>%
       dplyr::mutate (Method = "GWAX")
     
-    T3 <- Ltfh %>% dplyr::mutate(causal_snp = p.value < p) %>%
+    T3 <- Ltfh %>% dplyr::mutate(causal_snp = p.value < a) %>%
       dplyr::arrange(abs(estim)) %>%
       dplyr::mutate(cpower = cumsum(causal_snp)) %>%
       dplyr::mutate(Method = "LTFH")

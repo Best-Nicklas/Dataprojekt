@@ -5,17 +5,17 @@
 #' 
 #' @param pvalues A vector of the pvalues calculated from analysis.
 #' @param true_causal A vector indicating causal SNPs (1 where causal, 0 where not causal).
-#' @param threshold_pvalue An integer specifying the cutoff for a SNP being causal.
+#' @param a An integer specifying significance level and thereby the cutoff for a SNP being causal.
 #' @return a dataframe containing the statistics
 #' @export
 #'
 
-get_stats <- function(pvalues,  true_causal, threshold_pvalue) {
+get_stats <- function(pvalues,  true_causal, a) {
   if (length(pvalues) != length(true_causal)) stop("Length of pvalues vector and true_causal vector must be the same")
-  if (threshold_pvalue < 0) stop("threshold pvalue must be non-negative")
+  if (a < 0) stop("threshold pvalue must be non-negative")
   
   # find predicted causal SNPs 
-  pred_causal <- (pvalues < threshold_pvalue) + 0
+  pred_causal <- (pvalues < a) + 0
 
   # calculate true negatives, false negatives, true positives and false positives
   false_negatives <- sum(pred_causal == 0 & true_causal == 1)

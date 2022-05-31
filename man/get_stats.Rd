@@ -4,14 +4,14 @@
 \alias{get_stats}
 \title{Get statistics on how many SNPs have been correctly identified}
 \usage{
-get_stats(pvalues, true_causal, threshold_pvalue)
+get_stats(pvalues, true_causal, a)
 }
 \arguments{
 \item{pvalues}{A vector of the pvalues calculated from analysis.}
 
 \item{true_causal}{A vector indicating causal SNPs (1 where causal, 0 where not causal).}
 
-\item{threshold_pvalue}{An integer specifying the cutoff for a SNP being causal.}
+\item{a}{An integer specifying significance level and thereby the cutoff for a SNP being causal.}
 }
 \value{
 a dataframe containing the statistics

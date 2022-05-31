@@ -38,14 +38,14 @@ which outputs
 bad_knee_syndrome
 ```
 
-In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. 
+In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we are shown that SNP 4 has been simulated to be causal. 
 
 We can now chose what kind of simulation we want to perform for our population. Either with family history or without using one of the two functions:
 
 * `sim_genotypes_no_family()` simulates genotype and case-control phenotype without family case-control phenotypes
 * `sim_genotypes_with_family()` simulates genotype and case-control phenotype with family case-control phenotypes
 
-Lets try to do a simulation of 10 genotypes under the bad_knee_syndrom disease parameters with 1 to 3 siblings for each genotype and save it under the filename "bad_knee_data10x10": 
+Lets try to do a simulation of 10 genotypes under the bad_knee_syndrome disease parameters with 1 to 3 siblings for each genotype and save it under the filename "bad_knee_data10x10": 
 
 ```{r, eval = FALSE}
 bad_knee_data <- sim_genotypes_with_family(n = 10, 
@@ -65,7 +65,7 @@ bad_knee_data$genotypes[1:10, 1:10]
 
 ```
 Here each row represents a genotype and each column a SNP. 
-(WARNING: we highly advise against indexing all the data at once using [], as this will try to load the whole file-backed matrix into memory, which, depending on the size of the file, might cause problems)
+(WARNING: we highly advise against indexing all the data at once using [ ], as this will try to load the whole file-backed matrix into memory, which, depending on the size of the file, might cause problems)
 
 All of the simulated information contained in our example case bad_knee_data can be seen below.
 
@@ -99,32 +99,32 @@ knitr::kable(x)
 ```
 Note that to access the analysis data for GWAX and LTFH you have to use `method_result$GWAS_Data$`.
 
-Statistics for the data can be calculated by passing the p-values, the true causal SNPs and a pvalue threshold to the `get_stats()` function
+Statistics for the data can be calculated by passing the p-values, the true causal SNPs and a significance level to the `get_stats()` function
 
 ```{r}
 gwas_stats <- get_stats(pvalues = x$p.value, 
                         true_causal = bad_knee_syndrome$CAUSAL, 
-                        threshold_pvalue = 0.05)
+                        a = 0.05)
 knitr::kable(gwas_stats)
 ```
 
 
 ## Visualizations
 
-We can then visualize the data using the function `Manhattan_plot()` to get a picture of which SNPs have been determined to be causal: 
+We can then visualize the data using the function `Manhattan_plot()` to get a picture of which SNPs and where in the genome they have been determined to be causal: 
 
 ```{r}
-Manhattan_plot(x)
+Manhattan_plot(x, a = 5e-7)
 ```
 
 
 If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. The power for each of the methods gives us an idea of which of the methods, that finds most of the causal SNP´s. Since we randomly assign causal SNP´s when we simulate disease parameters, it´s possible to calculate the amount of false positives each of the methods have, which ensures us, that the methods does not analyze SNP´s to be causal, that are predetermined not to be causal. 
 
-Before we use the the function `Power_plots()` we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the p-value threshold to 0.5. 
+Before we use the the function `Power_plots()` we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the significance level to 0.5. 
 
 ```{r}
 power_plot_data = list(x, y$GWAS_Data, z$GWAS_Data)
-Power_plots(Gwas_data = power_plot_data, p = 0.5)
+Power_plots(Gwas_data = power_plot_data, a = 0.5)
 ```
 
 We also note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.
@@ -145,7 +145,7 @@ model_results <- Prediction_cross_validation(rds.obj = bad_knee_data,
                                              method = "LTFH")
 ```
 
-This information can now be used in the `Predict_status()` to predict a status for future genotypes. For illustrative purposes we will use our old data again, as the input needs to be formatted as an rds object.
+This model can now be used in the `Predict_status()` function to predict status for future genotypes. For illustrative purposes we will use our old data again, as the input needs to be formatted as an rds object.
 
 ```{r, warning=FALSE, include = FALSE, message = FALSE}
 predicted_status <- Predict_status(rds.obj = bad_knee_data,
@@ -188,7 +188,7 @@ user_input_obj$Status <- c(1,1,1,0,0,0,0,1,0,0)
 saveRds(user_input_obj)
 ```
 
-addtionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article `vignette("Writing_efficient_R_code_and_working_with_large_datasets")`). The rds file can later be opened again using the `OpenRds()` function.
+Additionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article `vignette("Writing_efficient_R_code_and_working_with_large_datasets")`). The rds file can later be opened again using the `OpenRds()` function.
 
 
 ## Parallelization
