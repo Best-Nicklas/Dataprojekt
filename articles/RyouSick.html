@@ -79,12 +79,12 @@
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>To illustrate the use of RyouSick lets go through an example where we try to simulate a disease called bad-knee syndrome in a population.</p>
-<p>When trying to simulate genotype and case-control phenotype data using RyouSick you first have to simulate the disease parameters. Disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:</p>
+<p>To illustrate the use of the package RyouSick lets go through an example, where we simulate a disease called bad-knee syndrome in a population.</p>
+<p>Before simulating genotypes and case-control phenotypes data using RyouSick, we need to simulate the disease parameters with the function <code><a href="../reference/sim_disease.html">sim_disease()</a></code>. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://best-nicklas.github.io/Dataprojekt/">"RyouSick"</a></span><span class="op">)</span>
 <span class="va">bad_knee_syndrome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_disease.html">sim_disease</a></span><span class="op">(</span>n_snp <span class="op">=</span> <span class="fl">10</span>, h2 <span class="op">=</span> <span class="fl">0.8</span>, prevalence <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></code></pre></div>
-<p>which outputs</p>
+<p>Disease parameters:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_syndrome</span>
 <span class="co">#&gt; $MAF</span>
@@ -106,7 +106,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $N_SNP</span>
 <span class="co">#&gt; [1] 10</span></code></pre></div>
-<p>In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we are shown that SNP 4 has been simulated to be causal.</p>
+<p>In the above output each MAF value at a given index indicates the frequency that the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal.</p>
 <p>We can now chose what kind of simulation we want to perform for our population. Either with family history or without using one of the two functions:</p>
 <ul>
 <li>
@@ -114,7 +114,7 @@
 <li>
 <code><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family()</a></code> simulates genotype and case-control phenotype with family case-control phenotypes</li>
 </ul>
-<p>Lets try to do a simulation of 10 genotypes under the bad_knee_syndrome disease parameters with 1 to 3 siblings for each genotype and save it under the filename “bad_knee_data10x10”:</p>
+<p>Lets try to use the simulation <code><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family()</a></code>, with the bad_knee_syndrome disease parameters, and with 1 to 3 siblings for each individual and save it under the filename “bad_knee_data10x10”:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_genotypes_with_family.html">sim_genotypes_with_family</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, 
                                            disease <span class="op">=</span> <span class="va">bad_knee_syndrome</span>, 
@@ -134,7 +134,7 @@
 <span class="co">#&gt;  [8,]    0</span>
 <span class="co">#&gt;  [9,]    1</span>
 <span class="co">#&gt; [10,]    0</span></code></pre></div>
-<p>Slices of the genotype data can be accessed as well.</p>
+<p>Slices of the genotypes can be accessed as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
 <span class="co">#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
@@ -148,7 +148,7 @@
 <span class="co">#&gt;  [8,]    0    0    0    2    1    0    0    0    0     0</span>
 <span class="co">#&gt;  [9,]    0    0    0    0    0    0    0    1    0     1</span>
 <span class="co">#&gt; [10,]    0    0    0    2    1    0    0    0    0     0</span></code></pre></div>
-<p>Here each row represents a genotype and each column a SNP. (WARNING: we highly advise against indexing all the data at once using [ ], as this will try to load the whole file-backed matrix into memory, which, depending on the size of the file, might cause problems)</p>
+<p>Here each row represents an individuals genotypes and each column a SNP. (WARNING: we highly advise against indexing all the data at once using [ ], as this will try to load the whole file-backed matrix into memory, which, depending on the size of the file, might cause problems)</p>
 <p>All of the simulated information contained in our example case bad_knee_data can be seen below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">bad_knee_data</span><span class="op">$</span><span class="va">MAP</span>, align <span class="op">=</span> <span class="st">"ccc"</span><span class="op">)</span></code></pre></div>
@@ -336,7 +336,7 @@
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GWAS.html">GWAS</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>, y <span class="op">=</span> <span class="va">bad_knee_data</span><span class="op">$</span><span class="va">FAM</span><span class="op">$</span><span class="va">Status</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GWAX.html">GWAX</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span><span class="op">)</span>
 <span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/LTFH.html">LTFH</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>, h2 <span class="op">=</span> <span class="fl">0.8</span>, prevalence <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
-<p>Output will consist of estimated effect sizes, standard errors, t-scores and p-values for each SNP, which again can be accessed using dollar notation.</p>
+<p>The output will consist of estimated effect sizes, standard errors, t-scores and p-values for each SNP, which again can be accessed using dollar notation.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 <table class="table">
@@ -452,37 +452,39 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/Manhattan_plot.html">Manhattan_plot</a></span><span class="op">(</span><span class="va">x</span>, a <span class="op">=</span> <span class="fl">5e-7</span><span class="op">)</span></code></pre></div>
 <p><img src="RyouSick_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>If we want to visually compare the accumulated power for each of the methods, we can use the function <code><a href="../reference/Power_plots.html">Power_plots()</a></code>. The power for each of the methods gives us an idea of which of the methods, that finds most of the causal SNP´s. Since we randomly assign causal SNP´s when we simulate disease parameters, it´s possible to calculate the amount of false positives each of the methods have, which ensures us, that the methods does not analyze SNP´s to be causal, that are predetermined not to be causal.</p>
-<p>Before we use the the function <code><a href="../reference/Power_plots.html">Power_plots()</a></code> we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the significance level to 0.5.</p>
+<p>If we want to visually compare the accumulated power for each of the methods, we can use the function <code><a href="../reference/Power_plots.html">Power_plots()</a></code>. We basically want to see which method finds most causal SNP´s, and that the SNP´s are actually predetermined to be causal. To check for this we use the output from <code><a href="../reference/get_stats.html">get_stats()</a></code> which tells us about the frequency for false positives for each method.</p>
+<p>Before we use the function <code><a href="../reference/Power_plots.html">Power_plots()</a></code> we need to save the GWAS_data for each method in a list format. For illustrative purposes we set the significance level to 0.5.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">power_plot_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">$</span><span class="va">GWAS_Data</span>, <span class="va">z</span><span class="op">$</span><span class="va">GWAS_Data</span><span class="op">)</span>
-<span class="fu"><a href="../reference/Power_plots.html">Power_plots</a></span><span class="op">(</span>Gwas_data <span class="op">=</span> <span class="va">power_plot_data</span>, a <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
-<p><img src="RyouSick_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<p>We also note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.</p>
+<code class="sourceCode R"><span class="va">power_plot_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">$</span><span class="va">GWAS_Data</span>, <span class="va">z</span><span class="op">$</span><span class="va">GWAS_Data</span><span class="op">)</span></code></pre></div>
+<p>With the data saved, we can now use <code><a href="../reference/Power_plots.html">Power_plots()</a></code>:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/Power_plots.html">Power_plots</a></span><span class="op">(</span>Gwas_data <span class="op">=</span> <span class="va">power_plot_data</span>, a <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
+<p><img src="RyouSick_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>For output from <code><a href="../reference/Power_plots.html">Power_plots()</a></code> we note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.</p>
 </div>
 <div class="section level2">
 <h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h2>
 <p>As seen in <code><a href="../articles/LTFH.html">vignette("LTFH")</a></code> the best method for evaluating causal SNPs is LT-FH. So let’s try to use <code><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation()</a></code> on our LT-FH data to get a model that can predict future cases.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Prediction_cross_validation.html">Prediction_cross_validation</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>,
                                              k <span class="op">=</span> <span class="fl">2</span>,
                                              method <span class="op">=</span> <span class="st">"LTFH"</span><span class="op">)</span></code></pre></div>
 <p>This model can now be used in the <code><a href="../reference/Predict_status.html">Predict_status()</a></code> function to predict status for future genotypes. For illustrative purposes we will use our old data again, as the input needs to be formatted as an rds object.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predicted_status</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Predict_status.html">Predict_status</a></span><span class="op">(</span>rds.obj <span class="op">=</span> <span class="va">bad_knee_data</span>,
                                    model <span class="op">=</span> <span class="va">model_results</span><span class="op">$</span><span class="va">Best_Model</span>,
                                    prevalence <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></code></pre></div>
 <p>This gives us the following results.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predicted_status</span>
 <span class="co">#&gt;  [1] 1 0 0 0 0 1 0 0 0 0</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="correct-formatting-of-rds-object">Correct formatting of rds object<a class="anchor" aria-label="anchor" href="#correct-formatting-of-rds-object"></a>
 </h2>
-<p>If you wish to run the analysis methods on your own data it must first be formatted properly. To do so you must first initialize an empty .rds file and object matching the size of your data using the <code><a href="../reference/createRds.html">createRds()</a></code> function.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>If you wish to run the analysis methods on your own data it must first be formatted properly. To do so you must first initialize an empty rds file and object matching the size of your data using the <code><a href="../reference/createRds.html">createRds()</a></code> function.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">user_input_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRds.html">createRds</a></span><span class="op">(</span><span class="st">"user_input_data"</span>, nrow <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>The rds object that is returned can then be filled up by adding columns/vectors in the MAP and FAM tibbles using dollar notation. To integrate with the methods in the package, columns must be given specific names based on their contents. The required information to run must functions and their naming is listed below</p>
 <ul>
@@ -493,8 +495,8 @@
 <li>sibs_Status (in FAM): list containing a vector with sibling status for each genotype or NULL if no siblings for genotype (only used in LTFH)</li>
 </ul>
 <p>Note that the names are case-sensitive. An example of filling up the genotypes with a matrix consisting of only 1’s and creating a Status column can be seen below. Remember that when making changes to the tibbles FAM and MAP, the changes to the rds object must be saved using <code><a href="../reference/saveRds.html">saveRds()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">user_input_obj</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">10</span>, <span class="va">nrow</span><span class="op">)</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">user_input_obj</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">10</span>, nrow <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">user_input_obj</span><span class="op">$</span><span class="va">Status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>
 <span class="fu"><a href="../reference/saveRds.html">saveRds</a></span><span class="op">(</span><span class="va">user_input_obj</span><span class="op">)</span></code></pre></div>
 <p>Additionally, it is recommended that the file-backed matrix be filled in blocks if working with large quantities of data (read more in article <code><a href="../articles/Writing_efficient_R_code_and_working_with_large_datasets.html">vignette("Writing_efficient_R_code_and_working_with_large_datasets")</a></code>). The rds file can later be opened again using the <code><a href="../reference/OpenRds.html">OpenRds()</a></code> function.</p>
@@ -503,7 +505,7 @@
 <h2 id="parallelization">Parallelization<a class="anchor" aria-label="anchor" href="#parallelization"></a>
 </h2>
 <p>Since most users work on very different computers with various setups Parallelization is not enabled by default. To run simulations using Parallelization, which is recommended as it provides a significant speedup in most cases, you must first set a Parallelization plan. For most basic computers running on windows the Parallelization plan below will work just fine.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, 
              workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/re-exports.html" class="external-link">availableCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The function should be called once at the beginning before any simulations have been run.</p>
