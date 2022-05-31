@@ -1,18 +1,18 @@
-#' Simulation of family (Fixed and non fixed)
+#' Simulation of genotypes with family information (Fixed and non-fixed)
 #' 
-#' This function is used to simulate genotypes gentypes for individuals with accompanying phenotype information and 
-#' information on the case-control status of parents annd possible sibling.
+#' This function is used to simulate genotypes with accompanying phenotype information, as well as 
+#' phenotype information on the case-control status of parents and possible siblings.
 #' 
 #' @param n Integer specifying the number of individuals/genotypes to simulate. 
 #' @param disease A list with all the disease parameters.
 #' @param path Path to where .rds file should be saved, or where one is stored if overwriting existing .rds file (DO NOT SPECIFY FILE EXTENSION).
 #' @param n_sibs Integer value for how many sibling to produce for each genotype or vector containing values for
 #' how many sibs to sample from (ex. c(1,4,6) will produce genotypes randomly with 1, 4 or 6 siblings).  
-#' @param overwrite Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)
+#' @param overwrite Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).
 #' @param n_blocks Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory 
 #' issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.
-#' @return Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
-#' FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
+#' @return Returns list object, refered to as an rds object, containing an FMB.code256 with genotypes, MAF tibble containing information on SNPs and
+#' FAM tibble containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
 #' @details Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. Since the running time depends on a number of variables,
 #' such as the parallelization settings, core speed, core amount and sibling configuration, we cannot accurately give an estimation how long the simulation will take.
 #' Instead we simply warn the user that simulations might take upwards of multiple hours for large datasets such as a 100.000x100.000. The default n_blocks parameter has been set to 500 as this

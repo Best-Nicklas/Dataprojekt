@@ -13,11 +13,11 @@ Prediction_cross_validation(
 )
 }
 \arguments{
-\item{rds.obj}{A .rds file with an FBM.code256 and accompanying FAM and MAP.}
+\item{rds.obj}{A .rds file with an FBM.code256 and accompanying FAM and MAP tibbles.}
 
 \item{k}{Number of folds to be used in cross-validation. The number of rows in the FBM must be at least twice as large as k. Highly recommended to choose k to be at most ~1\% of the number of rows, unless working with a very small dataset, as errors may occur.}
 
-\item{threshold}{Vector of P-values to be used in thresholding. Default does not use thresholding.}
+\item{threshold}{Vector of significance levels to be used in thresholding. Default does not use thresholding.}
 
 \item{method}{Method to use for prediction. Possible methods are "GWAS", "GWAX", "LTFH". Default is "GWAS".}
 

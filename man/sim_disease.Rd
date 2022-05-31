@@ -26,7 +26,7 @@ sim_disease(
 
 \item{causal_n}{Integer specifying amount of causal SNPs if no causal param given. Default value is 10 procent of total SNPs.}
 
-\item{maf}{Vector of predetermined Minor Allele Frequencies.Leave empty to get random MAF.}
+\item{maf}{Vector of predetermined Minor Allele Frequencies. Leave empty to get random MAF.}
 
 \item{maf_low}{Integer specifying lower bound for MAF if none given.}
 
@@ -37,5 +37,5 @@ A list with all the disease parameters.
 }
 \description{
 This function is used to simulate disease parameters. If not predetermined,
-the function will randomly calculate causal SNPs, MAF vaules and beta values.
+the function will randomly calculate causal SNPs, MAF values and beta values.
 }

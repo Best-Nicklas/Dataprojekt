@@ -7,15 +7,15 @@
 GWAX(rds.obj, include = bigparallelr::rows_along(rds.obj$genotypes))
 }
 \arguments{
-\item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP. Must contain case-control status
+\item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP tibbles. Must contain case-control status for
 parents in FAM.}
 
 \item{include}{Vector of rows to use in regression. Used with cross-validation. Default uses all rows.}
 }
 \value{
-A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
+A list containing GWAS data and a vector of proxy status for each genotype.
 }
 \description{
-This function uses proxy information on case-control status and given genotype data to find the likelihood that
+This function uses proxy information on case-control status along with genotype data to find the likelihood that
 SNPs are causal. Information on parent case-control status must be included.
 }

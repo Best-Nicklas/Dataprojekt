@@ -11,7 +11,7 @@ rnorm_trunc(n, range, mu, sigma)
 
 \item{range}{vector with two values specifying the truncated range (lower bound and upper bound).}
 
-\item{mu}{Integer value specifying the mean of normal distribution.}
+\item{mu}{Integer value specifying the mean of the normal distribution.}
 
 \item{sigma}{Integer value specifying the standard deviation of the normal distribution.}
 }

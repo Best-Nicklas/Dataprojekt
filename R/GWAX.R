@@ -1,12 +1,12 @@
 #' Perform GWAS with proxy information on family case-control status (GWAX)
 #' 
-#' This function uses proxy information on case-control status and given genotype data to find the likelihood that 
+#' This function uses proxy information on case-control status along with genotype data to find the likelihood that 
 #' SNPs are causal. Information on parent case-control status must be included. 
 #' 
-#' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP. Must contain case-control status
+#' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP tibbles. Must contain case-control status for
 #' parents in FAM. 
 #' @param include Vector of rows to use in regression. Used with cross-validation. Default uses all rows.
-#' @return A data.frame with slopes of each regression, standard errors of each slope, t-scores associated with each slope and P-values of each slope.
+#' @return A list containing GWAS data and a vector of proxy status for each genotype.
 #' @export 
 #' 
 

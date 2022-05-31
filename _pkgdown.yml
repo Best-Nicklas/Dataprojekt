@@ -22,7 +22,7 @@ reference:
 - title: Analysis
   description: |
     **Analysis** functions used to infer which SNPs might be causally related to a specific disease and to find a model 
-    that can predict future cases based on a individuals genotypes.
+    that can predict future cases based on an individuals genotypes.
   contents:
   - GWAS
   - GWAX

@@ -5,10 +5,10 @@
 #' configurations using gibbs sampling. The calculated posterior mean genetic 
 #' liabilities are then matched to each person in the dataset and used to perform GWAS.
 #' 
-#' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP.
+#' @param rds.obj A list object with an FBM.code256 and accompanying FAM and MAP tibbles.
 #' @param prevalence The likelihood of having the disease in the population.
-#' @param h2 Heritability parameter.
-#' @return A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and a data frame with the configurations and the associated liabilities.
+#' @param h2 The heritability parameter for the disease.
+#' @return A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and a data frame with the configurations and the associated posterior mean genetic liabilities.
 #' @export
 #' 
 

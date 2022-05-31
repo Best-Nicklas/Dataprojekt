@@ -25,5 +25,5 @@ When using this function both a .bk and .rds file will be created at the specifi
 the file-backed matrix two tibbles containing FAM (phenotype information) and MAP (SNP information)
 will be intialized and saved together with the file-backed matrix in the .rds file.
 Both the .bk and the .rds file must always be in the same directory.
-The function openRds can be used to access these files again (see function reference for openRds).
+The function openRds can be used to access these files again (see function reference for openRds()).
 }

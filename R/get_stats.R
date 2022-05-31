@@ -6,7 +6,7 @@
 #' @param pvalues A vector of the pvalues calculated from analysis.
 #' @param true_causal A vector indicating causal SNPs (1 where causal, 0 where not causal).
 #' @param a An integer specifying significance level and thereby the cutoff for a SNP being causal.
-#' @return a dataframe containing the statistics
+#' @return A dataframe containing the statistics
 #' @export
 #'
 

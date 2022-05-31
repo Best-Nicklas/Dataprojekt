@@ -1,14 +1,14 @@
 111#' Simulation of disease parameters
 #' 
 #' This function is used to simulate disease parameters. If not predetermined,
-#' the function will randomly calculate causal SNPs, MAF vaules and beta values. 
+#' the function will randomly calculate causal SNPs, MAF values and beta values. 
 #' 
 #' @param n_snp Integer specifying amount of SNPs.
 #' @param prevalence Integer specifying prevalence of disease in simulated population.
 #' @param h2 Integer specifying heritability parameter.
 #' @param causal Vector of predetermined causal SNPs (0 if not causal, 1 if causal). Leave empty to get random causal SNPs. 
 #' @param causal_n Integer specifying amount of causal SNPs if no causal param given. Default value is 10 procent of total SNPs.
-#' @param maf Vector of predetermined Minor Allele Frequencies.Leave empty to get random MAF.
+#' @param maf Vector of predetermined Minor Allele Frequencies. Leave empty to get random MAF.
 #' @param maf_low Integer specifying lower bound for MAF if none given. 
 #' @param maf_high Integer specifying upper bound for MAF if none given. 
 #' @return A list with all the disease parameters.

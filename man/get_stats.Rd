@@ -14,7 +14,7 @@ get_stats(pvalues, true_causal, a)
 \item{a}{An integer specifying significance level and thereby the cutoff for a SNP being causal.}
 }
 \value{
-a dataframe containing the statistics
+A dataframe containing the statistics
 }
 \description{
 This functions gives statistics on the count and frequency of false negatives, true negatives,

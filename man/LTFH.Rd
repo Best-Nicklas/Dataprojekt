@@ -7,14 +7,14 @@
 LTFH(rds.obj, prevalence, h2)
 }
 \arguments{
-\item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP.}
+\item{rds.obj}{A list object with an FBM.code256 and accompanying FAM and MAP tibbles.}
 
 \item{prevalence}{The likelihood of having the disease in the population.}
 
-\item{h2}{Heritability parameter.}
+\item{h2}{The heritability parameter for the disease.}
 }
 \value{
-A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and a data frame with the configurations and the associated liabilities.
+A list with 3 values: the GWAS output, the calculated posterior mean genetic liabilities, and a data frame with the configurations and the associated posterior mean genetic liabilities.
 }
 \description{
 This function finds all the unique status configurations in the data and

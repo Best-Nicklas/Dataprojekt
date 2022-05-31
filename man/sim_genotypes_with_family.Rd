@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_genotypes_with_family.R
 \name{sim_genotypes_with_family}
 \alias{sim_genotypes_with_family}
-\title{Simulation of family (Fixed and non fixed)}
+\title{Simulation of genotypes with family information (Fixed and non-fixed)}
 \usage{
 sim_genotypes_with_family(
   n,
@@ -23,18 +23,18 @@ sim_genotypes_with_family(
 \item{n_sibs}{Integer value for how many sibling to produce for each genotype or vector containing values for
 how many sibs to sample from (ex. c(1,4,6) will produce genotypes randomly with 1, 4 or 6 siblings).}
 
-\item{overwrite}{Boolean value used to determine if a helper function is allowed to overwrite (Default value is TRUE)}
+\item{overwrite}{Boolean value used to determine if existing .rds file with specified name should be overwritten (Default value TRUE).}
 
 \item{n_blocks}{Integer used to determine number of blocks to run simulation in (Default value is 500). Set higher if running into memory
 issues such as freezing or crashing. Setting n_blocks higher reduces the memory size of each block, but slightly slows the calculation time.}
 }
 \value{
-Returns list object containing an FMB.code256 with genotypes, MAF object containing information on SNPs and
-FAM object containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
+Returns list object, refered to as an rds object, containing an FMB.code256 with genotypes, MAF tibble containing information on SNPs and
+FAM tibble containing phenotype information on genotypes as well as case-control status of parents and possible siblings.
 }
 \description{
-This function is used to simulate genotypes gentypes for individuals with accompanying phenotype information and
-information on the case-control status of parents annd possible sibling.
+This function is used to simulate genotypes with accompanying phenotype information, as well as
+phenotype information on the case-control status of parents and possible siblings.
 }
 \details{
 Simulating a 100.000x100.000 dataset will take up around 9.76 GB of space. Since the running time depends on a number of variables,

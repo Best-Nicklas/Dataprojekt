@@ -2,9 +2,9 @@
 #' 
 #' This function is used to calculate predictive powers of different models at different thresholds.
 #' 
-#' @param rds.obj A .rds file with an FBM.code256 and accompanying FAM and MAP.
+#' @param rds.obj A .rds file with an FBM.code256 and accompanying FAM and MAP tibbles.
 #' @param k Number of folds to be used in cross-validation. The number of rows in the FBM must be at least twice as large as k. Highly recommended to choose k to be at most ~1% of the number of rows, unless working with a very small dataset, as errors may occur.
-#' @param threshold Vector of P-values to be used in thresholding. Default does not use thresholding.
+#' @param threshold Vector of significance levels to be used in thresholding. Default does not use thresholding.
 #' @param method Method to use for prediction. Possible methods are "GWAS", "GWAX", "LTFH". Default is "GWAS".
 #' @param liabilities Vector of liabilities used for prediction with "LTFH" method. If not specified, uses "GWAS" method instead.
 #' @return A list with 2 values: a tibble with average and best scores for each threshold, and a data.frame with the best model, fitted values, residuals, best p-value and its R^2.
