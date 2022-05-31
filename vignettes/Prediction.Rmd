@@ -30,5 +30,6 @@ We can now see what would be the best alpha value with simple GWAS, but what’s
 
 ![](../man/figures/prediction_figure.png){width=100%}
 
-We can easily compare and choose the best model for predicting as seen in the above figure. Note that the alpha level is decreasing on the x-axis. We can now predict a status for a new person and be comfortable that we have the best model that we can create to do so. 
+We can easily compare and choose the best model for predicting as seen in the above figure, where we illustrate the results from `Prediction_cross_validation()` on the three methods, where a higher score means better prediction. Note that the alpha level is decreasing on the x-axis. We can now predict a status for a new person and be comfortable that we have the best model that we can create to do so. 
+
 Though we output statuses, we are actually calculating PRS, which means we can do even more behind the scenes, like trying to minimize false positives by only assigning someone to be a case if they have a very high PRS. When using LT-FH, we can even attempt to guess how many cases and non-case family members a person has, though we should be careful if our model is not already very robust, as the number of possible family combinations also increases rapidly with more siblings, and some configurations can have similar posterior mean genetic liabilities.
