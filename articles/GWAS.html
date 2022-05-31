@@ -77,9 +77,13 @@
     
     
 <div class="section level2">
-<h2 id="gwas">GWAS<a class="anchor" aria-label="anchor" href="#gwas"></a>
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>GWAS is short for genome-wide association study, which is a method used to identify gene variations that are statistically associated with a risk for a disease. Once a large enough dataset has been collected the approach is to look for genomic variants that occur more frequently in those with a given disease compared to those without the disease. GWAS in practices makes a simple linear regression on each genomic variant (values at a particular SNP) and the case-control status for each individual. We note that other implementations of GWAS exist, but that this simple implementation is the one used in RyouSick. Among other statistics it gives us a p-value indicating the statistical significance of our observations. Using a threshold p-value we can then determine whether a SNP might be causal or not based on whether its p-value is higher or lower than our chosen threshold.</p>
+<p>GWAS is short for genome-wide association study, which is a method used to identify gene variations that are statistically associated with a risk for a disease. Once a large enough dataset has been collected the approach is to look for genomic variants that occur more frequently in those with a given disease compared to those without the disease. GWAS in practices makes a simple linear regression on each genomic variant (values at a particular SNP) and the case-control status for each individual. We note that other implementations of GWAS exist, but that this simple implementation is the one used in RyouSick. Among other statistics it gives us a p-value indicating the statistical significance of our observations. Using a chosen significance level we can then determine whether a SNP might be causal or not based on whether its p-value is higher or lower.</p>
+</div>
+<div class="section level2">
+<h2 id="example-run-on-100000x100000-dataset">Example run on 100,000x100,000 dataset<a class="anchor" aria-label="anchor" href="#example-run-on-100000x100000-dataset"></a>
+</h2>
 <p>when performing GWAS using the RyouSick package’s <code><a href="../reference/GWAS.html">GWAS()</a></code> function on a large population of 100,000 individuals on 100,000 SNPs we receive the following statistics given that we randomly choose 200 SNPs between SNP 1 and SNP 12500, 200 SNPs between SNP 37500 and SNP 50000 and 600 SNPs between SNP 75000 and SNP 100000 to be causal, with <span class="math inline">\(h^2=0.8\)</span> and a prevalence of 0.05:</p>
 <p><img src="../reference/figures/GWAS_stats.PNG"></p>
 <p>We note that to determine whether a SNP is causal or not we check to see if the p-value is lower or higher than the Bonferroni corrected significance level of <span class="math inline">\(5\cdot10^{-7}\)</span>, given an alpha value of 0.05, since we perform 100,000 tests/regressions.</p>
@@ -87,7 +91,8 @@
 <p><img src="../reference/figures/GWAS.PNG"></p>
 <p>This gives us an indication of where in the sequence the causal SNPs appear. We very clearly see that the GWAS analysis finds statistically significant SNPs in the SNP positions that we have chosen to be causal. A comparison between the results of the different association studies can be seen in the LTFH article <code><a href="../articles/LTFH.html">vignette("LTFH")</a></code>.</p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

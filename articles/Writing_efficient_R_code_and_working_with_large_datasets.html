@@ -91,8 +91,7 @@
 </h2>
 <p>But then how to we make it all run faster? Code in R can be made faster by utilizing the inbuilt vectorization that exists in most R functions. Coming from other programming languages it might be easy to fall into the trap of using for loops and indexes every time we want to address elements of a vector. But this type of operation makes our code much slower as seen below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000000</span>
+<code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000000</span>
   <span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span>
   <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span>
   <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
@@ -104,14 +103,14 @@
   <span class="op">}</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   1.036   0.036   1.072</span>
+<span class="co">#&gt;   1.170   0.016   1.186</span>
 
 <span class="co">#utilizing vectorization </span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span>
   <span class="va">c</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.029   0.032   0.060</span></code></pre></div>
+<span class="co">#&gt;   0.048   0.024   0.073</span></code></pre></div>
 <p>So whenever we want to make a loop in R it might be a good idea to first see if there is an inbuilt function in R that can do it for us faster. Some useful function that work often are those belonging to the apply family of functions such as apply(), sapply(), lapply() and tapply(). If we have no other choice but to loop through elements of a vector another useful tip is to always allocate the necessary memory beforehand. As shown below this also provides a significant speedup.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000000</span>
@@ -124,7 +123,7 @@
   <span class="op">}</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   2.812   0.252   3.064</span>
+<span class="co">#&gt;    3.15    0.24    3.39</span>
 
 <span class="co">#Allocating memory beforehand</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span>
@@ -134,7 +133,7 @@
   <span class="op">}</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.503   0.024   0.527</span></code></pre></div>
+<span class="co">#&gt;   0.582   0.020   0.602</span></code></pre></div>
 <p>finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously by taking advantage of each of our CPU cores at once, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
