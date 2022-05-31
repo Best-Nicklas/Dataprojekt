@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="A short guide to making you R code run better when working with large genetic datsets.">
+<meta name="description" content="A short guide to making your R code run better when working with large genetic datasets.">
 <title>Writing Efficient R Code and Working with Large Genetic Datasets • RyouSick</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -18,7 +18,7 @@
 <script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Writing Efficient R Code and Working with Large Genetic Datasets">
-<meta property="og:description" content="A short guide to making you R code run better when working with large genetic datsets.">
+<meta property="og:description" content="A short guide to making your R code run better when working with large genetic datasets.">
 <meta property="og:image" content="https://best-nicklas.github.io/Dataprojekt/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -84,12 +84,12 @@
 <div class="section level2">
 <h2 id="memory-efficiency-and-fbms">Memory Efficiency and FBMs<a class="anchor" aria-label="anchor" href="#memory-efficiency-and-fbms"></a>
 </h2>
-<p>So how do we create efficient code, when working with simulated genetic data? One of the first bottlenecks when working with genetic data, is the amount of information which needs to be stored. Genetic data, such as data for genotypes, is often stored for millions of SNPs for millions of people. When running code in R, objects are stored in RAM (Random Access Memory), which is a lot faster than any hard disk memory, but there is often an upper limit to how much data can be stored at a time. We therefore have to make use of files stored on disk, also known as FBMs (file-backed matrices). To this end the RyouSick package uses the bigsnpr and bigstatr packages which makes working with FBMs easy and fast. FMBs allow us to store as much information as our disc allows. But since we are still limited by how much data we can work with at a time in R, we have to load and save our data onto the FBMs in blocks of data that fit in our RAM. The downside is that this in turn leads to additional I/O time. So if want to make our code more efficient, we must also work to make it faster to make up for this.</p>
+<p>So how do we create efficient code, when working with simulated genetic data? One of the first bottlenecks when working with genetic data, is the amount of information which needs to be stored. Genetic data, such as data for genotypes, is often stored for millions of SNPs for millions of people. When running code in R, objects are stored in RAM (Random Access Memory), which is a lot faster than any hard disk memory, but there is often an upper limit to how much data can be stored at a time. We therefore have to make use of files stored on disk, also known as FBMs (file-backed matrices). To this end, the RyouSick package uses the bigsnpr and bigstatr packages, which make working with FBMs easy and fast. FMBs allow us to store as much information as our disk allows. But since we are still limited by how much data we can work with at a time in R, we have to load and save our data onto the FBMs in blocks of data that fit in our RAM. The downside is that this in turn leads to additional I/O time. So if we want to make our code more efficient, we must also work to make it faster to make up for this.</p>
 </div>
 <div class="section level2">
 <h2 id="speed-efficiency-and-parallelization">Speed Efficiency and Parallelization<a class="anchor" aria-label="anchor" href="#speed-efficiency-and-parallelization"></a>
 </h2>
-<p>But then how to we make it all run faster? Code in R can be made faster by utilizing the inbuilt vectorization that exists in most R functions. Coming from other programming languages it might be easy to fall into the trap of using for loops and indexes every time we want to address elements of a vector. But this type of operation makes our code much slower as seen below.</p>
+<p>But then how do we make it all run faster? Code in R can be made faster by utilizing the inbuilt vectorization that exists in most R functions. Coming from other programming languages it might be easy to fall into the trap of using for-loops and indexes every time we want to address elements of a vector. But this type of operation makes our code much slower as seen below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000000</span>
   <span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span>
@@ -103,15 +103,15 @@
   <span class="op">}</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   1.132   0.024   1.156</span>
+<span class="co">#&gt;   1.020   0.024   1.045</span>
 
 <span class="co">#utilizing vectorization </span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span>
   <span class="va">c</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.056   0.016   0.072</span></code></pre></div>
-<p>So whenever we want to make a loop in R it might be a good idea to first see if there is an inbuilt function in R that can do it for us faster. Some useful function that work often are those belonging to the apply family of functions such as apply(), sapply(), lapply() and tapply(). If we have no other choice but to loop through elements of a vector another useful tip is to always allocate the necessary memory beforehand. As shown below this also provides a significant speedup.</p>
+<span class="co">#&gt;   0.045   0.016   0.060</span></code></pre></div>
+<p>So whenever we want to make a loop in R, it might be a good idea to first see if there is an inbuilt function in R that can do it for us faster. Some useful function that work often are those belonging to the apply family of functions such as apply(), sapply(), lapply() and tapply(). If we have no other choice but to loop through elements of a vector another useful tip is to always allocate the necessary memory beforehand. As shown below this also provides a significant speedup.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000000</span>
 
@@ -123,7 +123,7 @@
   <span class="op">}</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   2.989   0.216   3.209</span>
+<span class="co">#&gt;   2.619   0.188   2.808</span>
 
 <span class="co">#Allocating memory beforehand</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span>
@@ -133,8 +133,8 @@
   <span class="op">}</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.555   0.020   0.574</span></code></pre></div>
-<p>finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously by taking advantage of each of our CPU cores at once, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel.</p>
+<span class="co">#&gt;   0.522   0.016   0.538</span></code></pre></div>
+<p>Finally, we can make use of parallelization. This is useful if we need to perform many tasks that are independent of each other. parallelization allows us to do these operations simultaneously by taking advantage of each of our CPU cores at once, thus saving us time. It can be implemented in R using the future.apply package that works similar to the apply functions mentioned earlier, but with an additional option to run each loop iteration in parallel.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
