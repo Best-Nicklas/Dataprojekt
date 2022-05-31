@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 ## Simulation
 To illustrate the use of the package RyouSick lets go through an example, where we simulate a disease called bad-knee syndrome in a population.
 
-Before simulating genotypes and case-control phenotypes data using RyouSick, we need to simulate the disease parameters with the function `sim_disease()`. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:
+Before simulating genotypes and case-control phenotype data using RyouSick, we first need to simulate the disease parameters with the function `sim_disease()`. The disease parameters for our target disorder is simulated on 10 SNPs with a heritability h2 of 0.8 and a prevalence in the population of 0.25:
 
 ```{r, eval = FALSE}
 library("RyouSick")
@@ -33,19 +33,19 @@ bad_knee_syndrome <- list(MAF = bad_knee_data$MAP$MAF, BETA = bad_knee_data$MAP$
 
 ```
 
-Disease parameters:
+Output disease parameters:
 ```{r}
 bad_knee_syndrome
 ```
 
-In the above output each MAF value at a given index indicates the frequency that the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal. 
+In the above output each MAF value at a given index indicates the frequency at which the genome will vary from the reference genome. The CAUSAL vector and BETA vector likewise tell us which SNPs are simulated to be causally connected to developing the simulated disease and how big of an effect they have. In the above output we can see that SNP 4 has been simulated to be causal. 
 
 We can now chose what kind of simulation we want to perform for our population. Either with family history or without using one of the two functions:
 
 * `sim_genotypes_no_family()` simulates genotype and case-control phenotype without family case-control phenotypes
 * `sim_genotypes_with_family()` simulates genotype and case-control phenotype with family case-control phenotypes
 
-Lets try to use the simulation `sim_genotypes_with_family()`, with the bad_knee_syndrome disease parameters, and with 1 to 3 siblings for each individual and save it under the filename "bad_knee_data10x10": 
+Lets try to simulate 10 genotypes/individuals with the simulation `sim_genotypes_with_family()`, with the bad_knee_syndrome disease parameters, and with 1 to 3 siblings for each individual and save it under the filename "bad_knee_data10x10": 
 
 ```{r, eval = FALSE}
 bad_knee_data <- sim_genotypes_with_family(n = 10, 
@@ -54,12 +54,12 @@ bad_knee_data <- sim_genotypes_with_family(n = 10,
                                            n_sibs = c(1,2,3))
 ```
 
-The bad_knee_data will now contain a list object, which we will refer to as an rds object, with a reference to a file-backed matrix (matrix stored on disk), a tibble containing information on the disease (MAP) and a tibble containing phenotype information on the genotypes. Individual columns in the data can be accessed using the dollar notation.
+The bad_knee_data will now contain a list object, which we will refer to as an rds object, with a reference to a file-backed matrix (matrix stored on disk), a tibble containing information on SNPs (MAP) and a tibble containing phenotype information on the genotypes (FAM). Individual columns in the data can be accessed using the dollar notation.
 
 ```{r}
 bad_knee_data$FAM$Status
 ```
-Slices of the genotypes can be accessed as well.
+Slices of the genotype data can be accessed as well.
 ```{r}
 bad_knee_data$genotypes[1:10, 1:10]
 
@@ -115,7 +115,6 @@ We can then visualize the data using the function `Manhattan_plot()` to get a pi
 ```{r}
 Manhattan_plot(x, a = 5e-7)
 ```
-
 
 If we want to visually compare the accumulated power for each of the methods, we can use the function `Power_plots()`. We basically want to see which method finds most causal SNP´s, and that the SNP´s are actually predetermined to be causal. To check for this we use the output from `get_stats()` which tells us about the frequency for false positives for each method. 
 
