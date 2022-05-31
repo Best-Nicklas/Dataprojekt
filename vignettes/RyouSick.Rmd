@@ -132,6 +132,10 @@ Power_plots(Gwas_data = power_plot_data, a = 0.5)
 
 For output from `Power_plots()` we note that the line for GWAS cannot be seen in the above plot because it lays under the plot for GWAX, which, when using such a low sample size, produces almost identical results to GWAS.
 
+The x axis of the power plots are estimated effect sizes, which are correlated with the p-value for each SNP. A larger numerical estimated effect size for a SNP, will therefore result in a greater chance of the methods analyzing the SNP to be causal. 
+
+The y axis is the cumulative number of SNP´s found causal by the methods. 
+
 ## Prediction
 
 As seen in `vignette("LTFH")` the best method for evaluating causal SNPs is LT-FH. So let's try to use `Prediction_cross_validation()` on our LT-FH data to get a model that can predict future cases.
