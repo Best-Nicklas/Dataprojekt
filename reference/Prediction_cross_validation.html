@@ -60,11 +60,11 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rds.obj</dt>
-<dd><p>A .rds file with an FBM.code256 and accompanying FAM and MAP.</p></dd>
+<dd><p>A .rds file with an FBM.code256 and accompanying FAM and MAP tibbles.</p></dd>
 <dt>k</dt>
 <dd><p>Number of folds to be used in cross-validation. The number of rows in the FBM must be at least twice as large as k. Highly recommended to choose k to be at most ~1% of the number of rows, unless working with a very small dataset, as errors may occur.</p></dd>
 <dt>threshold</dt>
-<dd><p>Vector of P-values to be used in thresholding. Default does not use thresholding.</p></dd>
+<dd><p>Vector of significance levels to be used in thresholding. Default does not use thresholding.</p></dd>
 <dt>method</dt>
 <dd><p>Method to use for prediction. Possible methods are "GWAS", "GWAX", "LTFH". Default is "GWAS".</p></dd>
 <dt>liabilities</dt>
